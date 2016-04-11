@@ -17,7 +17,10 @@ public class GameMgr : MonoBehaviour {
     public float PlayerPower;
 
     private Transform transformCache;
-
+  
+    //@ 함수 이름 똑바로
+    //@ 구조 똑바로
+    //@ C# 프로퍼티(속성) 공부하기
     public void GetPlayerTransform(Transform spot)
     {
         PlayerTransform = spot;
@@ -27,9 +30,10 @@ public class GameMgr : MonoBehaviour {
     {
         Instance = this;
     }
-
+    //@ 함수 순서, 이름
     public void BoomEvent()
     {
+        //@ 코루틴 제대로 쓰기
         StartCoroutine(Boom());
         StopCoroutine(Boom());
     }
@@ -49,17 +53,11 @@ public class GameMgr : MonoBehaviour {
 
         PlayerScore = 0.0f;
         PlayerPower = 0.0f;
-
-        //@ Transform 조정하기
-        //@ Player가 능동적으로 설정하기
-
-        // 플레이어의 Transform 확인
-        //     PlayerTransform = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
-
-
+        
         // 몬스터 풀 생성
         for (int i = 0; i < 10; i++)
         {
+            //@ 변수 이름
             GameObject SmallEnemy = GameObject.Instantiate(SmallEnemyPrefab);
             SmallEnemy.name = "SmallEnemy_" + i.ToString();
             SmallEnemy.SetActive(false);
@@ -74,6 +72,7 @@ public class GameMgr : MonoBehaviour {
 
     IEnumerator EnemySpawn()
     {
+        //@ 변수 이름
         foreach (GameObject Enemy in SmallEnemyPool)
         {
             yield return new WaitForSeconds(0.5f);
@@ -87,6 +86,7 @@ public class GameMgr : MonoBehaviour {
         }
     }
 
+    //@ 함수 이름
     public void PlayerDie(GameObject player)
     {
         StartCoroutine(RevivePlayer(player));
@@ -96,7 +96,7 @@ public class GameMgr : MonoBehaviour {
 
     IEnumerator RevivePlayer(GameObject playerObject)
     {
-        GameObject PlayerPrefab = playerObject;
+        GameObject playerPrefab = playerObject;
         GameObject newPlayer = GameObject.Instantiate(playerObject);
         newPlayer.transform.localPosition = new Vector3(0, -1.0f, 0);
         newPlayer.transform.localRotation = Quaternion.identity;
@@ -119,13 +119,14 @@ public class GameMgr : MonoBehaviour {
         } */
     }
 
-
+    //@ 함수 이름
     public void GetScore()
     {
         PlayerScore += 100;
         Debug.Log("Score : " + PlayerScore);
     }
 
+    //@ 함수 이름
     public void GetPower()
     {
         PlayerPower += 1;

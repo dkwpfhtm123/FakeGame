@@ -15,6 +15,7 @@ public class ItemSpawn : MonoBehaviour {
         LifeItem
     }
 
+    //@ 대소문자
     public static ItemSpawn instance = null;
 
     void Awake()
@@ -39,6 +40,7 @@ public class ItemSpawn : MonoBehaviour {
                       break;
               }
 
+        //@ 변수 이름
               Transform ItemTransform = Item.transform;
               SetPosition(point, ItemTransform); */
 
@@ -46,8 +48,7 @@ public class ItemSpawn : MonoBehaviour {
         if (item == ItemType.PowerItem)
         {
             Item = GameObject.Instantiate(PowerItem);
-        } 
-
+        }
         else if (item == ItemType.ScoreItem)
         {
             Item = GameObject.Instantiate(ScoreItem);
@@ -57,6 +58,7 @@ public class ItemSpawn : MonoBehaviour {
         SetPosition(point, ItemTransform);
     }
 
+    //@ modifier
     void SetPosition(Transform point , Transform ItemTransform)
     {
         ItemTransform.localPosition = point.transform.localPosition;

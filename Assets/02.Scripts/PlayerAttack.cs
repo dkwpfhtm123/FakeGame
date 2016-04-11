@@ -59,6 +59,7 @@ public class PlayerAttack : MonoBehaviour {
 
     void Fire()
     {
+        //@ 중복 코드 함수로 묶기
         if (shiftCheck == false) {
             GameObject playerBullet = Instantiate(PlayerAttack1);
             PlayerBullet obj = playerBullet.GetComponent<PlayerBullet>();
@@ -71,7 +72,7 @@ public class PlayerAttack : MonoBehaviour {
 
         }
 
-        else if (shiftCheck == true)
+        else 
         {
             GameObject playerBullet = Instantiate(PlayerAttack2);
             PlayerBullet obj = playerBullet.GetComponent<PlayerBullet>();
