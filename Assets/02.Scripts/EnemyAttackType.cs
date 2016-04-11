@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//@ 중괄호 규칙 적용
+//@ 형식 일원화
+
 public class EnemyAttackType : MonoBehaviour {
 
     public GameObject RedKnife;
@@ -13,17 +16,15 @@ public class EnemyAttackType : MonoBehaviour {
         RedAttack,
         BlueAttack
     }
-
-    //@ 대소문자
+    
     public static EnemyAttackType Instance = null;
 
     void Awake()
     {
         Instance = this;
     }
-
-
-    //@ 동사 명사
+    
+    //@ 주석을 안 쓸 수 있을 떄는 안 쓸 수 있도록 개선합시다
     public void FireType1(Transform spawnTransform , AttackType attackType) // 원뿔형
     {
         float oneshot = 5.0f;
@@ -31,7 +32,7 @@ public class EnemyAttackType : MonoBehaviour {
         float anglePlus = angle / (oneshot - 1);
         angle *= 0.5f;
         BulletSpeed = 2.0f;
-
+                
         while (0 < oneshot)
         {
             Vector2 targetDirection = BulletTurn(angle , spawnTransform);
@@ -108,17 +109,16 @@ public class EnemyAttackType : MonoBehaviour {
         return targetDirection;
     }
 
+    //@ 함수 이름
     void BulletSetTransform(Vector2 targetDirection, Transform spawnTransform , AttackType enemyType)
     {
         // 총알을 생성합니다.
+        //@ 변수 이름
         GameObject Bullet = null;   
         if (enemyType == AttackType.RedAttack)
         {
             Bullet = GameObject.Instantiate(RedKnife);
-
-        }
-        
-        //@ else의 소중함
+        }        
         else if (enemyType == AttackType.BlueAttack)
         {
             Bullet = GameObject.Instantiate(BlueKnife);
@@ -137,8 +137,16 @@ public class EnemyAttackType : MonoBehaviour {
         obj.MoveBullet(Time.deltaTime);
     }
 
+    // Create/Delete/Destroy
+    // Initialize/Finalize/Terminate
+    // Open/Close
+    // Add, Insert/Remove/Clear, Append
+    // Set/Get
+    // Reset
+    // Execute/Run/Launch
+    // Move
 
-
+    //@ 안 쓰는 코드는 지웁시다
     /*  
              private float LastShootTime;
              LastShootTime = Time.time;

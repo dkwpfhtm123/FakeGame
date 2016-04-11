@@ -5,6 +5,7 @@ public class EnemyCtrl : MonoBehaviour {
 
     public int HP = 5;
 
+    //@ modifier 붙이기
     EnemyTypeScript enemy;
     BulletTypeScript bullet;
 
@@ -15,8 +16,6 @@ public class EnemyCtrl : MonoBehaviour {
         StartCoroutine(AttackPlayer());
         StartCoroutine(TopMove());
     }
-
-
 
     IEnumerator TopMove()
     {

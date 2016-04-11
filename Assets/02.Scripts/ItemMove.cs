@@ -2,13 +2,12 @@
 using System.Collections;
 
 public class ItemMove : MonoBehaviour {
-    //@ public, private 위치 정리
-
     public float ScoreSpeed = 4.0f;
     public float PowerSpeed = 2.0f;
 
     private Transform transformCache;
 
+    //@ modifier
     Vector2 direction;
     ItemTypeScript item;
     
@@ -74,6 +73,7 @@ public class ItemMove : MonoBehaviour {
         CheckPowerSpeed();
     }
 
+    //@ 함수 이름
     void CheckPowerSpeed()
     {
         if (PowerSpeed > 0.0f)
