@@ -38,8 +38,8 @@ public class PlayerPowerUp : MonoBehaviour
 
             transformCache.localPosition = circle;
 
-            angle += 5.0f;
-            yield return new WaitForSeconds(0.02f);
+            angle += 180 * Time.deltaTime;
+            yield return null;
         }
     }
 
