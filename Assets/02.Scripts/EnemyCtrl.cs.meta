@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b46368fe4f4ca294cb2da5a6be1d0c8a
+timeCreated: 1459853723
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - SmallEnemyAttack1: {fileID: 173504, guid: 640671d78eae82642aa0a5cc5e3e837b, type: 2}
+  - SmallEnemyAttack2: {fileID: 134734, guid: 7840cd6490c340542b108f3724704343, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

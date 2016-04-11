@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e2a62c603e99be34eb0b0f2933271ccc
+timeCreated: 1459671874
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - PowerItem: {fileID: 189426, guid: f38070b586b082144812247737a4b660, type: 2}
+  - ScoreItem: {fileID: 102226, guid: 56f6edaaea5a8914da2576aa1508fc70, type: 2}
+  - BoomItem: {instanceID: 0}
+  - LifeItem: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
