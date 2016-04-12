@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemSpawn : MonoBehaviour {
+public class ItemSpawn : MonoBehaviour
+{
     public GameObject PowerItem;
     public GameObject ScoreItem;
     public GameObject BoomItem;
@@ -15,55 +16,38 @@ public class ItemSpawn : MonoBehaviour {
         LifeItem
     }
 
-    //@ 대소문자
-    public static ItemSpawn instance = null;
+    public static ItemSpawn Instance = null;
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
 
     public void SpawnItem(Transform point, ItemType item)
     {
-        //@ switch
-
-        // 오류가 나는부분 질문.
-        /*      switch (item)
-              {
-                  case ItemType.PowerItem:
-                      GameObject Item = GameObject.Instantiate(PowerItem);
-                      break;
-
-                  case ItemType.ScoreItem:
-                      GameObject Item = GameObject.Instantiate(ScoreItem);
-                      break;
-              }
-
-        //@ 변수 이름
-              Transform ItemTransform = Item.transform;
-              SetPosition(point, ItemTransform); */
-
         GameObject Item = null;
-        if (item == ItemType.PowerItem)
+        switch (item)
         {
-            Item = GameObject.Instantiate(PowerItem);
-        }
-        else if (item == ItemType.ScoreItem)
-        {
-            Item = GameObject.Instantiate(ScoreItem);
+            case ItemType.PowerItem:
+                Item = GameObject.Instantiate(PowerItem);
+                break;
+
+            case ItemType.ScoreItem:
+                Item = GameObject.Instantiate(ScoreItem);
+                break;
         }
 
-        Transform ItemTransform = Item.transform;
-        SetPosition(point, ItemTransform);
+
+        Transform itemTransform = Item.transform;
+        SetPosition(point, itemTransform);
+
     }
 
-    //@ modifier
-    void SetPosition(Transform point , Transform ItemTransform)
+    private void SetPosition(Transform point, Transform ItemTransform)
     {
         ItemTransform.localPosition = point.transform.localPosition;
         ItemTransform.localRotation = Quaternion.identity;
         ItemTransform.localScale = Vector3.one;
     }
-
 }

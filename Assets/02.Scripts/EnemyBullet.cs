@@ -12,7 +12,7 @@ public class EnemyBullet : MonoBehaviour
 
     private bool firstFrame;
 
-    BulletTypeScript bulletType;
+    private BulletTypeScript bulletType;
 
     void Start()
     {
@@ -22,10 +22,19 @@ public class EnemyBullet : MonoBehaviour
 
         firstFrame = true;
 
-        //@ 복잡한 수식은 함수로 만듭시다.
-        //@ 특정 값으로 설정하고 싶을 때는 Rotate가 아니라 localRotation을 직접 설정하자
-        float degree = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
+        float degree = GetRotation();
         transform.localRotation = Quaternion.Euler(0, 0, degree);
+
+        if (bulletType.BulletTypeCheck == BulletTypeScript.BulletType.BlueKnife)
+        {
+            StartCoroutine(BoomBullet());
+        }
+    }
+
+    private float GetRotation()
+    {
+        float degree = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
+        return degree;
     }
 
     void Update()
@@ -35,17 +44,10 @@ public class EnemyBullet : MonoBehaviour
             MoveBullet(Time.deltaTime);
         }
 
-        //@ 전체적인 흐름을 조정하자
         if (GameMgr.Instance.BoomActive == true)
         {
-            ItemSpawn.instance.SpawnItem(gameObject.transform, ItemSpawn.ItemType.ScoreItem);
+            ItemSpawn.Instance.SpawnItem(gameObject.transform, ItemSpawn.ItemType.ScoreItem);
             Destroy(gameObject);
-        }
-
-        //@ 전체적인 흐름을 조정하자
-        if (bulletType.BulletTypeCheck == BulletTypeScript.BulletType.BlueKnife)
-        {
-            StartCoroutine(BoomBullet());
         }
 
         firstFrame = false;
@@ -64,15 +66,14 @@ public class EnemyBullet : MonoBehaviour
         var position = transformCache.localPosition;
         position.x += Direction.x * BulletSpeed * deltaTime;
         position.y += Direction.y * BulletSpeed * deltaTime;
-        
+
         transformCache.localPosition = position;
     }
 
-    IEnumerator BoomBullet()
+    private IEnumerator BoomBullet()
     {
-        //@ cache된게 있으면 cache된걸 씁시다
-        yield return new WaitForSeconds(1.0f);
-        EnemyAttackType.Instance.FireType1(this.transform, EnemyAttackType.AttackType.RedAttack);
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
+        EnemyAttackType.Instance.ConFireType(transformCache, EnemyAttackType.AttackType.RedAttack);
+        Destroy(gameObject);
     }
 }
