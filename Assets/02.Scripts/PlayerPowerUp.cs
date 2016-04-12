@@ -3,45 +3,63 @@ using System.Collections;
 
 public class PlayerPowerUp : MonoBehaviour
 {
+    private Transform transformCache;
 
-    Transform playerTransformCache;
-    Transform transformCache;
-    float radius;
-    float angle;
+    public Transform playerTransform;
+
+    public float angle;
+ /*   {
+        set
+        {
+            angle = value;
+        }
+        get
+        {
+            return angle;
+        } 
+    } */
+    public float radius;
 
     void Start()
     {
-        angle = 0.0f * Mathf.Deg2Rad;
-        radius = 1.0f;
+        transformCache = GetComponent<Transform>();
+
+        StartCoroutine(RotatePower());
+    }
+
+    void Update()
+    {
+        if (playerTransform == null)
+        {
+            playerTransform = GameMgr.Instance.PlayerTransform;
+            StartCoroutine(RotatePower());
+        }
 
         if (GameMgr.Instance.PlayerReviving == true)
         {
-            playerTransformCache = GameMgr.Instance.PlayerTransform;
+            Destroy(gameObject);
         }
-
-        playerTransformCache = GameMgr.Instance.PlayerTransform;
-
-        StartCoroutine(RotatePower());
-        transformCache = GetComponent<Transform>();
     }
 
-    IEnumerator RotatePower()
+    private IEnumerator RotatePower()
     {
-        yield return new WaitForSeconds(1.0f);
+        if (playerTransform == null)
+        {
+            yield break;
+        }
 
         while (true)
         {
-            Vector2 circle = playerTransformCache.localPosition;
+            Vector2 circle = playerTransform.localPosition;
 
-            circle.x = playerTransformCache.localPosition.x + (Mathf.Sin(angle * Mathf.Deg2Rad) * radius);
-            circle.y = playerTransformCache.localPosition.y + (Mathf.Cos(angle * Mathf.Deg2Rad) * radius);
+            circle.x = playerTransform.localPosition.x + (Mathf.Sin(angle * Mathf.Deg2Rad) * radius);
+            circle.y = playerTransform.localPosition.y + (Mathf.Cos(angle * Mathf.Deg2Rad) * radius);
 
             transformCache.localPosition = circle;
 
             angle += 180 * Time.deltaTime;
-            yield return null;
+
+            yield return null; // 프레임마다 반복
         }
     }
-
-    // 180도 x1 / 120도 x2 / 90도 x3 구현예정
 }

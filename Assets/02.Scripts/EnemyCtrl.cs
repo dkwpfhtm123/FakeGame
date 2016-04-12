@@ -1,47 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyCtrl : MonoBehaviour {
-
+public class EnemyCtrl : MonoBehaviour
+{
     public int HP = 5;
 
-    //@ modifier 붙이기
-    EnemyTypeScript enemy;
-    BulletTypeScript bullet;
+    public enum EnemyType
+    {
+        SmallEnemy1,
+        SmallEnemy2
+    }
+    public EnemyType EnemyTypeCheck;
 
-    void Start () {
-        enemy = GetComponent<EnemyTypeScript>();
+    private BulletTypeScript bullet;
 
-        /* InvokeRepeating이 아니라 코루틴으로 재구현 */
+    void Start()
+    {
         StartCoroutine(AttackPlayer());
         StartCoroutine(TopMove());
     }
 
-    IEnumerator TopMove()
+    private IEnumerator TopMove()
     {
- //       iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("start"), "time", 5, "easetype", iTween.EaseType.easeOutCubic));
+        //       iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("start"), "time", 5, "easetype", iTween.EaseType.easeOutCubic));
         yield return new WaitForSeconds(2.0f);
- //       iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("top"), "time", 10, "easetype", iTween.EaseType.linear , "looptype", iTween.LoopType.loop));
+        //       iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("top"), "time", 10, "easetype", iTween.EaseType.linear , "looptype", iTween.LoopType.loop));
     }
 
-    IEnumerator AttackPlayer()
+    private IEnumerator AttackPlayer()
     {
-        while (true)
+        if (EnemyTypeCheck == EnemyType.SmallEnemy1)
         {
-            //@ while문 밖에서 판단하기
-            if (enemy.EnemyTypeCheck == EnemyTypeScript.EnemyType.SmallEnemy1)
+            while (true)
             {
                 yield return new WaitForSeconds(2.0f); // 공격 텀
-                EnemyAttackType.Instance.FireType1(this.transform, EnemyAttackType.AttackType.RedAttack);
-            }
-
-
-            if (enemy.EnemyTypeCheck == EnemyTypeScript.EnemyType.SmallEnemy2)
-            {
-                yield return new WaitForSeconds(3.0f);
-                EnemyAttackType.Instance.FireType2(this.transform, EnemyAttackType.AttackType.BlueAttack);
+                EnemyAttackType.Instance.ConFireType(this.transform, EnemyAttackType.AttackType.RedAttack);
             }
         }
+
+        if (EnemyTypeCheck == EnemyType.SmallEnemy2)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(3.0f);
+                EnemyAttackType.Instance.BoomFireType(this.transform, EnemyAttackType.AttackType.BlueAttack);
+            }
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -63,17 +68,15 @@ public class EnemyCtrl : MonoBehaviour {
             HP--;
         }
 
-        //@ 한 번 확인
         if (HP < 0)
         {
-            DeadEnemy();
+            killEnemy();
         }
-    } 
+    }
 
-    //@ 동사 명사
-    void DeadEnemy()
+    private void killEnemy()
     {
-        ItemSpawn.instance.SpawnItem(this.transform , ItemSpawn.ItemType.PowerItem);
-        Destroy(this.gameObject);
+        ItemSpawn.Instance.SpawnItem(transform, ItemSpawn.ItemType.PowerItem);
+        Destroy(gameObject);
     }
 }

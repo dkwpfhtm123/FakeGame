@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemMove : MonoBehaviour {
+public class ItemMove : MonoBehaviour
+{
     public float ScoreSpeed = 4.0f;
     public float PowerSpeed = 2.0f;
 
     private Transform transformCache;
 
-    //@ modifier
-    Vector2 direction;
-    ItemTypeScript item;
-    
+    private Vector2 direction;
+    private ItemTypeScript item;
+
     void Start()
     {
         item = gameObject.GetComponent<ItemTypeScript>();
@@ -29,33 +29,32 @@ public class ItemMove : MonoBehaviour {
             }
         }
 
-        if(item.ItemTypeCheck == ItemTypeScript.ItemTy.PowerItem)
+        if (item.ItemTypeCheck == ItemTypeScript.ItemTy.PowerItem)
         {
             MovePowerItem();
         }
     }
 
-    void SpeedUp()
+    private void SpeedUp()
     {
-        //      float Up = Random.Range(1.0f, 1.5f);
         ScoreSpeed *= 1.1f;
     }
 
-    void MoveScoreItem(float deltaTime)
+    private void MoveScoreItem(float deltaTime)
     {
         transformCache = GetComponent<Transform>();
-        
+
         Transform playerTransform = GameMgr.Instance.PlayerTransform;
         Vector2 target = (playerTransform.localPosition - transformCache.localPosition).normalized;
 
         Vector2 position = transformCache.localPosition;
         position.x += target.x * ScoreSpeed * deltaTime;
         position.y += target.y * ScoreSpeed * deltaTime;
-        
-        transformCache.localPosition = position;
-    } 
 
-    void MovePowerItem()
+        transformCache.localPosition = position;
+    }
+
+    private void MovePowerItem()
     {
         StartCoroutine(MovePosition());
     }
@@ -70,11 +69,10 @@ public class ItemMove : MonoBehaviour {
 
         yield return new WaitForSeconds(0.2f);
 
-        CheckPowerSpeed();
+        changePowerSpeed();
     }
 
-    //@ 함수 이름
-    void CheckPowerSpeed()
+    private void changePowerSpeed()
     {
         if (PowerSpeed > 0.0f)
         {

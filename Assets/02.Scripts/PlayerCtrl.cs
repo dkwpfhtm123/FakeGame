@@ -13,19 +13,17 @@ public class PlayerCtrl : MonoBehaviour
     private Transform transformCache;
     private float moveSpeed = 5.0f;
 
-    ItemTypeScript item = null;
+    private ItemTypeScript item = null;
 
     void Start()
     {
         transformCache = GetComponent<Transform>();
 
-        GameMgr.Instance.GetPlayerTransform(transformCache);
+        GameMgr.Instance.PlayerTransform = transformCache;
     }
 
     void Update()
     {
-        /* 다시 한 번 훑어보기 */
-        // -1,0,1 값 받음.
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -33,7 +31,7 @@ public class PlayerCtrl : MonoBehaviour
         // 약간 움직이는거 수정할것 - GameMgr부분
         if (GameMgr.Instance.PlayerReviving == false)
         {
-            
+
             Vector2 moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
 
             if (Input.GetKeyDown(KeyCode.X))
@@ -66,17 +64,15 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
-    IEnumerator Boom()
+    private IEnumerator Boom()
     {
         boomObject = (GameObject)Instantiate(BoomPrefab, this.transform.position, Quaternion.identity);
-        GameMgr.Instance.BoomEvent();
+        GameMgr.Instance.Boom();
         yield return new WaitForSeconds(boomTime);
         Destroy(boomObject);
         boomCheck = false;
         BoomCount--;
     }
-
-
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -87,13 +83,13 @@ public class PlayerCtrl : MonoBehaviour
 
             if (item.ItemTypeCheck == ItemTypeScript.ItemTy.ScoreItem)
             {
-                GameMgr.Instance.GetScore();
+                GameMgr.Instance.ScoreChange();
                 Destroy(coll.gameObject);
             }
 
             else if (item.ItemTypeCheck == ItemTypeScript.ItemTy.PowerItem)
             {
-                GameMgr.Instance.GetPower();
+                GameMgr.Instance.PowerChange();
                 Destroy(coll.gameObject);
             }
         }
@@ -102,9 +98,8 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (coll.gameObject.GetComponent<ThisIsEnemyBullet>()) // 적 탄을 구별하기위해 하나는 남겨둠.
             {
-                GameMgr.Instance.PlayerDie(gameObject);
+                GameMgr.Instance.KillPlayer(gameObject);
             }
         }
-
     }
 }
