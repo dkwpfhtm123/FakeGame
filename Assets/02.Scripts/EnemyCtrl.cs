@@ -29,6 +29,8 @@ public class EnemyCtrl : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
+        //@ 위임, delegate
+        
         if (EnemyTypeCheck == EnemyType.SmallEnemy1)
         {
             while (true)

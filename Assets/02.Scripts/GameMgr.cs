@@ -10,7 +10,7 @@ public class GameMgr : MonoBehaviour
     public List<GameObject> SmallEnemyPool;
     public Transform PlayerTransform
     {
-        set;
+        private set;
         get;
     }
 
