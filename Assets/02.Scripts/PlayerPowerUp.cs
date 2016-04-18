@@ -34,10 +34,7 @@ public class PlayerPowerUp : MonoBehaviour
             transformCache.localPosition = circle;
 
             angle += 180 * Time.deltaTime;
-            if(angle > 360.0f)
-            {
-                angle = 0;
-            }
+            angle = angle % 360.0f;
 
             yield return null; // 프레임마다 반복
         }
