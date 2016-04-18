@@ -5,75 +5,99 @@ public class EnemyBullet : MonoBehaviour
 {
     public Vector2 Direction;
     public float BulletSpeed;
-    public float Angle;
+    public float angle;
+
+    public bool StraightBullet = false;
+    public bool CurveBullet = false;
 
     private Transform transformCache;
-    private Vector2 startingPosition;
-
     private bool firstFrame;
-
     private BulletTypeScript bulletType;
+    private float currentTime;
+    private Vector2 startingPosition;
 
     void Start()
     {
-        transformCache = GetComponent<Transform>();
-
-        bulletType = gameObject.GetComponent<BulletTypeScript>();
-
         firstFrame = true;
 
-        float degree = GetRotation();
-        transform.localRotation = Quaternion.Euler(0, 0, degree);
+        transformCache = GetComponent<Transform>();
+        bulletType = gameObject.GetComponent<BulletTypeScript>();
+        currentTime = 0;
+        startingPosition = transformCache.localPosition;
 
-        if (bulletType.BulletTypeCheck == BulletTypeScript.BulletType.BlueKnife)
+        float angle = GetRotation();
+        transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        if (bulletType.BulletTypeCheck == BulletType.BlueKnife)
         {
             StartCoroutine(BoomBullet());
         }
     }
 
-    private float GetRotation()
-    {
-        float degree = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
-        return degree;
-    }
-
     void Update()
     {
-        if (firstFrame == false)
+        if (StraightBullet == true)
         {
-            MoveBullet(Time.deltaTime);
+            MoveStraightBullet();
+        }
+        else if (CurveBullet == true)
+        {
+            MoveCurveBullet();
         }
 
-        if (GameMgr.Instance.BoomActive == true)
+        if (GameMgr.Instance.OnGoingBoom == true)
         {
-            ItemSpawn.Instance.SpawnItem(gameObject.transform, ItemSpawn.ItemType.ScoreItem);
+            ItemSpawn.Instance.SpawnItem(gameObject.transform, ItemSpawn.ItemTypeObject.ScoreItem);
             Destroy(gameObject);
         }
-
-        firstFrame = false;
     }
 
-    public void MoveBullet(float deltaTime)
+    private float GetRotation()
+    {
+        float angle = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
+        return angle;
+    }
+
+    public void MoveStraightBullet()
     {
         if (transformCache == null)
         {
             transformCache = GetComponent<Transform>();
-            startingPosition = transformCache.localPosition;
         }
 
         Vector2 bulletPosition = transformCache.localPosition;
 
-        var position = transformCache.localPosition;
-        position.x += Direction.x * BulletSpeed * deltaTime;
-        position.y += Direction.y * BulletSpeed * deltaTime;
+        bulletPosition.x += Direction.x * BulletSpeed * Time.deltaTime;
+        bulletPosition.y += Direction.y * BulletSpeed * Time.deltaTime;
 
-        transformCache.localPosition = position;
+        transformCache.localPosition = bulletPosition;
+    }
+
+    private void MoveCurveBullet()
+    {
+        float dx = 300 * currentTime * Mathf.Deg2Rad;
+        float dy = Mathf.Sin(dx);
+
+        Vector2 direction = new Vector2(dx, dy);
+
+        Vector2 targetDirection = direction;
+
+        float Angle = angle * Mathf.Deg2Rad;
+
+        direction.x = targetDirection.x * Mathf.Cos(Angle) - targetDirection.y * Mathf.Sin(Angle);
+        direction.y = targetDirection.x * Mathf.Sin(Angle) + targetDirection.y * Mathf.Cos(Angle);
+
+        BulletSpeed = 5.0f;
+
+        transform.localPosition = startingPosition + (BulletSpeed * direction.normalized * currentTime);
+
+        currentTime += Time.deltaTime;
     }
 
     private IEnumerator BoomBullet()
     {
         yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
-        EnemyAttackType.Instance.ConFireType(transformCache, EnemyAttackType.AttackType.RedAttack);
+        EnemyAttackType.Instance.FireConeType(transformCache, EnemyAttackType.AttackType.RedAttack);
         Destroy(gameObject);
     }
 }

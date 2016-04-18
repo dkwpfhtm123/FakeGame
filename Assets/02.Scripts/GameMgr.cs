@@ -4,20 +4,28 @@ using System.Collections.Generic;
 
 public class GameMgr : MonoBehaviour
 {
+    public static GameMgr Instance = null;
+
     public GameObject PlayerPowerObject;
 
     public GameObject SmallEnemyPrefab;
     public List<GameObject> SmallEnemyPool;
     public Transform PlayerTransform
     {
-        private set;
+        set;
         get;
     }
 
-    public bool BoomActive;
-    public bool PlayerReviving;
-
-    public static GameMgr Instance = null;
+    public bool OnGoingBoom
+    {
+        private set;
+        get;
+    }
+    public bool RespawnPlayer
+    {
+        private set;
+        get;
+    }
 
     public float PlayerScore;
     public float PlayerPower;
@@ -33,14 +41,13 @@ public class GameMgr : MonoBehaviour
     {
         SmallEnemyPool = new List<GameObject>();
 
-        BoomActive = false;
-        PlayerReviving = false;
+        OnGoingBoom = false;
+        RespawnPlayer = false;
 
         PlayerScore = 0.0f;
         PlayerPower = 0.0f;
 
-        // 몬스터 풀 생성
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)         // 몬스터 풀 생성
         {
             GameObject smallEnemy = GameObject.Instantiate(SmallEnemyPrefab);
             smallEnemy.name = "SmallEnemy_" + i.ToString();
@@ -49,10 +56,10 @@ public class GameMgr : MonoBehaviour
         }
 
         transformCache = GameObject.Find("LeftSpawnPoint").GetComponent<Transform>();
-        //     StartCoroutine(EnemySpawn());
+        //     StartCoroutine(EnemySpawn()); 임시 비활성화
     }
 
-    private IEnumerator EnemySpawn()
+    private IEnumerator SpawnEnemy()
     {
         foreach (GameObject enemy in SmallEnemyPool)
         {
@@ -68,55 +75,49 @@ public class GameMgr : MonoBehaviour
 
     public void Boom()
     {
-        StartCoroutine(BoomActiveChange());
+        StartCoroutine(StartBoom());
     }
 
-    private IEnumerator BoomActiveChange()
+    private IEnumerator StartBoom()
     {
-        BoomActive = true;
+        OnGoingBoom = true;
         yield return new WaitForSeconds(2.0f); // 코루틴 : 여기서 StartCoroutine 으로 되돌아간 후 다음 명령 수행. 2초후 BoomActive = false 실행 / StopCoroutine 일 경우 BoomActive를 실행하지 않고 멈춤.
-        BoomActive = false;
+        OnGoingBoom = false;
     }
 
     public void KillPlayer(GameObject player)
     {
-        StartCoroutine(RevivePlayer(player));
+        StartCoroutine(CreatePlayer(player));
         Destroy(player.gameObject);
-        // 파워,체력을 잃어버린다 구현.
+        // 파워,체력을 잃어버린다 구현 예정.
     }
 
-    private IEnumerator RevivePlayer(GameObject playerObject)
+    private IEnumerator CreatePlayer(GameObject playerObject)
     {
-        GameObject playerPrefab = playerObject;
         GameObject newPlayer = GameObject.Instantiate(playerObject);
         newPlayer.transform.localPosition = new Vector3(0, -1.0f, 0);
         newPlayer.transform.localRotation = Quaternion.identity;
 
         PlayerTransform = newPlayer.transform;
 
-        PlayerReviving = true;
+        RespawnPlayer = true;
 
+        for (float i = 0; i < 2.0f; i += Time.deltaTime) // 위로 조금씩 올라간다 수정예정.
+        {
+            newPlayer.transform.Translate(Vector3.up * Time.deltaTime, Space.Self);
+        }
         yield return new WaitForSeconds(2.0f);
 
-        PlayerReviving = false;
-
-        // 조금 움직인다 구현.
-
-        /*    while (true)
-            {
-                newPlayer.transform.Translate(Vector3.up * Time.deltaTime , Space.Self);
-
-                yield return new WaitForSeconds(2.0f);
-            } */
+        RespawnPlayer = false;
     }
 
-    public void ScoreChange()
+    public void AddPlayerScore()
     {
         PlayerScore += 100;
         Debug.Log("Score : " + PlayerScore);
     }
 
-    public void PowerChange()
+    public void AddPlayerPower()
     {
         PlayerPower += 1;
 
@@ -130,28 +131,34 @@ public class GameMgr : MonoBehaviour
             PowerUp(PlayerPower);
         }
 
-        if (PlayerReviving == true)
+        if (RespawnPlayer == true)
         {
             PlayerPower = 0.0f;
         }
     }
 
-    private float powerAngle = 0.0f;
+    PlayerPowerUp powerA = null; // 임시변수
 
-    // 90도 추가 구현중 과부하걸림.
     public void PowerUp(float powerLevel)
     {
         GameObject playerPower = Instantiate(PlayerPowerObject);
         PlayerPowerUp powerCtrl = playerPower.GetComponent<PlayerPowerUp>();
 
-        //     playerPower.transform.localPosition = transform.localPosition + Vector3.up;
+        playerPower.transform.localPosition = transform.localPosition;
         playerPower.transform.localRotation = Quaternion.identity;
         playerPower.transform.localScale = Vector3.one;
 
         powerCtrl.radius = 1.0f;
-        powerCtrl.angle = (powerAngle + 90.0f) * (powerLevel - 1) * Mathf.Deg2Rad;
-        powerCtrl.playerTransform = PlayerTransform;
+        if (powerA != null)
+        {
+            powerCtrl.angle = (powerA.angle + 90.0f) * (powerLevel - 1);
+        }
+        else
+        {
+            powerCtrl.angle = 0;
+        }
+        powerCtrl.StartRotatePower(PlayerTransform);
 
-        powerAngle = powerCtrl.angle;
+        powerA = powerCtrl;
     }
 }

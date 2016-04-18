@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum ItemType
+{
+    ScoreItem,
+    PowerItem,
+    LifeItem,
+    BoomItem,
+}
+
 public class ItemTypeScript : MonoBehaviour {
-
-    public enum ItemTy
-    {
-        ScoreItem,
-        PowerItem,
-        LifeItem,
-        BoomItem,
-    }
-
-    public ItemTy ItemTypeCheck;
+    public ItemType ItemTypeCheck;
 }
