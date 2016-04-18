@@ -19,8 +19,7 @@ public class ItemMove : MonoBehaviour
     // 폭탄쓸때 모든 탄이 스코어로 전환되어 플레이어한테 가는것으로 설정되어잇음.
     void Update()
     {
-
-        if (item.ItemTypeCheck == ItemTypeScript.ItemTy.ScoreItem)
+        if (item.ItemTypeCheck == ItemType.ScoreItem)
         {
             MoveScoreItem(Time.deltaTime);
             if (ScoreSpeed < 20.0f)
@@ -29,7 +28,7 @@ public class ItemMove : MonoBehaviour
             }
         }
 
-        if (item.ItemTypeCheck == ItemTypeScript.ItemTy.PowerItem)
+        if (item.ItemTypeCheck == ItemType.PowerItem)
         {
             MovePowerItem();
         }
@@ -69,10 +68,10 @@ public class ItemMove : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        changePowerSpeed();
+        SlowPowerSpeed();
     }
 
-    private void changePowerSpeed()
+    private void SlowPowerSpeed()
     {
         if (PowerSpeed > 0.0f)
         {

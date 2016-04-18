@@ -28,19 +28,17 @@ public class PlayerCtrl : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         // 부활하는 중이 아닐때
-        // 약간 움직이는거 수정할것 - GameMgr부분
-        if (GameMgr.Instance.PlayerReviving == false)
+        if (GameMgr.Instance.RespawnPlayer == false)
         {
-
             Vector2 moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
 
             if (Input.GetKeyDown(KeyCode.X))
             {
-                // 폭탄이 활성화되지 않았을때
+                // 폭탄이 활성화되지 않았을때 폭탄진행가능
                 if (boomCheck == false)
                 {
                     boomCheck = true;
-                    StartCoroutine(Boom());
+                    StartCoroutine(BoomEvent());
                 }
             }
 
@@ -64,7 +62,7 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
-    private IEnumerator Boom()
+    private IEnumerator BoomEvent()
     {
         boomObject = (GameObject)Instantiate(BoomPrefab, this.transform.position, Quaternion.identity);
         GameMgr.Instance.Boom();
@@ -76,25 +74,24 @@ public class PlayerCtrl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-
         if (coll.gameObject.GetComponent<ItemTypeScript>())
         {
             item = coll.gameObject.GetComponent<ItemTypeScript>();
 
-            if (item.ItemTypeCheck == ItemTypeScript.ItemTy.ScoreItem)
+            if (item.ItemTypeCheck == ItemType.ScoreItem)
             {
-                GameMgr.Instance.ScoreChange();
+                GameMgr.Instance.AddPlayerScore();
                 Destroy(coll.gameObject);
             }
 
-            else if (item.ItemTypeCheck == ItemTypeScript.ItemTy.PowerItem)
+            else if (item.ItemTypeCheck == ItemType.PowerItem)
             {
-                GameMgr.Instance.PowerChange();
+                GameMgr.Instance.AddPlayerPower();
                 Destroy(coll.gameObject);
             }
         }
 
-        if (GameMgr.Instance.PlayerReviving == false)
+        if (GameMgr.Instance.RespawnPlayer == false)
         {
             if (coll.gameObject.GetComponent<ThisIsEnemyBullet>()) // 적 탄을 구별하기위해 하나는 남겨둠.
             {

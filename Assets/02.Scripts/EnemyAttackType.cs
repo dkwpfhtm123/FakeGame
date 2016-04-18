@@ -5,13 +5,15 @@ public class EnemyAttackType : MonoBehaviour
 {
     public GameObject RedKnife;
     public GameObject BlueKnife;
+    public GameObject PurpleCircle;
 
     public float BulletSpeed;
 
     public enum AttackType
     {
         RedAttack,
-        BlueAttack
+        BlueAttack,
+        PurpleCircle
     }
 
     public static EnemyAttackType Instance = null;
@@ -21,7 +23,7 @@ public class EnemyAttackType : MonoBehaviour
         Instance = this;
     }
 
-    public void ConFireType(Transform spawnTransform, AttackType attackType)
+    public void FireConeType(Transform spawnTransform, AttackType attackType)
     {
         float oneshot = 5.0f;
         float angle = 60.0f * Mathf.Deg2Rad;
@@ -31,16 +33,15 @@ public class EnemyAttackType : MonoBehaviour
 
         while (oneshot > 0)
         {
-            Vector2 targetDirection = BulletTurn(angle, spawnTransform);
-            CreateBullet(targetDirection, spawnTransform, attackType);
+            Vector2 targetDirection = RotateBullet(angle, spawnTransform);
+            CreateStraightBullet(targetDirection, spawnTransform, attackType);
 
             oneshot--;
             angle -= anglePlus;
         }
     }
 
-    // 무작위 발사후 ConFireType 형태로 발사.
-    public void BoomFireType(Transform spawnTransform, AttackType attackType)
+    public void FireBoomType(Transform spawnTransform, AttackType attackType)     // 무작위 발사후 ConFireType 형태로 발사.
     {
         float oneshot = 5.0f;
 
@@ -49,52 +50,53 @@ public class EnemyAttackType : MonoBehaviour
             float angle = Random.Range(0.0f, 360.0f) * Mathf.Deg2Rad;
             BulletSpeed = Random.Range(1.0f, 2.0f);
 
-            Vector2 targetDirection = BulletTurn(angle, spawnTransform);
-            CreateBullet(targetDirection, spawnTransform, attackType);
+            Vector2 targetDirection = RotateBullet(angle, spawnTransform);
+            CreateStraightBullet(targetDirection, spawnTransform, attackType);
 
             oneshot--;
         }
     }
 
-    // sin 그래프를 따라서 나가는 탄 구현중. 지금은 실행하면 유니티가 멈춤.
-    public void SinFireType(Transform spawnTransform, AttackType enemyType)
+    public void FireSinType(Transform spawnTransform, AttackType attackType)     // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
     {
-        float oneshot = 5.0f;
-        while (oneshot > 0)
+        StartCoroutine(SinTypeCoroutine(spawnTransform));
+    }
+
+    IEnumerator SinTypeCoroutine(Transform spawnTransform)
+    {
+        float angle = 0.0f;
+        float oneShot = 6.0f;
+        float anglePlus = 0;
+
+        while (true)
         {
-            SinType(spawnTransform);
-            oneshot--;
+            for (int i = 0; i < oneShot; i++)
+            {
+                for (int z = 0; z < oneShot; z++)
+                {
+                    GameObject bulletObject = GameObject.Instantiate(PurpleCircle);
+                    Transform bulletTransform = bulletObject.transform;
+                    EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
+
+                    bulletTransform.localPosition = spawnTransform.localPosition;
+                    bulletTransform.localRotation = Quaternion.identity;
+                    bulletTransform.localScale = Vector3.one * 0.5f;
+
+                    bullet.BulletSpeed = 5.0f;
+                    bullet.angle = angle;
+                    bullet.CurveBullet = true;
+
+                    angle += 60.0f;
+                }
+                yield return new WaitForSeconds(0.2f);
+            }
+            anglePlus += 20.0f;
+            angle = anglePlus;
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
-    private void SinType(Transform spawnTransform)
-    {
-        float dx = 0.0f;
-        while (dx < 360.0f)
-        {
-            dx = 0.0f * Mathf.Deg2Rad;
-            float dy = Mathf.Sin(dx);
-
-            GameObject bullet = GameObject.Instantiate(RedKnife);
-            Transform bulletTransformCache = bullet.transform;
-            EnemyBullet obj = bullet.GetComponent<EnemyBullet>();
-
-            bulletTransformCache.localPosition = spawnTransform.localPosition;
-            bulletTransformCache.localRotation = Quaternion.identity;
-            bulletTransformCache.localScale = Vector3.one;
-
-            Vector2 direction = new Vector2(dx, dy);
-
-            obj.Direction = direction;
-            obj.BulletSpeed = 3.0f;
-            obj.MoveBullet(Time.deltaTime);
-
-            dx += 0.1f;
-        }
-    }
-
-    // 총알 회전
-    private Vector2 BulletTurn(float angle, Transform spawnTransform)
+    private Vector2 RotateBullet(float angle, Transform spawnTransform)     // 총알 회전
     {
         Transform playerTransform = GameMgr.Instance.PlayerTransform;
         Vector2 targetDirection = (playerTransform.transform.position - spawnTransform.transform.position).normalized;
@@ -107,29 +109,28 @@ public class EnemyAttackType : MonoBehaviour
         return targetDirection;
     }
 
-    private void CreateBullet(Vector2 targetDirection, Transform spawnTransform, AttackType enemyType)
+    private void CreateStraightBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType) // 직선 탄환 생성
     {
-        GameObject Bullet = null;
-        if (enemyType == AttackType.RedAttack)
+        GameObject bulletObject = null;
+        if (attackType == AttackType.RedAttack)
         {
-            Bullet = GameObject.Instantiate(RedKnife);
+            bulletObject = GameObject.Instantiate(RedKnife);
         }
-        else if (enemyType == AttackType.BlueAttack)
+        else if (attackType == AttackType.BlueAttack)
         {
-            Bullet = GameObject.Instantiate(BlueKnife);
+            bulletObject = GameObject.Instantiate(BlueKnife);
         }
 
-        //@ 변수 이름
-        Transform bulletTransformCache = Bullet.transform;
-        EnemyBullet bulletObject = Bullet.GetComponent<EnemyBullet>();
+        Transform bulletTransformCache = bulletObject.transform;
+        EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
 
         bulletTransformCache.localPosition = spawnTransform.localPosition;
         bulletTransformCache.localRotation = Quaternion.identity;
         bulletTransformCache.localScale = Vector3.one;
 
-        bulletObject.Direction = targetDirection.normalized;
-        bulletObject.BulletSpeed = BulletSpeed;
-        bulletObject.MoveBullet(Time.deltaTime);
+        bullet.Direction = targetDirection.normalized;
+        bullet.BulletSpeed = BulletSpeed;
+        bullet.StraightBullet = true;
     }
 
     // Create/Delete/Destroy

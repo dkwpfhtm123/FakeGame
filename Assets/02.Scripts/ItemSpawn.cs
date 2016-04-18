@@ -8,7 +8,7 @@ public class ItemSpawn : MonoBehaviour
     public GameObject BoomItem;
     public GameObject LifeItem;
 
-    public enum ItemType
+    public enum ItemTypeObject
     {
         PowerItem,
         ScoreItem,
@@ -24,30 +24,28 @@ public class ItemSpawn : MonoBehaviour
     }
 
 
-    public void SpawnItem(Transform point, ItemType item)
+    public void SpawnItem(Transform point, ItemTypeObject itemType)
     {
-        GameObject Item = null;
-        switch (item)
+        GameObject item = null;
+        switch (itemType)
         {
-            case ItemType.PowerItem:
-                Item = GameObject.Instantiate(PowerItem);
+            case ItemTypeObject.PowerItem:
+                item = GameObject.Instantiate(PowerItem);
                 break;
 
-            case ItemType.ScoreItem:
-                Item = GameObject.Instantiate(ScoreItem);
+            case ItemTypeObject.ScoreItem:
+                item = GameObject.Instantiate(ScoreItem);
                 break;
         }
 
-
-        Transform itemTransform = Item.transform;
+        Transform itemTransform = item.transform;
         SetPosition(point, itemTransform);
-
     }
 
-    private void SetPosition(Transform point, Transform ItemTransform)
+    private void SetPosition(Transform point, Transform itemTransform)
     {
-        ItemTransform.localPosition = point.transform.localPosition;
-        ItemTransform.localRotation = Quaternion.identity;
-        ItemTransform.localScale = Vector3.one;
+        itemTransform.localPosition = point.transform.localPosition;
+        itemTransform.localRotation = Quaternion.identity;
+        itemTransform.localScale = Vector3.one;
     }
 }

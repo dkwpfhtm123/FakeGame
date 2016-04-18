@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     public GameObject PlayerAttack1;
     public GameObject PlayerAttack2;
     public Transform FirePosition;  // 발사위치
@@ -34,7 +33,6 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // 발사
-
     private void Fire()
     {
         GameObject playerBullet = null;
