@@ -13,7 +13,6 @@ GameObject:
   - 61: {fileID: 6192798}
   - 114: {fileID: 11469548}
   - 50: {fileID: 5067796}
-  - 114: {fileID: 11445738}
   m_Layer: 0
   m_Name: SmallEnemy
   m_TagString: SMALLENEMY
@@ -64,18 +63,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.29, y: 0.47}
---- !u!114 &11445738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b41c4c2fe5e925641a1e823c59fc9ec8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyTypeCheck: 0
 --- !u!114 &11465962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 5
+  EnemyTypeCheck: 0
 --- !u!114 &11469548
 MonoBehaviour:
   m_ObjectHideFlags: 1
