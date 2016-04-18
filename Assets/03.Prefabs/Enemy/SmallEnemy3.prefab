@@ -42,7 +42,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 5
-  EnemyTypeCheck: 0
+  EnemyTypeCheck: 2
 --- !u!114 &11481220
 MonoBehaviour:
   m_ObjectHideFlags: 1

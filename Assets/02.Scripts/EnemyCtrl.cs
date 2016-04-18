@@ -32,7 +32,7 @@ public class EnemyCtrl : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
-        EnemyAttackTypeDelegate attack;
+        System.Action<Transform, EnemyAttackType.AttackType> attack;
 
         if (EnemyTypeCheck == EnemyType.SmallEnemy1)
         {

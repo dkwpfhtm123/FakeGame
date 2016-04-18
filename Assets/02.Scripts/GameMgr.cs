@@ -151,7 +151,7 @@ public class GameMgr : MonoBehaviour
         powerCtrl.radius = 1.0f;
         if (powerA != null)
         {
-            powerCtrl.angle = (powerA.angle + 90.0f) * (powerLevel - 1);
+            powerCtrl.angle = (powerA.angle + 90.0f);
         }
         else
         {
