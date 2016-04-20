@@ -23,7 +23,6 @@ public class ItemSpawn : MonoBehaviour
         Instance = this;
     }
 
-
     public void SpawnItem(Transform point, ItemTypeObject itemType)
     {
         GameObject item = null;

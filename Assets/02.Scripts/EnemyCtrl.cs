@@ -20,7 +20,7 @@ public class EnemyCtrl : MonoBehaviour
     void Start()
     {
         StartCoroutine(AttackPlayer());
-     //   StartCoroutine(MoveEnemy()); 임시 주석상태
+        //   StartCoroutine(MoveEnemy()); 임시 주석상태
     }
 
     private IEnumerator MoveEnemy()
@@ -59,7 +59,7 @@ public class EnemyCtrl : MonoBehaviour
             attack(transform, EnemyAttackType.AttackType.PurpleCircle);
         }
     }
-    
+
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.GetComponent<BulletTypeScript>())

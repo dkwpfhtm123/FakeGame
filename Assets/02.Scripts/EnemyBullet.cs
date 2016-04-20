@@ -7,8 +7,7 @@ public class EnemyBullet : MonoBehaviour
     public float BulletSpeed;
     public float angle;
 
-    public bool StraightBullet = false;
-    public bool CurveBullet = false;
+    public bool Curve;
 
     private Transform transformCache;
     private bool firstFrame;
@@ -36,14 +35,7 @@ public class EnemyBullet : MonoBehaviour
 
     void Update()
     {
-        if (StraightBullet == true)
-        {
-            MoveStraightBullet();
-        }
-        else if (CurveBullet == true)
-        {
-            MoveCurveBullet();
-        }
+        MoveCurveBullet();
 
         if (GameMgr.Instance.OnGoingBoom == true)
         {
@@ -58,38 +50,33 @@ public class EnemyBullet : MonoBehaviour
         return angle;
     }
 
-    public void MoveStraightBullet()
-    {
-        if (transformCache == null)
-        {
-            transformCache = GetComponent<Transform>();
-        }
-
-        Vector2 bulletPosition = transformCache.localPosition;
-
-        bulletPosition.x += Direction.x * BulletSpeed * Time.deltaTime;
-        bulletPosition.y += Direction.y * BulletSpeed * Time.deltaTime;
-
-        transformCache.localPosition = bulletPosition;
-    }
-
-    private void MoveCurveBullet()
+    Vector2 SinCurve()
     {
         float dx = 300 * currentTime * Mathf.Deg2Rad;
         float dy = Mathf.Sin(dx);
 
         Vector2 direction = new Vector2(dx, dy);
 
-        Vector2 targetDirection = direction;
+        BulletSpeed = 4.0f; // 여기에 선언해야 안느려지는 이유?
+
+        return direction.normalized;
+    }
+
+    private void MoveCurveBullet()
+    {
+        if (Curve == true)
+        {
+            Direction = SinCurve();
+        }
+
+        Vector2 targetDirection = Direction;
 
         float Angle = angle * Mathf.Deg2Rad;
 
-        direction.x = targetDirection.x * Mathf.Cos(Angle) - targetDirection.y * Mathf.Sin(Angle);
-        direction.y = targetDirection.x * Mathf.Sin(Angle) + targetDirection.y * Mathf.Cos(Angle);
+        Direction.x = targetDirection.x * Mathf.Cos(Angle) - targetDirection.y * Mathf.Sin(Angle);
+        Direction.y = targetDirection.x * Mathf.Sin(Angle) + targetDirection.y * Mathf.Cos(Angle);
 
-        BulletSpeed = 5.0f;
-
-        transform.localPosition = startingPosition + (BulletSpeed * direction.normalized * currentTime);
+        transform.localPosition = startingPosition + (BulletSpeed * Direction * currentTime);
 
         currentTime += Time.deltaTime;
     }

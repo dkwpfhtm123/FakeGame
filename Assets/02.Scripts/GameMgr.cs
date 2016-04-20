@@ -31,6 +31,7 @@ public class GameMgr : MonoBehaviour
     public float PlayerPower;
 
     private Transform transformCache;
+    private PlayerPowerUp powerUp = null; // 임시변수
 
     void Awake()
     {
@@ -137,8 +138,6 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    PlayerPowerUp powerA = null; // 임시변수
-
     public void PowerUp(float powerLevel)
     {
         GameObject playerPower = Instantiate(PlayerPowerObject);
@@ -149,9 +148,9 @@ public class GameMgr : MonoBehaviour
         playerPower.transform.localScale = Vector3.one;
 
         powerCtrl.radius = 1.0f;
-        if (powerA != null)
+        if (powerUp != null)
         {
-            powerCtrl.angle = (powerA.angle + 90.0f);
+            powerCtrl.angle = (powerUp.angle + 90.0f);
         }
         else
         {
@@ -159,6 +158,6 @@ public class GameMgr : MonoBehaviour
         }
         powerCtrl.StartRotatePower(PlayerTransform);
 
-        powerA = powerCtrl;
+        powerUp = powerCtrl;
     }
 }

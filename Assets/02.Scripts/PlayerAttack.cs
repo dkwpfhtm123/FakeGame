@@ -32,8 +32,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // 발사
-    private void Fire()
+    private void Fire()     // 발사
     {
         GameObject playerBullet = null;
 
