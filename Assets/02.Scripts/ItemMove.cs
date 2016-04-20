@@ -16,9 +16,9 @@ public class ItemMove : MonoBehaviour
         item = gameObject.GetComponent<ItemTypeScript>();
     }
 
-    // 폭탄쓸때 모든 탄이 스코어로 전환되어 플레이어한테 가는것으로 설정되어잇음.
     void Update()
-    {
+    {    
+        // 폭탄쓸때 모든 탄이 스코어로 전환되어 플레이어한테 가는것으로 설정되어잇음.
         if (item.ItemTypeCheck == ItemType.ScoreItem)
         {
             MoveScoreItem(Time.deltaTime);

@@ -34,7 +34,7 @@ public class EnemyAttackType : MonoBehaviour
         while (oneshot > 0)
         {
             Vector2 targetDirection = RotateBullet(angle, spawnTransform);
-            CreateStraightBullet(targetDirection, spawnTransform, attackType);
+            CreateStraightBullet(targetDirection, spawnTransform, attackType, 0 , 1);
 
             oneshot--;
             angle -= anglePlus;
@@ -51,7 +51,7 @@ public class EnemyAttackType : MonoBehaviour
             BulletSpeed = Random.Range(1.0f, 2.0f);
 
             Vector2 targetDirection = RotateBullet(angle, spawnTransform);
-            CreateStraightBullet(targetDirection, spawnTransform, attackType);
+            CreateStraightBullet(targetDirection, spawnTransform, attackType , 0 , 1);
 
             oneshot--;
         }
@@ -59,14 +59,17 @@ public class EnemyAttackType : MonoBehaviour
 
     public void FireSinType(Transform spawnTransform, AttackType attackType)     // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
     {
-        StartCoroutine(SinTypeCoroutine(spawnTransform));
+        StartCoroutine(SinTypeCoroutine(spawnTransform , attackType));
     }
 
-    IEnumerator SinTypeCoroutine(Transform spawnTransform)
+    IEnumerator SinTypeCoroutine(Transform spawnTransform , AttackType attackType)
     {
         float angle = 0.0f;
         float oneShot = 6.0f;
         float anglePlus = 0;
+
+        BulletSpeed = 4.0f;
+        Vector2 imsi = new Vector2(1, 0);
 
         while (true)
         {
@@ -74,17 +77,7 @@ public class EnemyAttackType : MonoBehaviour
             {
                 for (int z = 0; z < oneShot; z++)
                 {
-                    GameObject bulletObject = GameObject.Instantiate(PurpleCircle);
-                    Transform bulletTransform = bulletObject.transform;
-                    EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
-
-                    bulletTransform.localPosition = spawnTransform.localPosition;
-                    bulletTransform.localRotation = Quaternion.identity;
-                    bulletTransform.localScale = Vector3.one * 0.5f;
-
-                    bullet.BulletSpeed = 5.0f;
-                    bullet.angle = angle;
-                    bullet.CurveBullet = true;
+                    CreateStraightBullet(imsi , spawnTransform, attackType, angle, 0.5f);
 
                     angle += 60.0f;
                 }
@@ -109,28 +102,36 @@ public class EnemyAttackType : MonoBehaviour
         return targetDirection;
     }
 
-    private void CreateStraightBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType) // 직선 탄환 생성
+    private void CreateStraightBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType , float angle , float localScale) // 직선 탄환 생성
     {
         GameObject bulletObject = null;
         if (attackType == AttackType.RedAttack)
         {
-            bulletObject = GameObject.Instantiate(RedKnife);
+            bulletObject = Instantiate(RedKnife);
         }
         else if (attackType == AttackType.BlueAttack)
         {
-            bulletObject = GameObject.Instantiate(BlueKnife);
+            bulletObject = Instantiate(BlueKnife);
         }
-
+        else if(attackType == AttackType.PurpleCircle)
+        {
+            bulletObject = Instantiate(PurpleCircle);
+        }
+            
         Transform bulletTransformCache = bulletObject.transform;
         EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
 
         bulletTransformCache.localPosition = spawnTransform.localPosition;
         bulletTransformCache.localRotation = Quaternion.identity;
-        bulletTransformCache.localScale = Vector3.one;
+        bulletTransformCache.localScale = Vector3.one * localScale;
 
         bullet.Direction = targetDirection.normalized;
         bullet.BulletSpeed = BulletSpeed;
-        bullet.StraightBullet = true;
+        bullet.angle = angle;
+        if(attackType == AttackType.PurpleCircle)
+        {
+            bullet.Curve = true;
+        }
     }
 
     // Create/Delete/Destroy
