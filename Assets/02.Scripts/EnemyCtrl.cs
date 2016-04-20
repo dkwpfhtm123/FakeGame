@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyCtrl : MonoBehaviour
 {
     public int HP = 5;
-    public delegate void EnemyAttackTypeDelegate(Transform Tr, EnemyAttackType.AttackType Type);
+    public delegate void EnemyAttackTypeDelegate(Transform tr, EnemyAttackType.AttackType type, float bulletSpeed);
 
     public enum EnemyType
     {
@@ -32,31 +32,32 @@ public class EnemyCtrl : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
-        System.Action<Transform, EnemyAttackType.AttackType> attack;
-
+        //     System.Action<Transform, EnemyAttackType.AttackType , float> attack;
+        EnemyAttackTypeDelegate attack;
         if (EnemyTypeCheck == EnemyType.SmallEnemy1)
         {
             attack = EnemyAttackType.Instance.FireConeType;
-            while (true)
-            {
-                yield return new WaitForSeconds(2.0f); // 공격 텀
-                attack(transform, EnemyAttackType.AttackType.RedAttack);
-            }
+            StartCoroutine(StartAttack(2.0f, 2.0f, EnemyAttackType.AttackType.RedAttack, attack));
         }
         else if (EnemyTypeCheck == EnemyType.SmallEnemy2)
         {
             attack = EnemyAttackType.Instance.FireBoomType;
-            while (true)
-            {
-                yield return new WaitForSeconds(2.5f);
-                attack(transform, EnemyAttackType.AttackType.BlueAttack);
-            }
+            StartCoroutine(StartAttack(2.5f, Random.Range(1.0f, 2.0f), EnemyAttackType.AttackType.BlueAttack, attack));
         }
         else if (EnemyTypeCheck == EnemyType.SmallEnemy3)
         {
             attack = EnemyAttackType.Instance.FireSinType;
             yield return new WaitForSeconds(0.5f);
-            attack(transform, EnemyAttackType.AttackType.PurpleCircle);
+            attack(transform, EnemyAttackType.AttackType.PurpleCircle, 4.0f);
+        }
+    }
+
+    IEnumerator StartAttack(float attackTime, float bulletSpeed, EnemyAttackType.AttackType attackType, EnemyAttackTypeDelegate attack)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(attackTime); // 공격 텀
+            attack(transform, attackType, bulletSpeed);
         }
     }
 

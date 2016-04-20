@@ -3,9 +3,12 @@ using System.Collections;
 
 public class EnemyBullet : MonoBehaviour
 {
+    public delegate Vector2 MoveTypeDelegate(float deltaTime);
+    public MoveTypeDelegate MoveType;
+
     public Vector2 Direction;
     public float BulletSpeed;
-    public float angle;
+    public float Angle;
 
     public bool Curve;
 
@@ -15,9 +18,10 @@ public class EnemyBullet : MonoBehaviour
     private float currentTime;
     private Vector2 startingPosition;
 
+
     void Start()
     {
-        firstFrame = true;
+        firstFrame = true;        
 
         transformCache = GetComponent<Transform>();
         bulletType = gameObject.GetComponent<BulletTypeScript>();
@@ -50,31 +54,18 @@ public class EnemyBullet : MonoBehaviour
         return angle;
     }
 
-    Vector2 SinCurve()
-    {
-        float dx = 300 * currentTime * Mathf.Deg2Rad;
-        float dy = Mathf.Sin(dx);
-
-        Vector2 direction = new Vector2(dx, dy);
-
-        BulletSpeed = 4.0f; // 여기에 선언해야 안느려지는 이유?
-
-        return direction.normalized;
-    }
-
     private void MoveCurveBullet()
     {
-        if (Curve == true)
+        if (MoveType != null)
         {
-            Direction = SinCurve();
+            Direction = MoveType(currentTime);
         }
-
         Vector2 targetDirection = Direction;
 
-        float Angle = angle * Mathf.Deg2Rad;
+        float radAngle = Angle * Mathf.Deg2Rad;
 
-        Direction.x = targetDirection.x * Mathf.Cos(Angle) - targetDirection.y * Mathf.Sin(Angle);
-        Direction.y = targetDirection.x * Mathf.Sin(Angle) + targetDirection.y * Mathf.Cos(Angle);
+        Direction.x = targetDirection.x * Mathf.Cos(radAngle) - targetDirection.y * Mathf.Sin(radAngle);
+        Direction.y = targetDirection.x * Mathf.Sin(radAngle) + targetDirection.y * Mathf.Cos(radAngle);
 
         transform.localPosition = startingPosition + (BulletSpeed * Direction * currentTime);
 
@@ -84,7 +75,7 @@ public class EnemyBullet : MonoBehaviour
     private IEnumerator BoomBullet()
     {
         yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
-        EnemyAttackType.Instance.FireConeType(transformCache, EnemyAttackType.AttackType.RedAttack);
+        EnemyAttackType.Instance.FireConeType(transformCache, EnemyAttackType.AttackType.RedAttack , 2.0f);
         Destroy(gameObject);
     }
 }
