@@ -1,59 +1,82 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_script : MonoBehaviour {
+public class test_script : MonoBehaviour
+{
+    public GameObject BulletA;
+    public GameObject BulletB;
 
-    Transform transformCache;
-    Transform playerTransform;
+    private bool firstFire;
+    private bool firing;
 
-    public GameObject PurpleCircle;
+    private Transform transformCache;
+    private Transform playerTransform;
 
-	void Start () {
-        playerTransform = GameMgr.Instance.PlayerTransform;
+    void Start()
+    {
         transformCache = GetComponent<Transform>();
+        firstFire = false;
+        firing = false;
 
-        StartCoroutine(CreateB());
-	}
-	
-	void Update () {
-        if(playerTransform == null)
+        StartCoroutine(FireBullet());
+    }
+
+    void Update()
+    {
+        if (firing == false)
         {
-            playerTransform = GameMgr.Instance.PlayerTransform;
+            if (test_managerscript.Instance.waitTime == false)
+            {
+                test_managerscript.Instance.waitTime = true;
+                firstFire = false;
+                k = -1.0f;
+                StartCoroutine(FireBullet());
+            }
         }
     }
 
-    IEnumerator CreateB()
+    private float k = -1.0f; // 임시변수
+
+    IEnumerator FireBullet()
     {
-        float angle = 0.0f;
-        float oneShot = 6.0f;
-        float zero = 0;
-        while (true)
+        firing = true;
+        float anglePlus = 0;
+        playerTransform = GameMgr.Instance.PlayerTransform;
+        Vector2 targetVector = (playerTransform.localPosition - transformCache.localPosition).normalized;
+
+        while (test_managerscript.Instance.oncollision == false)
         {
-            yield return new WaitForSeconds(0.2f);
-
-            if (playerTransform == null)
+            yield return new WaitForSeconds(0.1f); // 발사간격
+            for (int i = 0; i < 3; i++)
             {
-                playerTransform = GameMgr.Instance.PlayerTransform;
-            }
-            for (int i = 0; i < oneShot; i++)
-            {
-                for (int z = 0; z < oneShot; z++)
+                GameObject bullet;
+                if (firstFire == false)
                 {
-                    GameObject bullet = GameObject.Instantiate(PurpleCircle);
-                    Transform bulletTransformCache = bullet.transform;
-                    test_movescript obj = bullet.GetComponent<test_movescript>();
-
-                    bulletTransformCache.localPosition = transform.localPosition;
-                    bulletTransformCache.localRotation = Quaternion.identity;
-                    bulletTransformCache.localScale = Vector3.one;
-
-                    obj.BulletSpeed = 3.0f;
-                    obj.angle = angle;
-                    angle += 60.0f;
+                    bullet = Instantiate(BulletA);
                 }
+                else
+                {
+                    bullet = Instantiate(BulletB);
+                }
+                Transform bulletTransform = bullet.GetComponent<Transform>();
+                test_movescript bulletScript = bullet.GetComponent<test_movescript>();
+
+                bulletTransform.localPosition = transformCache.localPosition;
+                bulletTransform.localRotation = Quaternion.identity;
+                bulletTransform.localScale = Vector3.one * 0.5f;
+
+                bulletScript.Direction = targetVector;
+                bulletScript.BulletSpeed = 3.0f;
+                bulletScript.Angle = anglePlus;
+                bulletScript.MakingBullet = false;
+
+                anglePlus = k * 60.0f;
+                Debug.Log(anglePlus);
+                k += 2.0f;
+                firstFire = true; // 제일 긴쪽먼저
             }
-            angle = zero;
-            zero += 6.0f;
+            anglePlus = 0;
         }
+        firing = false;
     }
 }

@@ -122,12 +122,12 @@ public class EnemyAttackType : MonoBehaviour
             bulletObject = Instantiate(PurpleCircle);
         }
             
-        Transform bulletTransformCache = bulletObject.transform;
+        Transform bulletTransform = bulletObject.transform;
         EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
 
-        bulletTransformCache.localPosition = spawnTransform.localPosition;
-        bulletTransformCache.localRotation = Quaternion.identity;
-        bulletTransformCache.localScale = Vector3.one * localScale;
+        bulletTransform.localPosition = spawnTransform.localPosition;
+        bulletTransform.localRotation = Quaternion.identity;
+        bulletTransform.localScale = Vector3.one * localScale;
 
         bullet.Direction = targetDirection.normalized;
         bullet.BulletSpeed = bulletSpeed;
