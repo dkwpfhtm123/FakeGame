@@ -25,17 +25,17 @@ public class test_script : MonoBehaviour
     {
         if (firing == false)
         {
-            if (test_managerscript.Instance.waitTime == false)
+            if (test_managerscript.Instance.WaitTime == false)
             {
-                test_managerscript.Instance.waitTime = true;
+                test_managerscript.Instance.WaitTime = true;
                 firstFire = false;
-                k = -1.0f;
+                k = 1;
                 StartCoroutine(FireBullet());
             }
         }
     }
 
-    private float k = -1.0f; // 임시변수
+    private float k = 1; // 임시변수
 
     IEnumerator FireBullet()
     {
@@ -44,10 +44,10 @@ public class test_script : MonoBehaviour
         playerTransform = GameMgr.Instance.PlayerTransform;
         Vector2 targetVector = (playerTransform.localPosition - transformCache.localPosition).normalized;
 
-        while (test_managerscript.Instance.oncollision == false)
+        while (test_managerscript.Instance.OnCollision == false)
         {
             yield return new WaitForSeconds(0.1f); // 발사간격
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
                 GameObject bullet;
                 if (firstFire == false)
@@ -71,8 +71,7 @@ public class test_script : MonoBehaviour
                 bulletScript.MakingBullet = false;
 
                 anglePlus = k * 60.0f;
-                Debug.Log(anglePlus);
-                k += 2.0f;
+                k += 1.0f;
                 firstFire = true; // 제일 긴쪽먼저
             }
             anglePlus = 0;

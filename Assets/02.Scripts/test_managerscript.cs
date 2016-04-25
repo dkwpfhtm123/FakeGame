@@ -5,8 +5,8 @@ public class test_managerscript : MonoBehaviour
 {
     public static test_managerscript Instance = null;
 
-    public bool oncollision;
-    public bool waitTime;
+    public bool OnCollision;
+    public bool WaitTime;
 
     void Awake()
     {
@@ -15,7 +15,7 @@ public class test_managerscript : MonoBehaviour
 
     void Start()
     {
-        oncollision = false;
-        waitTime = false;
+        OnCollision = false;
+        WaitTime = false;
     }
 }
