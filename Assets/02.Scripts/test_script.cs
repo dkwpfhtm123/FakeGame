@@ -64,7 +64,7 @@ public class test_script : MonoBehaviour
                 bulletTransform.localPosition = transformCache.localPosition;
                 bulletTransform.localRotation = Quaternion.identity;
                 bulletTransform.localScale = Vector3.one * 0.5f;
-
+                
                 bulletScript.Direction = targetVector;
                 bulletScript.BulletSpeed = 3.0f;
                 bulletScript.Angle = anglePlus;
