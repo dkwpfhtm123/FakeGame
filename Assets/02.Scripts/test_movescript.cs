@@ -3,10 +3,13 @@ using System.Collections;
 
 public class test_movescript : MonoBehaviour
 {
-    public Vector2 Direction;
-    public float BulletSpeed;
-    public bool MakingBullet;
-    public float Angle;
+    //? 프로퍼티로 구현해보기
+    //? 초기화 함수도 만들기
+    private Vector2 direction;
+    private float bulletSpeed;
+    private bool makingBullet;
+    private float angle;
+    public int life;
 
     private Transform transformCache;
     private bool creating;
@@ -49,6 +52,7 @@ public class test_movescript : MonoBehaviour
             transformCache = GetComponent<Transform>();
         }
 
+        //? xy 나누지 말기
         Vector2 position = transformCache.localPosition;
         position.x += Direction.x * BulletSpeed * Time.deltaTime;
         position.y += Direction.y * BulletSpeed * Time.deltaTime;
@@ -56,13 +60,27 @@ public class test_movescript : MonoBehaviour
         transformCache.localPosition = position;
     }
 
+    //? 액세스 한정자 지정하자
     void RotateBullet()
     {
         Vector2 targetDirection = Direction;
-        float anglePlus = Angle * Mathf.Deg2Rad;
+        float radian = Angle * Mathf.Deg2Rad;
 
-        Direction.x = targetDirection.x * Mathf.Cos(anglePlus) - targetDirection.y * Mathf.Sin(anglePlus);
-        Direction.y = targetDirection.x * Mathf.Sin(anglePlus) + targetDirection.y * Mathf.Cos(anglePlus);
+        //? 통합하기 확장 메서드
+        Direction.x = targetDirection.x * Mathf.Cos(radian) - targetDirection.y * Mathf.Sin(radian);
+        Direction.y = targetDirection.x * Mathf.Sin(radian) + targetDirection.y * Mathf.Cos(radian);
+    }
+
+    /*   private static Vector2 RotateVector2ByDegree(Vector2 original, float degree)
+      {
+      } */
+
+    public void Setup(Vector2 direction, float bulletSpeed, bool makingBullet, float angle, int life = 10)
+    {
+        this.direction = direction.normalized;
+        this.bulletSpeed = Mathf.Max(bulletSpeed, 0.0f);
+        this.makingBullet = makingBullet;
+        this.angle = angle;
     }
 
     IEnumerator CreateBullet()
@@ -96,12 +114,12 @@ public class test_movescript : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         test_managerscript.Instance.WaitTime = false;
     }
-
+    
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (gameObject.GetComponent<NoWallDestroy>())
         {
-            if (coll.gameObject.GetComponent<Wall>() == true) // 임시체크
+            if (coll.gameObject.GetComponent<Wall>()) //? null 체크
             {
                 test_managerscript.Instance.OnCollision = true;
                 Destroy(gameObject);

@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11481022}
   - 50: {fileID: 5024880}
   m_Layer: 0
-  m_Name: LeftWall
+  m_Name: LeftRightWall
   m_TagString: WALL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
