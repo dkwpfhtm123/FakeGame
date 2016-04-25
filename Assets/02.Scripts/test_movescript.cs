@@ -9,13 +9,11 @@ public class test_movescript : MonoBehaviour
     public float Angle;
 
     private Transform transformCache;
-    private Vector2 startingPosition;
     private bool creating;
 
     void Start()
     {
         transformCache = GetComponent<Transform>();
-        startingPosition = transformCache.localPosition;
         creating = false;
 
         RotateBullet();
@@ -23,7 +21,7 @@ public class test_movescript : MonoBehaviour
 
     void Update()
     {
-        if (test_managerscript.Instance.oncollision == false)
+        if (test_managerscript.Instance.OnCollision == false)
         {
             MoveBullet();
         }
@@ -51,18 +49,11 @@ public class test_movescript : MonoBehaviour
             transformCache = GetComponent<Transform>();
         }
 
-        Vector2 bulletPosition = transformCache.localPosition;
-
-        var position = transformCache.localPosition;
+        Vector2 position = transformCache.localPosition;
         position.x += Direction.x * BulletSpeed * Time.deltaTime;
         position.y += Direction.y * BulletSpeed * Time.deltaTime;
 
         transformCache.localPosition = position;
-
-        //       transformCache.localPosition = position;
-        //       transform.localPosition = startingPosition + (BulletSpeed * Direction.normalized * currentTime);
-
-        //    currentTime += Time.deltaTime;
     }
 
     void RotateBullet()
@@ -78,7 +69,7 @@ public class test_movescript : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            test_managerscript.Instance.waitTime = true;
+            test_managerscript.Instance.WaitTime = true;
             creating = true;
 
             GameObject bullet = Instantiate(gameObject);
@@ -94,25 +85,25 @@ public class test_movescript : MonoBehaviour
             bulletScript.Direction = Direction;
             bulletScript.MakingBullet = true;
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.0f); // 1초마다 한번씩 호출 x3
 
             creating = false;
         }
         Angle = Random.Range(0, 360);
         RotateBullet();
 
-        test_managerscript.Instance.oncollision = false;
+        test_managerscript.Instance.OnCollision = false;
         yield return new WaitForSeconds(2.0f);
-        test_managerscript.Instance.waitTime = false;
+        test_managerscript.Instance.WaitTime = false;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (gameObject.GetComponent<NoWallDestroy>())
         {
-            if (coll.gameObject.GetComponent<Wall>() == true)
+            if (coll.gameObject.GetComponent<Wall>() == true) // 임시체크
             {
-                test_managerscript.Instance.oncollision = true;
+                test_managerscript.Instance.OnCollision = true;
                 Destroy(gameObject);
             }
         }
