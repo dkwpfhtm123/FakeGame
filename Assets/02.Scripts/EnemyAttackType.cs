@@ -129,9 +129,7 @@ public class EnemyAttackType : MonoBehaviour
         bulletTransform.localRotation = Quaternion.identity;
         bulletTransform.localScale = Vector3.one * localScale;
 
-        bullet.Direction = targetDirection.normalized;
-        bullet.BulletSpeed = bulletSpeed;
-        bullet.Angle = angle;
+        bullet.setValue(targetDirection.normalized, bulletSpeed, angle);
 
         if (attackType == AttackType.PurpleCircle)
         {

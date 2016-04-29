@@ -2,9 +2,39 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace GlobalMethod
+{
+    class Global
+    {
+        public static Vector2 RotateDirection(Vector2 direction, float degree)
+        {
+            float radian = degree * Mathf.Deg2Rad;
+            Vector2 targetDirection = direction;
+            direction.x = targetDirection.x * Mathf.Cos(radian) - targetDirection.y * Mathf.Sin(radian);
+            direction.y = targetDirection.x * Mathf.Sin(radian) + targetDirection.y * Mathf.Cos(radian);
+
+            return direction;
+        }
+    }
+}
+
 public class GameMgr : MonoBehaviour
 {
-    public static GameMgr Instance = null;
+    private static GameMgr instance;
+    public static GameMgr Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType(typeof(GameMgr)) as GameMgr;
+
+            return instance;
+        }
+        private set
+        {
+            instance = value;
+        }
+    }
 
     public GameObject PlayerPowerObject;
 
@@ -33,11 +63,6 @@ public class GameMgr : MonoBehaviour
     private Transform transformCache;
     private PlayerPowerUp powerUp = null; // 임시변수
 
-    void Awake()
-    {
-        Instance = this;
-    }
-
     void Start()
     {
         SmallEnemyPool = new List<GameObject>();
@@ -56,8 +81,14 @@ public class GameMgr : MonoBehaviour
             SmallEnemyPool.Add(smallEnemy);
         }
 
-        transformCache = GameObject.Find("LeftSpawnPoint").GetComponent<Transform>();
+        //    transformCache = GameObject.Find("LeftSpawnPoint").GetComponent<Transform>();
         //     StartCoroutine(EnemySpawn()); 임시 비활성화
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 
     private IEnumerator SpawnEnemy()
@@ -103,11 +134,12 @@ public class GameMgr : MonoBehaviour
 
         RespawnPlayer = true;
 
-        for (float i = 0; i < 2.0f; i += Time.deltaTime) // 위로 조금씩 올라간다 수정예정.
-        {
-            newPlayer.transform.Translate(Vector3.up * Time.deltaTime, Space.Self);
-        }
-        yield return new WaitForSeconds(2.0f);
+        /*    for (float i = 0; i < 2.0f; i += Time.deltaTime) // 위로 조금씩 올라간다 수정예정.
+            {
+                newPlayer.transform.Translate(Vector3.up * Time.deltaTime, Space.Self);
+            } */
+
+        yield return new WaitForSeconds(1.0f);
 
         RespawnPlayer = false;
     }
