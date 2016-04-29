@@ -6,14 +6,46 @@ public class EnemyBullet : MonoBehaviour
     public delegate Vector2 MoveTypeDelegate(float deltaTime);
     public MoveTypeDelegate MoveType;
 
-    public Vector2 Direction;
-    public float BulletSpeed;
-    public float Angle;
+    private Vector2 direction;
+    public Vector2 Direction
+    {
+        get
+        {
+            return direction;
+        }
+        private set
+        {
+            direction = value;
+        }
+    }
 
-    public bool Curve;
+    private float bulletSpeed;
+    public float BulletSpeed
+    {
+        get
+        {
+            return bulletSpeed;
+        }
+        private set
+        {
+            bulletSpeed = value;
+        }
+    }
+
+    private float angle;
+    public float Angle
+    {
+        get
+        {
+            return angle;
+        }
+        private set
+        {
+            angle = value;
+        }
+    }
 
     private Transform transformCache;
-    private bool firstFrame;
     private BulletTypeScript bulletType;
     private float currentTime;
     private Vector2 startingPosition;
@@ -21,8 +53,6 @@ public class EnemyBullet : MonoBehaviour
 
     void Start()
     {
-        firstFrame = true;        
-
         transformCache = GetComponent<Transform>();
         bulletType = gameObject.GetComponent<BulletTypeScript>();
         currentTime = 0;
@@ -39,7 +69,7 @@ public class EnemyBullet : MonoBehaviour
 
     void Update()
     {
-        MoveCurveBullet();
+        MoveBullet();
 
         if (GameMgr.Instance.OnGoingBoom == true)
         {
@@ -48,26 +78,34 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
+    public void setValue(Vector2 direction, float bulletSpeed , float angle)
+    {
+        this.direction = direction;
+        this.bulletSpeed = bulletSpeed;
+        this.angle = angle;
+    }
+
     private float GetRotation()
     {
         float angle = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
         return angle;
     }
 
-    private void MoveCurveBullet()
+    private void MoveBullet()
     {
         if (MoveType != null)
         {
-            Direction = MoveType(currentTime);
+            Direction = MoveType(currentTime); // EnemyAttackType에서 받아옴.
         }
         Vector2 targetDirection = Direction;
+        Vector2 position = Direction;
 
         float radAngle = Angle * Mathf.Deg2Rad;
 
-        Direction.x = targetDirection.x * Mathf.Cos(radAngle) - targetDirection.y * Mathf.Sin(radAngle);
-        Direction.y = targetDirection.x * Mathf.Sin(radAngle) + targetDirection.y * Mathf.Cos(radAngle);
+        position.x = targetDirection.x * Mathf.Cos(radAngle) - targetDirection.y * Mathf.Sin(radAngle);
+        position.y = targetDirection.x * Mathf.Sin(radAngle) + targetDirection.y * Mathf.Cos(radAngle);
 
-        transform.localPosition = startingPosition + (BulletSpeed * Direction * currentTime);
+        transform.localPosition = startingPosition + (BulletSpeed * position * currentTime);
 
         currentTime += Time.deltaTime;
     }
