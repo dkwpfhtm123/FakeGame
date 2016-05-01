@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GlobalMethod
 {
-    class Global
+    static class Global
     {
         public static Vector2 RotateDirection(Vector2 direction, float degree)
         {

@@ -57,9 +57,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c89c936e5db0ef409748b7f75623ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Direction: {x: 0, y: 0}
-  BulletSpeed: 0
-  Angle: 0
 --- !u!114 &11458144
 MonoBehaviour:
   m_ObjectHideFlags: 1
