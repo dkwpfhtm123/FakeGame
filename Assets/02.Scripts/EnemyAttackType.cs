@@ -14,17 +14,22 @@ public class EnemyAttackType : MonoBehaviour
         PurpleCircle
     }
 
-    public static EnemyAttackType Instance = null;
-
-    void Awake()
+    private static EnemyAttackType instance;
+    public static EnemyAttackType Instance
     {
-        Instance = this;
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType(typeof(EnemyAttackType)) as EnemyAttackType;
+
+            return instance;
+        }
     }
 
     public void FireConeType(Transform spawnTransform, AttackType attackType , float bulletSpeed)
     {
         float oneshot = 5.0f;
-        float angle = 60.0f * Mathf.Deg2Rad;
+        float angle = 60.0f;
         float anglePlus = angle / (oneshot - 1);
         angle *= 0.5f;
 
@@ -44,7 +49,7 @@ public class EnemyAttackType : MonoBehaviour
 
         while (oneshot > 0)
         {
-            float angle = Random.Range(0.0f, 360.0f) * Mathf.Deg2Rad;
+            float angle = Random.Range(0.0f, 360.0f);
 
             Vector2 targetDirection = RotateBullet(angle, spawnTransform);
             CreateStraightBullet(targetDirection, spawnTransform, attackType , 0 , 1 , bulletSpeed);
@@ -98,12 +103,14 @@ public class EnemyAttackType : MonoBehaviour
         Transform playerTransform = GameMgr.Instance.PlayerTransform;
         Vector2 targetDirection = (playerTransform.transform.position - spawnTransform.transform.position).normalized;
 
-        Vector2 targetVector = targetDirection;
+   /*     Vector2 targetVector = targetDirection;
 
         targetDirection.x = targetVector.x * Mathf.Cos(angle) - targetVector.y * Mathf.Sin(angle);
         targetDirection.y = targetVector.x * Mathf.Sin(angle) + targetVector.y * Mathf.Cos(angle);
 
-        return targetDirection;
+        return targetDirection; */
+
+        return GlobalClass.RotateDirection(targetDirection, angle);
     }
 
     private void CreateStraightBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType , float angle , float localScale , float bulletSpeed) // 직선 탄환 생성

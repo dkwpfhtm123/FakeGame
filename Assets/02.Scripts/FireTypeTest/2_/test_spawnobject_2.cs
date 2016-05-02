@@ -45,20 +45,20 @@ public class test_spawnobject_2 : MonoBehaviour
 
             if (SpawnObjectDirection == SpawnDirection.Left)
             {
-                setObject.SetValue(Vector2.left, Random.RandomRange(0.9f, 1.1f), test_fireobject_2.FireType.White);
+                setObject.SetValue(Vector2.left, Random.Range(0.9f, 1.1f), test_fireobject_2.FireType.White);
             }
             else
             {
-                setObject.SetValue(Vector2.right, Random.RandomRange(0.9f, 1.1f), test_fireobject_2.FireType.Blue);
+                setObject.SetValue(Vector2.right, Random.Range(0.9f, 1.1f), test_fireobject_2.FireType.Blue);
             }
 
-            Vector3 random = new Vector3(Random.RandomRange(-0.2f, 0.2f), Random.RandomRange(-0.2f, 0.2f), 0); // 초록색밑줄 질문
+            Vector3 random = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0);
 
             objectTransform.localPosition = transformCache.localPosition + random;
             objectTransform.localRotation = Quaternion.identity;
             objectTransform.localScale = Vector3.one;
 
-            yield return new WaitForSeconds(Random.RandomRange(0.9f, 1.1f));
+            yield return new WaitForSeconds(Random.Range(0.95f, 1.05f));
         }
         spawning = false;
     }

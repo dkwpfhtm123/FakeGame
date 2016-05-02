@@ -30,7 +30,6 @@ using System.Collections;
 
 public class test_manager_1 : MonoBehaviour
 {
-    // 만약 monobehavior을 상속받지 않는다면 언제 onDestory가 호출되는지 질문.
     private static test_manager_1 instance;
     public static test_manager_1 Instance
     {
@@ -40,10 +39,6 @@ public class test_manager_1 : MonoBehaviour
                 instance = FindObjectOfType(typeof(test_manager_1)) as test_manager_1;
             
             return instance;
-        }
-        private set
-        {
-            instance = value;
         }
     }
 
