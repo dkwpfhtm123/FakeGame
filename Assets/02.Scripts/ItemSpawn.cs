@@ -16,11 +16,16 @@ public class ItemSpawn : MonoBehaviour
         LifeItem
     }
 
-    public static ItemSpawn Instance = null;
-
-    void Awake()
+    private static ItemSpawn instance;
+    public static ItemSpawn Instance
     {
-        Instance = this;
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType(typeof(ItemSpawn)) as ItemSpawn;
+
+            return instance;
+        }
     }
 
     public void SpawnItem(Transform point, ItemTypeObject itemType)

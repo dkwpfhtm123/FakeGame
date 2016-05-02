@@ -3,29 +3,15 @@ using System.Collections;
 
 public class test_bullet_2 : MonoBehaviour
 {
-    private Vector2 direction;
     public Vector2 Direction
     {
-        get
-        {
-            return direction;
-        }
-        private set
-        {
-            direction = value;
-        }
+        get;
+        private set;
     }
-    private float bulletSpeed;
     public float BulletSpeed
     {
-        get
-        {
-            return bulletSpeed;
-        }
-        private set
-        {
-            bulletSpeed = value;
-        }
+        get;
+        private set;
     }
 
     private test_fireobject_2 parent;
@@ -54,14 +40,14 @@ public class test_bullet_2 : MonoBehaviour
 
     public void SetValue(Vector2 direction , float bulletSpeed)
     {
-        this.direction = direction;  // this.direction을 쓰는지 Direction을 쓰는지 질문
-        this.bulletSpeed = bulletSpeed;
+        this.Direction = direction;  // this.direction을 쓰는지 Direction을 쓰는지 질문
+        this.BulletSpeed = bulletSpeed;
     }
 
     private void MoveChild()
     {
         Vector2 position = transformCache.localPosition;
-        Vector2 oppositeParentDirection = GlobalMethod.Global.RotateDirection(parent.Direction, -180.0f);
+        Vector2 oppositeParentDirection = GlobalClass.RotateDirection(parent.Direction, -180.0f);
 
         position += oppositeParentDirection * parent.ObjectSpeed * Time.deltaTime;
 
@@ -72,23 +58,23 @@ public class test_bullet_2 : MonoBehaviour
     {
         Vector2 position = transformCache.localPosition;
 
-        position += direction * bulletSpeed * Time.deltaTime;
+        position += Direction * BulletSpeed * Time.deltaTime;
 
         transformCache.localPosition = position;
     }
 
     private void ChangeDirection()
     {
-        Vector2 oldDirection = direction;
-        float oldBulletSpeed = bulletSpeed;
+        Vector2 oldDirection = Direction;
+        float oldBulletSpeed = BulletSpeed;
 
-        bulletSpeed = 0.5f;
-        direction = GlobalMethod.Global.RotateDirection(parent.Direction, -180.0f);
+        BulletSpeed = 0.5f;
+        Direction = GlobalClass.RotateDirection(parent.Direction, -180.0f);
 
         MoveBullet();
         //   MoveChild();
 
-        direction = oldDirection;
-        bulletSpeed = oldBulletSpeed;
+        Direction = oldDirection;
+        BulletSpeed = oldBulletSpeed;
     }
 }

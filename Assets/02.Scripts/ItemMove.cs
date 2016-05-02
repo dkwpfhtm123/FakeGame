@@ -3,8 +3,8 @@ using System.Collections;
 
 public class ItemMove : MonoBehaviour
 {
-    public float ScoreSpeed = 4.0f;
-    public float PowerSpeed = 2.0f;
+    public float ScoreSpeed;
+    public float PowerSpeed;
 
     private Transform transformCache;
 
@@ -13,6 +13,9 @@ public class ItemMove : MonoBehaviour
 
     void Start()
     {
+        ScoreSpeed = 4.0f;
+        PowerSpeed = 2.0f;
+
         item = gameObject.GetComponent<ItemTypeScript>();
     }
 

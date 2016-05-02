@@ -12,30 +12,16 @@ public class test_fireobject_2 : MonoBehaviour
         Blue
     }
 
-    private Vector2 direction;
     public Vector2 Direction
     {
-        get
-        {
-            return direction;
-        }
-        private set
-        {
-            direction = value;
-        }
+        get;  /// 이부분 오류 확인.
+        private set;
     }
 
-    private float objectSpeed;
     public float ObjectSpeed
     {
-        get
-        {
-            return objectSpeed;
-        }
-        private set
-        {
-            objectSpeed = value;
-        }
+        get;
+        private set;
     }
 
     private bool firing;
@@ -63,15 +49,15 @@ public class test_fireobject_2 : MonoBehaviour
 
     public void SetValue(Vector2 direction, float objectSpeed, FireType type)
     {
-        this.direction = direction;
-        this.objectSpeed = objectSpeed;
+        Direction = direction;
+        ObjectSpeed = objectSpeed;
         this.type = type;
     }
 
     private void MoveObject()
     {
         Vector2 position = transformCache.localPosition;
-        position += direction * objectSpeed * Time.deltaTime;
+        position += Direction * ObjectSpeed * Time.deltaTime;
         transform.localPosition = position;
     }
 
@@ -92,20 +78,20 @@ public class test_fireobject_2 : MonoBehaviour
                 bullet = Instantiate(BlueBullet);
             }
             test_bullet_2 setBullet = bullet.GetComponent<test_bullet_2>();
-            Transform bulletTransform = bullet.transform; // 질문 Transform / Getcomponent<transform>
+            Transform bulletTransform = bullet.GetComponent<Transform>(); // bullet.transform = bullet.GetComponent<Transform>() 같은 의미 이므로 원하는대로 쓰면 됨.
 
-            bulletTransform.SetParent(transformCache, false); // bulletTransform.parent == bulletTransform.SetParent(transformCache , true);  // 두번째 인자가 true면 시작위치 = 부모위치 , false면 시작위치 = null
+            bulletTransform.SetParent(transformCache, false); // bulletTransform.parent == bulletTransform.SetParent(transformCache , true);  // 두번째 인자가 true면 월드좌표를 고정하고 로컬좌표를 움직인다. / false면 로컬좌표를 고정하고 월드좌표를 움직인다.
             bulletTransform.localPosition = Vector3.zero;
             bulletTransform.localRotation = Quaternion.identity;
             bulletTransform.localScale = Vector2.one;
 
             if (Up == true)
             {
-                setBullet.SetValue(GlobalMethod.Global.RotateDirection(direction, 90.0f), 1.0f);
+                setBullet.SetValue(GlobalClass.RotateDirection(Direction, 90.0f), 1.0f);
             }
             else
             {
-                setBullet.SetValue(GlobalMethod.Global.RotateDirection(direction, -90.0f), 1.0f);
+                setBullet.SetValue(GlobalClass.RotateDirection(Direction, -90.0f), 1.0f);
             }
 
             Up = false;

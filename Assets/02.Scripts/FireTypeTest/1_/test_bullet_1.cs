@@ -5,56 +5,28 @@ public class test_bullet_1 : MonoBehaviour
 {
     //? 프로퍼티로 구현해보기
     //? 초기화 함수도 만들기
-    private Vector2 direction;
     public Vector2 Direction
     {
-        get
-        {
-            return direction;
-        }
-        private set
-        {
-            direction = value;
-        }
+        get;
+        private set;
     }
 
-    private float bulletSpeed;
     public float BulletSpeed
     {
-        get
-        {
-            return bulletSpeed;
-        }
-        private set
-        {
-            bulletSpeed = value;
-        }
+        get;
+        private set;
     }
 
-    private bool madeInBullet;
     public bool MadeInBullet
     {
-        get
-        {
-            return madeInBullet;
-        }
-        private set
-        {
-            madeInBullet = value;
-        }
+        get;
+        private set;
     }
 
-    private float angle;
     public float Angle
     {
-        get
-        {
-            return angle;
-        }
-        private set
-        {
-            angle = value;
-        }
+        get;
+        private set;
     }
 
     private Transform transformCache;
@@ -65,7 +37,7 @@ public class test_bullet_1 : MonoBehaviour
         transformCache = GetComponent<Transform>();
         creating = false;
 
-        Direction = GlobalMethod.Global.RotateDirection(Direction, angle);
+        Direction = GlobalClass.RotateDirection(Direction, Angle);
     }
 
     void Update()
@@ -93,10 +65,10 @@ public class test_bullet_1 : MonoBehaviour
 
     public void SetValue(Vector2 direction , float bulletSpeed , float angle , bool madeInBullet)
     {
-        this.direction = direction;
-        this.bulletSpeed = bulletSpeed;
-        this.angle = angle;
-        this.madeInBullet = madeInBullet;
+        Direction = direction;
+        BulletSpeed = bulletSpeed;
+        Angle = angle;
+        MadeInBullet = madeInBullet;
     }
 
     private void MoveBullet()
@@ -106,12 +78,6 @@ public class test_bullet_1 : MonoBehaviour
 
         transformCache.localPosition = position;
     }
-
- /*   private void RotateBullet()
-    {
-        //? 통합하기 확장 메서드
-        Direction = Rotate.RotateBullet(Direction, angle);
-    } */
 
     private IEnumerator CreateBullet()
     {
@@ -132,7 +98,7 @@ public class test_bullet_1 : MonoBehaviour
         }
 
         Angle = Random.Range(0, 360);
-        Direction = GlobalMethod.Global.RotateDirection(Direction, angle);
+        Direction = GlobalClass.RotateDirection(Direction, Angle);
 
         test_manager_1.Instance.OnCollision = false; // 충돌판정을 끝내서 object에서 만들어진 bullet을 움직이게 함.
 

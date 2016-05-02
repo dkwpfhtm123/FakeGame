@@ -2,22 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GlobalMethod
-{
-    static class Global
-    {
-        public static Vector2 RotateDirection(Vector2 direction, float degree)
-        {
-            float radian = degree * Mathf.Deg2Rad;
-            Vector2 targetDirection = direction;
-            direction.x = targetDirection.x * Mathf.Cos(radian) - targetDirection.y * Mathf.Sin(radian);
-            direction.y = targetDirection.x * Mathf.Sin(radian) + targetDirection.y * Mathf.Cos(radian);
-
-            return direction;
-        }
-    }
-}
-
 public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance;
@@ -30,17 +14,13 @@ public class GameMgr : MonoBehaviour
 
             return instance;
         }
-        private set
-        {
-            instance = value;
-        }
     }
 
     public GameObject PlayerPowerObject;
 
     public GameObject SmallEnemyPrefab;
     public List<GameObject> SmallEnemyPool;
-    public Transform PlayerTransform
+    public Transform PlayerTransform  // 이부분에 { return PlayerTransform} 등을 적어넣으면 overflow 에러로 유니티가 멈춤. 확인.
     {
         set;
         get;
@@ -61,7 +41,7 @@ public class GameMgr : MonoBehaviour
     public float PlayerPower;
 
     private Transform transformCache;
-    private PlayerPowerUp powerUp = null; // 임시변수
+    private PlayerPowerUp powerUp;
 
     void Start()
     {
@@ -72,6 +52,8 @@ public class GameMgr : MonoBehaviour
 
         PlayerScore = 0.0f;
         PlayerPower = 0.0f;
+
+        powerUp = null;
 
         for (int i = 0; i < 10; i++)         // 몬스터 풀 생성
         {

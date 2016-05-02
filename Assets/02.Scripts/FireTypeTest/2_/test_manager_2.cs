@@ -13,10 +13,6 @@ public class test_manager_2 : MonoBehaviour
 
             return instance;
         }
-        private set
-        {
-            instance = value;
-        }
     }
 
     public bool StopTime;
