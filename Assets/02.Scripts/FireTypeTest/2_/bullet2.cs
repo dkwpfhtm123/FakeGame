@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_bullet_2 : MonoBehaviour
+public class bullet2 : MonoBehaviour
 {
     private Vector2 direction;
     public Vector2 Direction
@@ -16,18 +16,18 @@ public class test_bullet_2 : MonoBehaviour
         private set { bulletSpeed = value; }
     }
 
-    private test_fireobject_2 parent;
+    private fireobject2 parent;
     private Transform transformCache;
 
     void Start()
     {
         transformCache = GetComponent<Transform>();
-        parent = gameObject.GetComponentInParent<test_fireobject_2>();
+        parent = gameObject.GetComponentInParent<fireobject2>();
     }
 
     void Update()
     {
-        if (test_manager_2.Instance.StopTime == false)
+        if (manager2.Instance.StopTime == false)
         {
             MoveBullet();
             if (parent != null)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_bullet_1 : MonoBehaviour
+public class bullet1 : MonoBehaviour
 {
     //? 프로퍼티로 구현해보기
     //? 초기화 함수도 만들기
@@ -67,6 +67,8 @@ public class test_bullet_1 : MonoBehaviour
         }
     }
 
+    //@ 함수이름 바꾸기 전부
+
     public void SetValue(Vector2 direction, float bulletSpeed, float angle, bool madeInBullet)
     {
         Direction = direction;
@@ -91,7 +93,7 @@ public class test_bullet_1 : MonoBehaviour
         {
             GameObject bullet = Instantiate(gameObject);
             Transform bulletTransform = bullet.GetComponent<Transform>();
-            test_bullet_1 setBullet = bullet.GetComponent<test_bullet_1>();
+            bullet1 setBullet = bullet.GetComponent<bullet1>();
 
             bulletTransform.localPosition = transformCache.localPosition;
             bulletTransform.localRotation = Quaternion.identity;

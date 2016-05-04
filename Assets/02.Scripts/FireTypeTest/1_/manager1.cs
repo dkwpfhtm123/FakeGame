@@ -35,6 +35,8 @@ public class test_manager_1 : MonoBehaviour
     {
         get
         {
+            //@ 코드 정리
+            //@ <> 사용해보기
             if(instance == null)
                 instance = FindObjectOfType(typeof(test_manager_1)) as test_manager_1;
             

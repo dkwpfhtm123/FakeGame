@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_spawnobject_2 : MonoBehaviour
+public class spawnobject2 : MonoBehaviour
 {
     public enum SpawnDirection
     {
@@ -25,7 +25,7 @@ public class test_spawnobject_2 : MonoBehaviour
 
     void Update()
     {
-        if (test_manager_2.Instance.StopTime == false)
+        if (manager2.Instance.StopTime == false)
         {
             if (spawning == false)
             {
@@ -37,19 +37,19 @@ public class test_spawnobject_2 : MonoBehaviour
     private IEnumerator SpawnObject()
     {
         spawning = true;
-        while (test_manager_2.Instance.StopTime == false)
+        while (manager2.Instance.StopTime == false)
         {
             GameObject fireObject = Instantiate(FireObject);
-            test_fireobject_2 setObject = fireObject.GetComponent<test_fireobject_2>();
+            fireobject2 setObject = fireObject.GetComponent<fireobject2>();
             Transform objectTransform = fireObject.transform;
 
             if (SpawnObjectDirection == SpawnDirection.Left)
             {
-                setObject.SetValue(Vector2.left, Random.Range(0.9f, 1.1f), test_fireobject_2.FireType.White);
+                setObject.SetValue(Vector2.left, Random.Range(0.9f, 1.1f), fireobject2.FireType.White);
             }
             else
             {
-                setObject.SetValue(Vector2.right, Random.Range(0.9f, 1.1f), test_fireobject_2.FireType.Blue);
+                setObject.SetValue(Vector2.right, Random.Range(0.9f, 1.1f), fireobject2.FireType.Blue);
             }
 
             Vector3 random = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0);
