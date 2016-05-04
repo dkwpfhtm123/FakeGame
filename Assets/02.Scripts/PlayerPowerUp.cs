@@ -5,8 +5,8 @@ public class PlayerPowerUp : MonoBehaviour
 {
     private Transform transformCache;
 
-    public float angle;
-    public float radius;
+    public float Angle;
+    public float Radius;
 
     void Update()
     {
@@ -28,13 +28,13 @@ public class PlayerPowerUp : MonoBehaviour
         {
             Vector2 circle = playerTransform.localPosition;
 
-            circle.x = playerTransform.localPosition.x + (Mathf.Sin(angle * Mathf.Deg2Rad) * radius);
-            circle.y = playerTransform.localPosition.y + (Mathf.Cos(angle * Mathf.Deg2Rad) * radius);
+            circle.x = playerTransform.localPosition.x + (Mathf.Sin(Angle * Mathf.Deg2Rad) * Radius);
+            circle.y = playerTransform.localPosition.y + (Mathf.Cos(Angle * Mathf.Deg2Rad) * Radius);
 
             transformCache.localPosition = circle;
 
-            angle += 180 * Time.deltaTime;
-            angle = angle % 360.0f;
+            Angle += 180 * Time.deltaTime;
+            Angle = Angle % 360.0f;
 
             yield return null; // 프레임마다 반복
         }

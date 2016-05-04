@@ -3,15 +3,17 @@ using System.Collections;
 
 public class test_bullet_2 : MonoBehaviour
 {
+    private Vector2 direction;
     public Vector2 Direction
     {
-        get;
-        private set;
+        get { return direction; }
+        private set { direction = value; }
     }
+    public float bulletSpeed;
     public float BulletSpeed
     {
-        get;
-        private set;
+        get { return bulletSpeed; }
+        private set { bulletSpeed = value; }
     }
 
     private test_fireobject_2 parent;
@@ -38,10 +40,10 @@ public class test_bullet_2 : MonoBehaviour
         }
     }
 
-    public void SetValue(Vector2 direction , float bulletSpeed)
+    public void SetValue(Vector2 direction, float bulletSpeed)
     {
-        this.Direction = direction;  // this.direction을 쓰는지 Direction을 쓰는지 질문
-        this.BulletSpeed = bulletSpeed;
+        Direction = direction; 
+        BulletSpeed = bulletSpeed;
     }
 
     private void MoveChild()
@@ -72,7 +74,6 @@ public class test_bullet_2 : MonoBehaviour
         Direction = GlobalClass.RotateDirection(parent.Direction, -180.0f);
 
         MoveBullet();
-        //   MoveChild();
 
         Direction = oldDirection;
         BulletSpeed = oldBulletSpeed;

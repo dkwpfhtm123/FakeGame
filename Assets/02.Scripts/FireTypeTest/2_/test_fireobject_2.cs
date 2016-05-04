@@ -12,16 +12,18 @@ public class test_fireobject_2 : MonoBehaviour
         Blue
     }
 
+    private Vector2 direction;
     public Vector2 Direction
     {
-        get;  /// 이부분 오류 확인.
-        private set;
+        get { return direction; }
+        private set { direction = value; }
     }
 
+    private float objectSpeed;
     public float ObjectSpeed
     {
-        get;
-        private set;
+        get { return objectSpeed; }
+        private set { objectSpeed = value; }
     }
 
     private bool firing;
