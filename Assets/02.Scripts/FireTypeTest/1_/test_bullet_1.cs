@@ -5,28 +5,32 @@ public class test_bullet_1 : MonoBehaviour
 {
     //? 프로퍼티로 구현해보기
     //? 초기화 함수도 만들기
+    private Vector2 direction;
     public Vector2 Direction
     {
-        get;
-        private set;
+        get { return direction; }
+        private set { direction = value; }
     }
 
+    private float bulletSpeed;
     public float BulletSpeed
     {
-        get;
-        private set;
+        get { return bulletSpeed; }
+        private set { bulletSpeed = value; }
     }
 
+    private bool madeInBullet;
     public bool MadeInBullet
     {
-        get;
-        private set;
+        get { return madeInBullet; }
+        private set { madeInBullet = value; }
     }
 
+    private float angle;
     public float Angle
     {
-        get;
-        private set;
+        get { return angle; }
+        private set { angle = value; }
     }
 
     private Transform transformCache;
@@ -63,7 +67,7 @@ public class test_bullet_1 : MonoBehaviour
         }
     }
 
-    public void SetValue(Vector2 direction , float bulletSpeed , float angle , bool madeInBullet)
+    public void SetValue(Vector2 direction, float bulletSpeed, float angle, bool madeInBullet)
     {
         Direction = direction;
         BulletSpeed = bulletSpeed;
@@ -102,12 +106,12 @@ public class test_bullet_1 : MonoBehaviour
 
         test_manager_1.Instance.OnCollision = false; // 충돌판정을 끝내서 object에서 만들어진 bullet을 움직이게 함.
 
-        yield return new WaitForSeconds(2.0f); 
+        yield return new WaitForSeconds(2.0f);
 
         creating = false; // bullet 에서 bullet 만들기를 끝냄
         test_manager_1.Instance.WaitTime = false; // bullet 에서 bullet 만들기를 끝냄을 fireobject 에게 보냄.
     }
-    
+
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (gameObject.GetComponent<NoWallDestroy>() != null) // bulletA , bulletB 구분.

@@ -20,21 +20,24 @@ public class GameMgr : MonoBehaviour
 
     public GameObject SmallEnemyPrefab;
     public List<GameObject> SmallEnemyPool;
-    public Transform PlayerTransform  // 이부분에 { return PlayerTransform} 등을 적어넣으면 overflow 에러로 유니티가 멈춤. 확인.
+    public Transform PlayerTransform
     {
-        set;
         get;
+        set;
     }
 
+    private bool onGoingBoom;
     public bool OnGoingBoom
     {
-        private set;
-        get;
+        get { return onGoingBoom; }
+        private set { onGoingBoom = value; }
     }
+
+    private bool respawnPlayer;
     public bool RespawnPlayer
     {
-        private set;
-        get;
+        get { return respawnPlayer; }
+        private set { respawnPlayer = value; }
     }
 
     public float PlayerScore;
@@ -161,14 +164,14 @@ public class GameMgr : MonoBehaviour
         playerPower.transform.localRotation = Quaternion.identity;
         playerPower.transform.localScale = Vector3.one;
 
-        powerCtrl.radius = 1.0f;
+        powerCtrl.Radius = 1.0f;
         if (powerUp != null)
         {
-            powerCtrl.angle = (powerUp.angle + 90.0f);
+            powerCtrl.Angle = (powerUp.Angle + 90.0f);
         }
         else
         {
-            powerCtrl.angle = 0;
+            powerCtrl.Angle = 0;
         }
         powerCtrl.StartRotatePower(PlayerTransform);
 

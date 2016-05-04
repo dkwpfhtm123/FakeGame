@@ -9,40 +9,22 @@ public class EnemyBullet : MonoBehaviour
     private Vector2 direction;
     public Vector2 Direction
     {
-        get
-        {
-            return direction;
-        }
-        private set
-        {
-            direction = value;
-        }
+        get { return direction; }
+        private set { direction = value; }
     }
 
     private float bulletSpeed;
     public float BulletSpeed
     {
-        get
-        {
-            return bulletSpeed;
-        }
-        private set
-        {
-            bulletSpeed = value;
-        }
+        get { return bulletSpeed; }
+        private set { bulletSpeed = value; }
     }
 
     private float angle;
     public float Angle
     {
-        get
-        {
-            return angle;
-        }
-        private set
-        {
-            angle = value;
-        }
+        get { return angle; }
+        private set { angle = value; }
     }
 
     private Transform transformCache;
@@ -78,11 +60,11 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
-    public void setValue(Vector2 direction, float bulletSpeed , float angle)
+    public void setValue(Vector2 direction, float bulletSpeed, float angle)
     {
-        this.direction = direction;
-        this.bulletSpeed = bulletSpeed;
-        this.angle = angle;
+        Direction = direction;
+        BulletSpeed = bulletSpeed;
+        Angle = angle;
     }
 
     private float GetRotation()
@@ -113,7 +95,7 @@ public class EnemyBullet : MonoBehaviour
     private IEnumerator BoomBullet()
     {
         yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
-        EnemyAttackType.Instance.FireConeType(transformCache, EnemyAttackType.AttackType.RedAttack , 2.0f);
+        EnemyAttackType.Instance.FireConeType(transformCache, EnemyAttackType.AttackType.RedAttack, 2.0f);
         Destroy(gameObject);
     }
 }
