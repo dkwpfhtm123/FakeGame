@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_fireobject_1 : MonoBehaviour
+public class fireobject1 : MonoBehaviour
 {
     public GameObject BulletA;
     public GameObject BulletB;
@@ -58,7 +58,7 @@ public class test_fireobject_1 : MonoBehaviour
                     bullet = Instantiate(BulletB);
                 }
                 Transform bulletTransform = bullet.GetComponent<Transform>();
-                test_bullet_1 setBullet = bullet.GetComponent<test_bullet_1>();
+                bullet1 setBullet = bullet.GetComponent<bullet1>();
 
                 bulletTransform.localPosition = transformCache.localPosition;
                 bulletTransform.localRotation = Quaternion.identity;

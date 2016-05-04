@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_fireobject_2 : MonoBehaviour
+public class fireobject2 : MonoBehaviour
 {
     public GameObject WhiteBullet;
     public GameObject BlueBullet;
@@ -39,7 +39,7 @@ public class test_fireobject_2 : MonoBehaviour
 
     void Update()
     {
-        if (test_manager_2.Instance.StopTime == false)
+        if (manager2.Instance.StopTime == false)
         {
             MoveObject();
             if (firing == false)
@@ -79,7 +79,7 @@ public class test_fireobject_2 : MonoBehaviour
             {
                 bullet = Instantiate(BlueBullet);
             }
-            test_bullet_2 setBullet = bullet.GetComponent<test_bullet_2>();
+            bullet2 setBullet = bullet.GetComponent<bullet2>();
             Transform bulletTransform = bullet.GetComponent<Transform>(); // bullet.transform = bullet.GetComponent<Transform>() 같은 의미 이므로 원하는대로 쓰면 됨.
 
             bulletTransform.SetParent(transformCache, false); // bulletTransform.parent == bulletTransform.SetParent(transformCache , true);  // 두번째 인자가 true면 월드좌표를 고정하고 로컬좌표를 움직인다. / false면 로컬좌표를 고정하고 월드좌표를 움직인다.

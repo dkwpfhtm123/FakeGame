@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class test_manager_2 : MonoBehaviour
+public class manager2 : MonoBehaviour
 {
-    private static test_manager_2 instance;
-    public static test_manager_2 Instance
+    private static manager2 instance;
+    public static manager2 Instance
     {
         get
         {
             if (instance == null)
-                instance = FindObjectOfType(typeof(test_manager_2)) as test_manager_2;
+                instance = FindObjectOfType(typeof(manager2)) as manager2;
 
             return instance;
         }
