@@ -11,7 +11,7 @@ public class GameMgr : MonoBehaviour
         get
         {
             if (instance == null)
-                instance = FindObjectOfType(typeof(GameMgr)) as GameMgr;
+                instance = FindObjectOfType<GameMgr>();
 
             return instance;
         }
@@ -27,18 +27,16 @@ public class GameMgr : MonoBehaviour
         set;
     }
 
-    private bool onGoingBoom;
     public bool OnGoingBoom
     {
-        get { return onGoingBoom; }
-        private set { onGoingBoom = value; }
+        get;
+        private set;
     }
 
-    private bool respawnPlayer;
     public bool RespawnPlayer
     {
-        get { return respawnPlayer; }
-        private set { respawnPlayer = value; }
+        get;
+        private set;
     }
 
     public float PlayerScore;
@@ -61,7 +59,7 @@ public class GameMgr : MonoBehaviour
 
         for (int i = 0; i < 10; i++)         // 몬스터 풀 생성
         {
-            GameObject smallEnemy = GameObject.Instantiate(SmallEnemyPrefab);
+            GameObject smallEnemy = Instantiate(SmallEnemyPrefab);
             smallEnemy.name = "SmallEnemy_" + i.ToString();
             smallEnemy.SetActive(false);
             SmallEnemyPool.Add(smallEnemy);
@@ -99,7 +97,7 @@ public class GameMgr : MonoBehaviour
     private IEnumerator StartBoom()
     {
         OnGoingBoom = true;
-        yield return new WaitForSeconds(2.0f); // 코루틴 : 여기서 StartCoroutine 으로 되돌아간 후 다음 명령 수행. 2초후 BoomActive = false 실행 / StopCoroutine 일 경우 BoomActive를 실행하지 않고 멈춤.
+        yield return new WaitForSeconds(2.0f); // 코루틴 : 여기서 StartCoroutine 으로 되돌아간 후 다음 명령 수행. 2초후 OnGoinBoom = false 실행 / StopCoroutine 일 경우 OnGoinBoom 를 실행하지 않고 멈춤.
         OnGoingBoom = false;
     }
 
@@ -120,10 +118,7 @@ public class GameMgr : MonoBehaviour
 
         RespawnPlayer = true;
 
-        /*    for (float i = 0; i < 2.0f; i += Time.deltaTime) // 위로 조금씩 올라간다 수정예정.
-            {
-                newPlayer.transform.Translate(Vector3.up * Time.deltaTime, Space.Self);
-            } */
+      // 위로 조금씩 올라간다 수정예정.
 
         yield return new WaitForSeconds(1.0f);
 

@@ -22,7 +22,7 @@ public class ItemSpawn : MonoBehaviour
         get
         {
             if (instance == null)
-                instance = FindObjectOfType(typeof(ItemSpawn)) as ItemSpawn;
+                instance = FindObjectOfType<ItemSpawn>();
 
             return instance;
         }
@@ -34,11 +34,11 @@ public class ItemSpawn : MonoBehaviour
         switch (itemType)
         {
             case ItemTypeObject.PowerItem:
-                item = GameObject.Instantiate(PowerItem);
+                item = Instantiate(PowerItem);
                 break;
 
             case ItemTypeObject.ScoreItem:
-                item = GameObject.Instantiate(ScoreItem);
+                item = Instantiate(ScoreItem);
                 break;
         }
 
