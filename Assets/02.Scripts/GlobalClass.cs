@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GlobalClass : MonoBehaviour
+public static class GlobalClass
 {
     public static Vector2 RotateDirection(Vector2 direction, float degree)
     {
