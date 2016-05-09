@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// +er
 public class EnemyAttackType : MonoBehaviour
 {
     public GameObject RedKnife;
@@ -28,7 +29,7 @@ public class EnemyAttackType : MonoBehaviour
 
     public void FireConeType(Transform spawnTransform, AttackType attackType , float bulletSpeed)
     {
-        float oneshot = 5.0f;
+        int oneshot = 5;
         float angle = 60.0f;
         float anglePlus = angle / (oneshot - 1);
         angle *= 0.5f;

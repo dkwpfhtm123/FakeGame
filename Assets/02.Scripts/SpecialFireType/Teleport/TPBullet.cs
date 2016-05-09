@@ -98,7 +98,6 @@ public class TPBullet : MonoBehaviour
         float rotateAngle = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
         transformCache.localRotation = Quaternion.Euler(0, 0, rotateAngle);
 
-
         transform.localPosition = TeleportPoint;
         position = transformCache.localPosition;
 

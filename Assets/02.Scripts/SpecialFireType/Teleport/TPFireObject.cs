@@ -15,6 +15,7 @@ public class TPFireObject : MonoBehaviour
 
     private side sideOption;
 
+
     private Vector2 insideLeftUp;
     private Vector2 insideRightUp;
     private Vector2 insideLeftDown;
@@ -40,21 +41,23 @@ public class TPFireObject : MonoBehaviour
 
         direction = new Vector2(1, 0);
 
+
         insideLength = 2.0f;
         float insideHalf = insideLength * 0.5f;
 
-        insideLeftUp = new Vector2(transformCache.localPosition.x - insideHalf, transformCache.localPosition.y + insideHalf);
-        insideLeftDown = new Vector2(transformCache.localPosition.x - insideHalf, transformCache.localPosition.y - insideHalf);
-        insideRightUp = new Vector2(transformCache.localPosition.x + insideHalf, transformCache.localPosition.y + insideHalf);
-        insideRightDown = new Vector2(transformCache.localPosition.x + insideHalf, transformCache.localPosition.y - insideHalf);
+        var position = transformCache.localPosition;
+        insideLeftUp = new Vector2(position.x - insideHalf, position.y + insideHalf);
+        insideLeftDown = new Vector2(position.x - insideHalf, position.y - insideHalf);
+        insideRightUp = new Vector2(position.x + insideHalf, position.y + insideHalf);
+        insideRightDown = new Vector2(position.x + insideHalf, position.y - insideHalf);
 
         outsideLength = insideLength * 2;
         float outsideHalf = outsideLength * 0.5f;
 
-        outsideLeftUp = new Vector2(transformCache.localPosition.x - outsideHalf, transformCache.localPosition.y + outsideHalf);
-        outsideLeftDown = new Vector2(transformCache.localPosition.x - outsideHalf, transformCache.localPosition.y - outsideHalf);
-        outsideRightUp = new Vector2(transformCache.localPosition.x + outsideHalf, transformCache.localPosition.y + outsideHalf);
-        outsideRightDown = new Vector2(transformCache.localPosition.x + outsideHalf, transformCache.localPosition.y - outsideHalf);
+        outsideLeftUp = new Vector2(position.x - outsideHalf, position.y + outsideHalf);
+        outsideLeftDown = new Vector2(position.x - outsideHalf, position.y - outsideHalf);
+        outsideRightUp = new Vector2(position.x + outsideHalf, position.y + outsideHalf);
+        outsideRightDown = new Vector2(position.x + outsideHalf, position.y - outsideHalf);
 
         StartCoroutine(CreateBullet());
     }
@@ -79,28 +82,30 @@ public class TPFireObject : MonoBehaviour
                 bulletTransform.localRotation = Quaternion.Euler(0, 0, rotateAngle);
                 bulletTransform.localScale = Vector2.one * 0.5f;
 
+                Vector2 v = transformCache.localPosition;
+
                 if (45 < angle && angle <= 135)
                 {
                     sideOption = side.Up;
-                    Check(transformCache.localPosition, realDirection, insideLeftUp, insideRightUp); // 위 
+                    Check(transformCache.localPosition, v + realDirection * 3.0f, insideLeftUp, insideRightUp); // 위 
                     setBullet.SetVariable(realDirection, 0.5f, crossPoint, teleportPoint, TPBullet.Side.Up, angle);
                 }
                 else if (135 < angle && angle <= 225)
                 {
                     sideOption = side.Left;
-                    Check(transformCache.localPosition, realDirection, insideLeftUp, insideLeftDown); // 왼쪽 
+                    Check(transformCache.localPosition, v + realDirection * 3.0f, insideLeftUp, insideLeftDown); // 왼쪽 
                     setBullet.SetVariable(realDirection, 0.5f, crossPoint, teleportPoint, TPBullet.Side.Left, angle);
                 }
                 else if (225 < angle && angle <= 315)
                 {
                     sideOption = side.Down;
-                    Check(transformCache.localPosition, realDirection, insideRightDown, insideLeftDown); // 아래
+                    Check(transformCache.localPosition, v + realDirection * 3.0f, insideRightDown, insideLeftDown); // 아래
                     setBullet.SetVariable(realDirection, 0.5f, crossPoint, teleportPoint, TPBullet.Side.Down, angle);
                 }
                 else
                 {
                     sideOption = side.Right;
-                    Check(transformCache.localPosition, realDirection, insideRightDown, insideRightUp); // 오른쪽
+                    Check(transformCache.localPosition, v + realDirection * 3.0f, insideRightDown, insideRightUp); // 오른쪽
                     setBullet.SetVariable(realDirection, 0.5f, crossPoint, teleportPoint, TPBullet.Side.Right, angle);
                 }
 
@@ -132,6 +137,14 @@ public class TPFireObject : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    // homework: Check 분리 (static)
+    // homework: swap (http://mwultong.blogspot.com/2007/05/c-swap-call-by-reference.html)
+    //             - ref, out
+    //             - Generic
+    //             - Swap<T>
+    // homework: 일정 반경 원안에 랜덤으로 생성되는 탄막
+
 
     private void Check(Vector2 StraightA, Vector2 StraightB, Vector2 LineC, Vector2 LineD) // 직선점a 직선점b : 선분점c 선분점d
     {
@@ -174,12 +187,15 @@ public class TPFireObject : MonoBehaviour
                 teleportPoint = new Vector2(outsideRightDown.x, outsideRightDown.y + outsideLength * dis);
             }
 
+            // crossPoint += new Vector2(transformCache.localPosition.x, transformCache.localPosition.y);
+            // teleportPoint += new Vector2(transformCache.localPosition.x, transformCache.localPosition.y);
+
             //      Debug.Log(crossPoint.x + " " + crossPoint.y);
             //        Debug.Log(teleportPoint.x + " " + teleportPoint.y);
         }
     }
 
-    private float AxBy_AyBx(Vector2 a, Vector2 b) // 복잡한거 함수로 만듬.
+    private static float AxBy_AyBx(Vector2 a, Vector2 b) // 복잡한거 함수로 만듬.
     {
         return (a.x * b.y - a.y * b.x);
     }
