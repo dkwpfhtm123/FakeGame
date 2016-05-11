@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using Player;
+
 public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance;
@@ -39,11 +41,11 @@ public class GameMgr : MonoBehaviour
         private set;
     }
 
-    public float PlayerScore;
+    public int PlayerScore;
     public float PlayerPower;
 
     private Transform transformCache;
-    private PlayerPowerUp powerUp;
+    private PowerObject powerUp;
 
     void Start()
     {
@@ -52,7 +54,7 @@ public class GameMgr : MonoBehaviour
         OnGoingBoom = false;
         RespawnPlayer = false;
 
-        PlayerScore = 0.0f;
+        PlayerScore = 0;
         PlayerPower = 0.0f;
 
         powerUp = null;
@@ -118,7 +120,7 @@ public class GameMgr : MonoBehaviour
 
         RespawnPlayer = true;
 
-      // 위로 조금씩 올라간다 수정예정.
+        // 위로 조금씩 올라간다 수정예정.
 
         yield return new WaitForSeconds(1.0f);
 
@@ -154,7 +156,7 @@ public class GameMgr : MonoBehaviour
     public void PowerUp(float powerLevel)
     {
         GameObject playerPower = Instantiate(PlayerPowerObject);
-        PlayerPowerUp powerCtrl = playerPower.GetComponent<PlayerPowerUp>();
+        PowerObject powerCtrl = playerPower.GetComponent<PowerObject>();
 
         playerPower.transform.localPosition = transform.localPosition;
         playerPower.transform.localRotation = Quaternion.identity;
