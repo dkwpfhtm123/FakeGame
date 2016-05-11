@@ -46,24 +46,24 @@ namespace LineSpread
                 yield return new WaitForSeconds(0.1f); // 발사간격
                 for (int i = 0; i < 6; i++)
                 {
-                    GameObject bullet;
+                    GameObject bulletObject;
                     if (firstFire == false)
                     {
-                        bullet = Instantiate(BulletA);
+                        bulletObject = Instantiate(BulletA);
                         firstFire = true; // 첫번째만 발사
                     }
                     else
                     {
-                        bullet = Instantiate(BulletB);
+                        bulletObject = Instantiate(BulletB);
                     }
-                    Transform bulletTransform = bullet.GetComponent<Transform>();
-                    Bullet setBullet = bullet.GetComponent<Bullet>();
+                    Transform bulletTransform = bulletObject.GetComponent<Transform>();
+                    Bullet bullet = bulletObject.GetComponent<Bullet>();
 
                     bulletTransform.localPosition = transformCache.localPosition;
                     bulletTransform.localRotation = Quaternion.identity;
                     bulletTransform.localScale = Vector3.one * 0.5f;
 
-                    setBullet.SetUp(targetVector, 3.0f, anglePlus, false);
+                    bullet.SetUp(targetVector, 3.0f, anglePlus, false);
 
                     anglePlus = (i + 1) * 60; // 60도씩 돌림.
                 }
