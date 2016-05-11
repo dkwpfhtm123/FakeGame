@@ -27,19 +27,30 @@ namespace Teleport
             Right
         }
 
-        //   class Square 잘 모르겠음.
+        public class Square
+        {
+            public readonly Vector2 LeftUp;
+            public readonly Vector2 LeftDown;
+            public readonly Vector2 RightUp;
+            public readonly Vector2 RightDown;
 
-        private Vector2 insideLeftUp;
-        private Vector2 insideRightUp;
-        private Vector2 insideLeftDown;
-        private Vector2 insideRightDown;
-        private float insideLength;
+            public float Length
+            {
+                get { return RightUp.x - LeftUp.x; }
+            }
 
-        private Vector2 outsideLeftUp;
-        private Vector2 outsideRightUp;
-        private Vector2 outsideLeftDown;
-        private Vector2 outsideRightDown;
-        private float outsideLength;
+            public Square(Vector2 position, float length)
+            {
+                float lengthHalf = length * 0.5f;
+                LeftUp = new Vector2(position.x - lengthHalf, position.y + lengthHalf);
+                LeftDown = new Vector2(position.x - lengthHalf, position.y - lengthHalf);
+                RightUp = new Vector2(position.x + lengthHalf, position.y + lengthHalf);
+                RightDown = new Vector2(position.x + lengthHalf, position.y - lengthHalf);
+            }
+        }
+
+        private Square inside;
+        private Square outside;
 
         private Transform transformCache;
 
@@ -47,23 +58,10 @@ namespace Teleport
         {
             transformCache = GetComponent<Transform>();
 
-            insideLength = 2.0f;
-            float insideHalf = insideLength * 0.5f;
-
             Vector2 position = transformCache.localPosition;
 
-            insideLeftUp = new Vector2(position.x - insideHalf, position.y + insideHalf);
-            insideLeftDown = new Vector2(position.x - insideHalf, position.y - insideHalf);
-            insideRightUp = new Vector2(position.x + insideHalf, position.y + insideHalf);
-            insideRightDown = new Vector2(position.x + insideHalf, position.y - insideHalf);
-
-            outsideLength = insideLength * 2;
-            float outsideHalf = outsideLength * 0.5f;
-
-            outsideLeftUp = new Vector2(position.x - outsideHalf, position.y + outsideHalf);
-            outsideLeftDown = new Vector2(position.x - outsideHalf, position.y - outsideHalf);
-            outsideRightUp = new Vector2(position.x + outsideHalf, position.y + outsideHalf);
-            outsideRightDown = new Vector2(position.x + outsideHalf, position.y - outsideHalf);
+            inside = new Square(position, 2.0f);
+            outside = new Square(position, inside.Length * 2.0f);
 
             StartCoroutine(CreateBullet());
         }
@@ -74,8 +72,6 @@ namespace Teleport
             int anglePlus = 0;
             bool plus = true;
 
-            Vector2 teleportPoint;
-            Vector2 crossPoint;
             Side sideOption;
 
             while (true)
@@ -91,37 +87,37 @@ namespace Teleport
 
                     bulletTransform.localPosition = transformCache.localPosition;
                     bulletTransform.localRotation = Quaternion.Euler(0, 0, rotateAngle);
-                    bulletTransform.localScale = Vector2.one * 0.5f; // 설정이 잘 안됨
+                    //         bulletTransform.localScale = Vector2.one;
 
                     Vector2 startPoint = transformCache.localPosition;
 
                     if (45 < angle && angle <= 135)
                     {
                         sideOption = Side.Up;
-                        crossPoint = FindCrossPoint(startPoint, startPoint + direction, insideLeftUp, insideRightUp); // 위 
-                        teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
-                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, Side.Up, angle);
+                        Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.LeftUp, inside.RightUp); // 위 
+                        Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
+                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else if (135 < angle && angle <= 225)
                     {
                         sideOption = Side.Left;
-                        crossPoint = FindCrossPoint(startPoint, startPoint + direction, insideLeftUp, insideLeftDown); // 왼쪽 
-                        teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
-                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, Side.Left, angle);
+                        Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.LeftUp, inside.LeftDown); // 왼쪽 
+                        Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
+                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else if (225 < angle && angle <= 315)
                     {
                         sideOption = Side.Down;
-                        crossPoint = FindCrossPoint(startPoint, startPoint + direction, insideRightDown, insideLeftDown); // 아래
-                        teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
-                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, Side.Down, angle);
+                        Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.RightDown, inside.LeftDown); // 아래
+                        Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
+                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else
                     {
                         sideOption = Side.Right;
-                        crossPoint = FindCrossPoint(startPoint, startPoint + direction, insideRightDown, insideRightUp); // 오른쪽
-                        teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
-                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, Side.Right, angle);
+                        Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.RightDown, inside.RightUp); // 오른쪽
+                        Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
+                        bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
 
                     angle += 30;
@@ -178,23 +174,23 @@ namespace Teleport
             // LeftDown , RightUp 으로 수정해보기. (--) (++)
             if (sideOption == Side.Up)  // 위
             {
-                dis = (dx - insideLeftUp.x) / insideLength; // 비율 = 좌표거리 / 총거리 - Y 좌표는 같으므로 X좌표만 계산. (직사각형 이라는 가정에서만 가능)
-                teleportPoint = new Vector2(outsideLeftUp.x + outsideLength * dis, outsideLeftUp.y); // 텔포지점 = 원래좌표 C.x + 비율 * 거리
+                dis = (dx - inside.LeftUp.x) / inside.Length; // 비율 = 좌표거리 / 총거리 - Y 좌표는 같으므로 X좌표만 계산. (직사각형 이라는 가정에서만 가능)
+                teleportPoint = new Vector2(outside.LeftUp.x + outside.Length * dis, outside.LeftUp.y); // 텔포지점 = 원래좌표 C.x + 비율 * 거리
             }
             else if (sideOption == Side.Left) // 왼쪽
             {
-                dis = (insideLeftUp.y - dy) / insideLength; // LeftUp 으로부터 계산
-                teleportPoint = new Vector2(outsideLeftUp.x, outsideLeftUp.y - outsideLength * dis); // 텔포지점 = 원래좌표 C.y - 비율 * 거리
+                dis = (inside.LeftUp.y - dy) / inside.Length; // LeftUp 으로부터 계산
+                teleportPoint = new Vector2(outside.LeftUp.x, outside.LeftUp.y - outside.Length * dis); // 텔포지점 = 원래좌표 C.y - 비율 * 거리
             }
             else if (sideOption == Side.Down) // 아래
             {
-                dis = (insideRightDown.x - dx) / insideLength; // RightDown 으로부터 계산
-                teleportPoint = new Vector2(outsideRightDown.x - outsideLength * dis, outsideRightDown.y); // 텔포지점 = 원래좌표 C.x - 비율 * 거리
+                dis = (inside.RightDown.x - dx) / inside.Length; // RightDown 으로부터 계산
+                teleportPoint = new Vector2(outside.RightDown.x - outside.Length * dis, outside.RightDown.y); // 텔포지점 = 원래좌표 C.x - 비율 * 거리
             }
             else // 오른쪽
             {
-                dis = (dy - insideRightDown.y) / insideLength; // RightDown 으로부터 계산
-                teleportPoint = new Vector2(outsideRightDown.x, outsideRightDown.y + outsideLength * dis);
+                dis = (dy - inside.RightDown.y) / inside.Length; // RightDown 으로부터 계산
+                teleportPoint = new Vector2(outside.RightDown.x, outside.RightDown.y + outside.Length * dis);
             }
 
             return teleportPoint;
