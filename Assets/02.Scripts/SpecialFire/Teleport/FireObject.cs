@@ -72,8 +72,6 @@ namespace Teleport
             int anglePlus = 0;
             bool plus = true;
 
-            Side sideOption;
-
             while (true)
             {
                 for (int i = 0; i < 12; i++)
@@ -93,28 +91,28 @@ namespace Teleport
 
                     if (45 < angle && angle <= 135)
                     {
-                        sideOption = Side.Up;
+                        Side sideOption = Side.Up;
                         Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.LeftUp, inside.RightUp); // 위 
                         Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
                         bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else if (135 < angle && angle <= 225)
                     {
-                        sideOption = Side.Left;
+                        Side sideOption = Side.Left;
                         Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.LeftUp, inside.LeftDown); // 왼쪽 
                         Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
                         bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else if (225 < angle && angle <= 315)
                     {
-                        sideOption = Side.Down;
+                        Side sideOption = Side.Down;
                         Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.RightDown, inside.LeftDown); // 아래
                         Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
                         bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
                     }
                     else
                     {
-                        sideOption = Side.Right;
+                        Side sideOption = Side.Right;
                         Vector2 crossPoint = FindCrossPoint(startPoint, startPoint + direction, inside.RightDown, inside.RightUp); // 오른쪽
                         Vector2 teleportPoint = FindTeleportPoint(crossPoint.x, crossPoint.y, sideOption);
                         bullet.SetUp(direction, 0.5f, crossPoint, teleportPoint, sideOption, angle);
