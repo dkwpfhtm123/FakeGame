@@ -13,7 +13,7 @@ namespace Player
         void Start()
         {
             transformCache = GetComponent<Transform>();
-            // GetComponent<Rigidbody>().AddForce(Vector2.up); // 부드러운 속도로 발사됨
+            // GetComponent<Rigidbody>().AddForce(Vector2.up); // 부드러운 속도로 발사됨 //
         }
 
         void Update()
