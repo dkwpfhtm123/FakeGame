@@ -9,7 +9,7 @@ public class GameMgr : MonoBehaviour
 {
     private static GameMgr instance;
     public static GameMgr Instance
-    {
+    { 
         get
         {
             if (instance == null)
