@@ -17,7 +17,7 @@ namespace Player
 
         private ItemTypeScript item = null;
 
-        void Start()
+        void Awake()
         {
             transformCache = GetComponent<Transform>();
 

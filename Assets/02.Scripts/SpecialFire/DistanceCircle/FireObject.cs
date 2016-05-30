@@ -27,13 +27,13 @@ namespace DistanceCircle
 
         IEnumerator CreateBullet()
         {
-            yield return new WaitForSeconds(0.1f); // 이부분 빼는거 질문
-
-            if(playerTransform == null)
-                playerTransform = GameMgr.Instance.PlayerTransform;
+     //       yield return new WaitForSeconds(0.1f); // 이부분 빼는거 질문
             
             while (true)
             {
+                if (playerTransform == null)
+                    playerTransform = GameMgr.Instance.PlayerTransform;
+
                 distance = Vector3.Distance(playerTransform.localPosition, transformCache.localPosition);
 
                 if (distance > 5)
