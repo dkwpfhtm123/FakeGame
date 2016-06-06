@@ -127,12 +127,6 @@ public class GameMgr : MonoBehaviour
         RespawnPlayer = false;
     }
 
-    public void AddPlayerScore()
-    {
-        PlayerScore += 100;
-        Debug.Log("Score : " + PlayerScore);
-    }
-
     public void AddPlayerPower()
     {
         PlayerPower += 1;

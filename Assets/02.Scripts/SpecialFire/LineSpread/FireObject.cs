@@ -59,7 +59,9 @@ namespace LineSpread
                     Transform bulletTransform = bulletObject.GetComponent<Transform>();
                     Bullet bullet = bulletObject.GetComponent<Bullet>();
 
-                    bulletTransform.localPosition = transformCache.localPosition;
+                    bulletTransform.parent = transformCache;
+
+                    bulletTransform.localPosition = Vector3.zero;
                     bulletTransform.localRotation = Quaternion.identity;
                     bulletTransform.localScale = Vector3.one * 0.5f;
 

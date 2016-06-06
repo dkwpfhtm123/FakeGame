@@ -52,8 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46368fe4f4ca294cb2da5a6be1d0c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 5
+  HPBar: {fileID: 22397608, guid: f438fa00396707449a495722a8302b01, type: 2}
   EnemyTypeCheck: 1
+  GreenHpBar: {fileID: 0}
 --- !u!212 &21223048
 SpriteRenderer:
   m_ObjectHideFlags: 1

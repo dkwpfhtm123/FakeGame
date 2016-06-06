@@ -28,12 +28,14 @@ namespace RandomCircle
 
                        float radian = degree * Mathf.Deg2Rad; // 꽃잎설정
                        float distance = 2 * Mathf.Sin(4 * radian); ; // 꽃잎설정
-                      Vector2 position = Change(transformCache.localPosition, distance, degree); // 꽃잎설정
+                      Vector2 position = Change(Vector3.zero , distance, degree); // 꽃잎설정
 
              //   Vector2 position = Change(transformCache.localPosition, distance, angle);  // 원 설정
 
                 GameObject bulletObject = Instantiate(Bullet);
                 Transform bulletTransform = bulletObject.GetComponent<Transform>();
+
+                bulletTransform.parent = transformCache;
 
                 bulletTransform.localPosition = position;
                 bulletTransform.localRotation = Quaternion.identity;

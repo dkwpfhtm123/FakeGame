@@ -146,20 +146,20 @@ namespace Teleport
             float da = (StraightA.x - StraightB.x) * (LineC.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineC.x);
             float db = (StraightA.x - StraightB.x) * (LineD.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineD.x);
 
-            if (da * db <= 0) // 교차한다. 교차점을 구한다.
-            {
-                float division = (StraightA.x - StraightB.x) * (LineC.y - LineD.y) - (StraightA.y - StraightB.y) * (LineC.x - LineD.x);
+            //         if (da * db <= 0) // 교차한다. 교차점을 구한다.
+            //     {
+            float division = (StraightA.x - StraightB.x) * (LineC.y - LineD.y) - (StraightA.y - StraightB.y) * (LineC.x - LineD.x);
 
-                float dx = AxBy_AyBx(StraightA, StraightB) * (LineC.x - LineD.x) - (StraightA.x - StraightB.x) * AxBy_AyBx(LineC, LineD);
-                dx /= division;
+            float dx = AxBy_AyBx(StraightA, StraightB) * (LineC.x - LineD.x) - (StraightA.x - StraightB.x) * AxBy_AyBx(LineC, LineD);
+            dx /= division;
 
-                float dy = AxBy_AyBx(StraightA, StraightB) * (LineC.y - LineD.y) - (StraightA.y - StraightB.y) * AxBy_AyBx(LineC, LineD);
-                dy /= division;
+            float dy = AxBy_AyBx(StraightA, StraightB) * (LineC.y - LineD.y) - (StraightA.y - StraightB.y) * AxBy_AyBx(LineC, LineD);
+            dy /= division;
 
-                crossPoint = new Vector2(dx, dy); // 교차점 좌표.
-            }
-            else
-                crossPoint = Vector2.zero;
+            crossPoint = new Vector2(dx, dy); // 교차점 좌표.
+                            //       }
+                            //        else
+                            //           crossPoint = Vector2.zero;
 
             return crossPoint;
         }

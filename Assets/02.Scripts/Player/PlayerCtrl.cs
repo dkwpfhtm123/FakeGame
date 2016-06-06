@@ -15,11 +15,15 @@ namespace Player
         private Transform transformCache;
         private float moveSpeed = 5.0f;
 
+        private GameUI gameUI;
+
         private ItemTypeScript item = null;
 
         void Awake()
         {
             transformCache = GetComponent<Transform>();
+
+            gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
 
             GameMgr.Instance.PlayerTransform = transformCache;
         }
@@ -82,13 +86,14 @@ namespace Player
 
                 if (item.ItemTypeCheck == ItemType.ScoreItem)
                 {
-                    GameMgr.Instance.AddPlayerScore();
+                    gameUI.CheckScore(50);
                     Destroy(coll.gameObject);
                 }
 
                 else if (item.ItemTypeCheck == ItemType.PowerItem)
                 {
                     GameMgr.Instance.AddPlayerPower();
+                    gameUI.CheckScore(10);
                     Destroy(coll.gameObject);
                 }
             }

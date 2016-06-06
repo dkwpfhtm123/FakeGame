@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Enemy
 {
     public class EnemyCtrl : MonoBehaviour
     {
-        public int HP = 5;
+        public Canvas HPBar;
+
         public delegate void EnemyAttackTypeDelegate(Transform tr, AttackKinds.AttackType type, float bulletSpeed);
 
         public enum EnemyType
@@ -17,10 +19,22 @@ namespace Enemy
 
         public EnemyType EnemyTypeCheck;
 
+        public Image GreenHpBar;
+
         private BulletTypeScript bulletType;
+
+        private Transform transformCache;
+
+        private int maxHP = 10;
+        private int currentHP;
 
         void Start()
         {
+            transformCache = GetComponent<Transform>();
+            currentHP = maxHP;
+
+            CreateHPbar();
+
             StartCoroutine(AttackPlayer());
             //   StartCoroutine(MoveEnemy()); 임시 주석상태
         }
@@ -54,13 +68,23 @@ namespace Enemy
             }
         }
 
-        IEnumerator StartAttack(float attackTime, float bulletSpeed, AttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
+        private IEnumerator StartAttack(float attackTime, float bulletSpeed, AttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
         {
             while (true)
             {
                 yield return new WaitForSeconds(attackTime); // 공격 텀
                 attack(transform, attackType, bulletSpeed);
             }
+        }
+
+        private void CreateHPbar()
+        {
+            Canvas hp = Instantiate(HPBar);
+            Transform hpTransform = hp.GetComponent<Transform>();
+            hpTransform.parent = transformCache;
+            hpTransform.position = transformCache.localPosition + Vector3.up;
+
+            GreenHpBar = hp.GetComponentInChildren<Image>();
         }
 
         void OnCollisionEnter2D(Collision2D coll)
@@ -72,16 +96,18 @@ namespace Enemy
                 if (bulletType.BulletTypeCheck == BulletType.PlayerBullet)
                 {
                     Destroy(coll.gameObject);
-                    HP--;
+                    currentHP--;
                 }
             }
             else if (coll.gameObject.GetComponent<ThisIsBoom>() != null)
             {
                 // 충돌하는 동안으로 바꿔야함.
-                HP--;
+                currentHP--;
             }
 
-            if (HP < 0)
+            GreenHpBar.fillAmount = (float) currentHP / (float) maxHP;
+
+            if (currentHP < 0)
             {
                 KillEnemy();
             }

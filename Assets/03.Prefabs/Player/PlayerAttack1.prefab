@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1891e5559332f04f984fdfd10c3693c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletTypeCheck: 2
+  BulletTypeCheck: 3
 --- !u!212 &21220234
 SpriteRenderer:
   m_ObjectHideFlags: 1

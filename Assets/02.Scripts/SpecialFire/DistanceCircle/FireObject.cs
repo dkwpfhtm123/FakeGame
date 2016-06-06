@@ -44,7 +44,9 @@ namespace DistanceCircle
                     GameObject bulletObject = Instantiate(Bullet);
                     Transform bullet = bulletObject.GetComponent<Transform>();
 
-                    bullet.localPosition = Change(transformCache.localPosition, distance, degree);
+                    bullet.parent = transformCache;
+
+                    bullet.localPosition = Change(Vector3.zero, distance, degree);
                     bullet.localRotation = Quaternion.identity;
                     bullet.localScale = Vector2.one * 0.3f;
 
