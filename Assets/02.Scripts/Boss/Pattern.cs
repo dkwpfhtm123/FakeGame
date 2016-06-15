@@ -22,6 +22,9 @@ namespace Boss
 
         private bool patternStart;
 
+        private float timeRemainings;
+        private System.Action timeAction;
+
         void Start()
         {
             transformCache = GetComponent<Transform>();
@@ -39,7 +42,7 @@ namespace Boss
             if (patternStart == true)
                 transformCache.localPosition = BossTransformObject.transform.localPosition;
         }
-
+         
         private IEnumerator PatternStart()
         {
             while (endPattern >= currentPattern)
@@ -97,7 +100,7 @@ namespace Boss
             return patternObject;
         }
 
-  /*      void OnCollisionEnter2D(Collider2D coll)
+        void OnCollisionEnter2D(Collision2D coll)
         {
             if (coll.gameObject.GetComponent<BulletTypeScript>() != null)
             {
@@ -110,6 +113,6 @@ namespace Boss
                     bossHPbar.fillAmount = currentBossHP / bossHPMax;
                 }
             }
-        } */
+        } 
     }
 }
