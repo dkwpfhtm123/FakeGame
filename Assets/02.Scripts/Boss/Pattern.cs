@@ -47,6 +47,7 @@ namespace Boss
 
         private IEnumerator StartPattern()
         {
+            GetComponent<Collider2D>().enabled = false;
             GameObject WaitTimeBoss = MakeBossImage();
 
             // 패턴 시작 직전 패턴이름, 패턴애니메이션 기타등등 넣을곳
@@ -94,6 +95,8 @@ namespace Boss
             currentBossHP = bossHPMax;
             bossHPbar.fillAmount = currentBossHP / bossHPMax;
 
+            GetComponent<Collider2D>().enabled = true;
+
             GameObject patternObject = Instantiate(pattern[number]);
             Transform objectTransform = patternObject.GetComponent<Transform>();
 
@@ -106,8 +109,8 @@ namespace Boss
 
         void OnCollisionEnter2D(Collision2D coll)
         {
-            if (patternStart == true)
-            {
+       //     if (patternStart == true)
+         //   {
                 if (coll.gameObject.GetComponent<BulletTypeScript>() != null)
                 {
                     BulletTypeScript bulletType = coll.gameObject.GetComponent<BulletTypeScript>();
@@ -131,7 +134,7 @@ namespace Boss
                             }
                         }
                     }
-                }
+            //    }
             }
         }
     }
