@@ -14,27 +14,29 @@ namespace Boss
 
         private GameObject BossTransformObject;
 
-        private int endPattern;
         private int currentPattern;
 
-        private int currentBossHP;
-        private int bossHPMax;
+        private int bossLife;
+        private float currentBossHP;
+        private float bossHPMax;
+
+        private GameObject bossPattern;
 
         private bool patternStart;
 
-        private float timeRemainings;
-        private System.Action timeAction;
+   //     private float timeRemainings;
+   //     private System.Action timeAction;
 
         void Start()
         {
             transformCache = GetComponent<Transform>();
 
-            endPattern = pattern.Length - 1;
+            bossLife = pattern.Length;
             currentPattern = 0;
 
             patternStart = false;
 
-            StartCoroutine(PatternStart());
+            StartCoroutine(StartPattern());
         }
 
         void Update()
@@ -42,33 +44,35 @@ namespace Boss
             if (patternStart == true)
                 transformCache.localPosition = BossTransformObject.transform.localPosition;
         }
-         
-        private IEnumerator PatternStart()
+
+        private IEnumerator StartPattern()
         {
-            while (endPattern >= currentPattern)
-            {
-                GameObject WaitTimeBoss = MakeBossImage();
+            GameObject WaitTimeBoss = MakeBossImage();
 
-                // 패턴 시작 직전 패턴이름, 패턴애니메이션 기타등등 넣을곳
-                yield return new WaitForSeconds(3.0f);
+            // 패턴 시작 직전 패턴이름, 패턴애니메이션 기타등등 넣을곳
+            yield return new WaitForSeconds(3.0f);
 
-                GameObject bossPattern = StartPattern(currentPattern);
-                BossTransformObject = bossPattern;
+            bossPattern = FirePattern(currentPattern);
+            BossTransformObject = bossPattern;
 
-                patternStart = true;
+            patternStart = true;
 
-                Destroy(WaitTimeBoss);
+            Destroy(WaitTimeBoss);
+        }
 
-                yield return new WaitForSeconds(5.0f);
+        private void ChangePattern()
+        {
+            patternStart = false;
 
-                patternStart = false;
+            Destroy(bossPattern);
+            currentPattern++;
 
-                Destroy(bossPattern);
-                currentPattern++;
-            }
+            StartCoroutine(StartPattern());
+        }
 
-            Debug.Log("End Pattern");
-
+        private void DeadBoss()
+        {
+            Destroy(bossPattern);
             Destroy(gameObject);
         }
 
@@ -84,7 +88,7 @@ namespace Boss
             return WaitTimeBoss;
         }
 
-        private GameObject StartPattern(int number)
+        private GameObject FirePattern(int number)
         {
             bossHPMax = 30;
             currentBossHP = bossHPMax;
@@ -102,17 +106,33 @@ namespace Boss
 
         void OnCollisionEnter2D(Collision2D coll)
         {
-            if (coll.gameObject.GetComponent<BulletTypeScript>() != null)
+            if (patternStart == true)
             {
-                BulletTypeScript bulletType = coll.gameObject.GetComponent<BulletTypeScript>();
-
-                if (bulletType.BulletTypeCheck == BulletType.PlayerBullet)
+                if (coll.gameObject.GetComponent<BulletTypeScript>() != null)
                 {
-                    Destroy(coll.gameObject);
-                    currentBossHP--;
-                    bossHPbar.fillAmount = currentBossHP / bossHPMax;
+                    BulletTypeScript bulletType = coll.gameObject.GetComponent<BulletTypeScript>();
+
+                    if (bulletType.BulletTypeCheck == BulletType.PlayerBullet)
+                    {
+                        Destroy(coll.gameObject);
+                        currentBossHP--;
+                        bossHPbar.fillAmount = currentBossHP / bossHPMax;
+
+                        if (currentBossHP < 0)
+                        {
+                            bossLife--;
+                            if (bossLife > 0)
+                            {
+                                ChangePattern();
+                            }
+                            else
+                            {
+                                DeadBoss();
+                            }
+                        }
+                    }
                 }
             }
-        } 
+        }
     }
 }
