@@ -9,6 +9,8 @@ namespace Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
+        private int erasethis;
+ 
         public enum AttackType
         {
             RedAttack,
