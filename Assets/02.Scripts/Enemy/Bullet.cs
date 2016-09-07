@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿
+
+
+
+
+
+
+using UnityEngine;
 using System.Collections;
 
 namespace Enemy
@@ -31,6 +38,7 @@ namespace Enemy
         private float currentTime;
         private Vector2 startingPosition;
 
+        private Player.PlayerCtrl boomCheck;
 
         void Start()
         {
@@ -38,6 +46,8 @@ namespace Enemy
             bulletType = gameObject.GetComponent<BulletTypeScript>();
             currentTime = 0;
             startingPosition = transformCache.localPosition;
+
+            boomCheck = GetComponent<Player.PlayerCtrl>();
 
             float angle = GetRotation();
             transform.localRotation = Quaternion.Euler(0, 0, angle);
@@ -51,10 +61,13 @@ namespace Enemy
         void Update()
         {
             MoveBullet();
-
-            if (GameMgr.Instance.OnGoingBoom == true)
+            if(boomCheck == null)
             {
-                ItemSpawn.Instance.SpawnItem(gameObject.transform, ItemSpawn.ItemTypeObject.ScoreItem);
+                boomCheck = GetComponent<Player.PlayerCtrl>();
+            }
+            else if (boomCheck.OnGoingBoom == false)
+            {
+          //      ItemSpawn.Instance.SpawnItem(transformCache, ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
             }
         }

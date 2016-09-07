@@ -36,14 +36,6 @@ namespace Enemy
             CreateHPbar();
 
             StartCoroutine(AttackPlayer());
-            //   StartCoroutine(MoveEnemy()); 임시 주석상태
-        }
-
-        private IEnumerator MoveEnemy()
-        {
-            iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("start"), "time", 5, "easetype", iTween.EaseType.easeOutCubic));
-            yield return new WaitForSeconds(2.0f);
-            iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("top"), "time", 10, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
         }
 
         private IEnumerator AttackPlayer()
@@ -98,11 +90,6 @@ namespace Enemy
                     Destroy(coll.gameObject);
                     currentHP--;
                 }
-            }
-            else if (coll.gameObject.GetComponent<ThisIsBoom>() != null)
-            {
-                // 충돌하는 동안으로 바꿔야함.
-                currentHP--;
             }
 
             GreenHpBar.fillAmount = (float) currentHP / (float) maxHP;

@@ -107,7 +107,7 @@ namespace LineSpread
             Manager.Instance.WaitTime = false; // bullet 에서 bullet 만들기를 끝냄을 fireobject 에게 보냄.
         }
 
-        void OnCollisionEnter2D(Collision2D coll)
+        void OnCollisionExit2D(Collision2D coll)
         {
             if (gameObject.GetComponent<NoWallDestroy>() != null) // bulletA , bulletB 구분.
             {

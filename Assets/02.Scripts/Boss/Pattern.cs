@@ -74,7 +74,8 @@ namespace Boss
         private void DeadBoss()
         {
             Destroy(bossPattern);
-            Destroy(gameObject);
+            Debug.Log("BossDead!");
+      //      Destroy(gameObject);
         }
 
         private GameObject MakeBossImage()

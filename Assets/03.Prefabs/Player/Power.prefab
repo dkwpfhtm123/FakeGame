@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 489030}
   - 212: {fileID: 21209110}
   - 114: {fileID: 11461236}
+  - 114: {fileID: 11457044}
   m_Layer: 0
   m_Name: Power
   m_TagString: Untagged
@@ -29,6 +30,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11457044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67e67cf5cea1ad4fb3f3345d2045f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11461236
 MonoBehaviour:
   m_ObjectHideFlags: 1

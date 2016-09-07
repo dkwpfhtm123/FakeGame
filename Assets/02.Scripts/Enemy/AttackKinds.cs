@@ -40,7 +40,7 @@ namespace Enemy
             while (oneshot > 0)
             {
                 Vector2 targetDirection = RotateBullet(angle, spawnTransform);
-                CreateStraightBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
+                CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
 
                 oneshot--;
                 angle -= anglePlus;
@@ -56,7 +56,7 @@ namespace Enemy
                 float angle = Random.Range(0.0f, 360.0f);
 
                 Vector2 targetDirection = RotateBullet(angle, spawnTransform);
-                CreateStraightBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
+                CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
 
                 oneshot--;
             }
@@ -81,7 +81,7 @@ namespace Enemy
                 {
                     for (int z = 0; z < oneShot; z++)
                     {
-                        CreateStraightBullet(direction, spawnTransform, attackType, angle, 0.5f, bulletSpeed);
+                        CreateMoveBullet(direction, spawnTransform, attackType, angle, 0.5f, bulletSpeed);
                         angle += 60.0f;
                     }
                     yield return new WaitForSeconds(0.2f);
@@ -110,7 +110,7 @@ namespace Enemy
             return GlobalClass.RotateDirection(targetDirection, angle);
         }
 
-        private void CreateStraightBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType, float angle, float localScale, float bulletSpeed) // 직선 탄환 생성
+        private void CreateMoveBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType, float angle, float localScale, float bulletSpeed) // 직선 탄환 생성
         {
             GameObject bulletObject = null;
             if (attackType == AttackType.RedAttack)

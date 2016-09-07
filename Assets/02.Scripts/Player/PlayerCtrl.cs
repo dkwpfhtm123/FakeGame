@@ -8,22 +8,38 @@ namespace Player
         // Boom관련 변수들
         public GameObject BoomPrefab;    // 프리팹
         public int BoomCount = 3;        // 남은 갯수
+        public bool OnGoingBoom = false; // 폭탄이 진행중인지 체크
         private float boomTime = 2.0f;   // 지속시간
         private GameObject boomObject;   // 게임오브젝트 저장
-        private bool boomCheck = false;  // 폭탄이 켜져있는지 체크
+
+        // Power관련 변수들
+        public int PlayerPower = 0;
+        public GameObject PlayerPowerObject;
+        private PowerObject powerUp = null;    // 파워 오브젝트 순서대로 저장
 
         private Transform transformCache;
         private float moveSpeed = 5.0f;
 
         private GameUI gameUI;
 
+        private int playerLife = 3;
+
         private ItemTypeScript item = null;
+
+        private enum PowerLife
+        {
+            Life,
+            Power,
+        }
 
         void Awake()
         {
             transformCache = GetComponent<Transform>();
 
             gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
+
+            UI_Player(PlayerPower, PowerLife.Power);
+            UI_Player(playerLife, PowerLife.Life);
 
             GameMgr.Instance.PlayerTransform = transformCache;
         }
@@ -33,49 +49,52 @@ namespace Player
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
 
-            // 부활하는 중이 아닐때
-            if (GameMgr.Instance.RespawnPlayer == false)
+            Vector2 moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
+
+            if (Input.GetKeyDown(KeyCode.X))
             {
-                Vector2 moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
-
-                if (Input.GetKeyDown(KeyCode.X))
+                // 폭탄이 활성화되지 않았을때 폭탄진행가능
+                if (OnGoingBoom == false)
                 {
-                    // 폭탄이 활성화되지 않았을때 폭탄진행가능
-                    if (boomCheck == false)
-                    {
-                        boomCheck = true;
-                        StartCoroutine(BoomEvent());
-                    }
+                    OnGoingBoom = true;
+                    StartCoroutine(BoomEvent());
                 }
-
-                // 쉬프트 눌렀을때 느려짐 빨라짐
-                if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    moveSpeed /= 2.0f;
-                }
-                else if (Input.GetKeyUp(KeyCode.LeftShift))
-                {
-                    moveSpeed *= 2.0f;
-                }
-
-                // 폭탄이 있을때 폭탄이 플레이어와 같이 움직임.
-                if (boomObject != null)
-                {
-                    boomObject.transform.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
-                }
-
-                transformCache.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
             }
+
+            // 쉬프트 눌렀을때 느려짐 빨라짐
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                moveSpeed /= 2.0f;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                moveSpeed *= 2.0f;
+            }
+
+            transformCache.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
         }
 
         private IEnumerator BoomEvent()
         {
             boomObject = (GameObject)Instantiate(BoomPrefab, transformCache.localPosition, Quaternion.identity);
-            GameMgr.Instance.Boom();
+            boomObject.transform.SetParent(transformCache, true);
+            boomObject.transform.localScale *= 2.0f;
+            OnGoingBoom = true;
+            Debug.Log("Start");
             yield return new WaitForSeconds(boomTime);
+            Debug.Log("End");
+            OnGoingBoom = false;
             Destroy(boomObject);
-            boomCheck = false;
+            OnGoingBoom = false;
             BoomCount--;
+        }
+
+        public void KillPlayer(GameObject player)
+        {
+            Debug.Log("Player Hit!!");
+            PlayerPower--;
+            UI_Player(PlayerPower, PowerLife.Power);
+            //     Destroy(player.gameObject);
         }
 
         void OnCollisionEnter2D(Collision2D coll)
@@ -89,22 +108,69 @@ namespace Player
                     gameUI.CheckScore(50);
                     Destroy(coll.gameObject);
                 }
-
                 else if (item.ItemTypeCheck == ItemType.PowerItem)
                 {
-                    GameMgr.Instance.AddPlayerPower();
+                    AddPlayerPower();
                     gameUI.CheckScore(10);
                     Destroy(coll.gameObject);
                 }
             }
 
-            if (GameMgr.Instance.RespawnPlayer == false)
+            if (coll.gameObject.GetComponent<ThisIsEnemyBullet>())
             {
-                if (coll.gameObject.GetComponent<ThisIsEnemyBullet>()) // 적 탄을 구별하기위해 하나는 남겨둠.
-                {
-                    GameMgr.Instance.KillPlayer(gameObject);
-                }
+                KillPlayer(gameObject);
             }
+        }
+
+        public void AddPlayerPower()
+        {
+            PlayerPower += 1;
+            UI_Player(PlayerPower, PowerLife.Power);
+
+            if (PlayerPower > 4)
+            {
+                PlayerPower = 4;
+                Debug.Log("Max Power");
+            }
+            else {
+                Debug.Log("Power : " + PlayerPower);
+                PowerUp(PlayerPower);
+            }
+        }
+
+        private void UI_Player(int num, PowerLife what)
+        {
+            if (what == PowerLife.Power)
+            {
+                gameUI.CheckPlayerPower(num);
+            }
+            else
+            {
+                gameUI.CheckPlayerLife(num);
+            }
+        }
+
+        public void PowerUp(float powerLevel)
+        {
+            GameObject playerPower = Instantiate(PlayerPowerObject);
+            PowerObject powerCtrl = playerPower.GetComponent<PowerObject>();
+
+            playerPower.transform.localPosition = transform.localPosition;
+            playerPower.transform.localRotation = Quaternion.identity;
+            playerPower.transform.localScale = Vector3.one;
+
+            powerCtrl.Radius = 1.0f;
+            if (powerUp != null)
+            {
+                powerCtrl.Angle = (powerUp.Angle + 90.0f);
+            }
+            else
+            {
+                powerCtrl.Angle = 0;
+            }
+            powerCtrl.StartRotatePower(transformCache);
+
+            powerUp = powerCtrl;
         }
     }
 }

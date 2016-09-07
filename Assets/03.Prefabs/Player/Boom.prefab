@@ -12,8 +12,8 @@ GameObject:
   - 58: {fileID: 5860484}
   - 114: {fileID: 11460640}
   - 50: {fileID: 5089928}
-  - 114: {fileID: 11482398}
   - 114: {fileID: 11429018}
+  - 114: {fileID: 11429150}
   m_Layer: 0
   m_Name: Boom
   m_TagString: Untagged
@@ -75,6 +75,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e094e4bb50de483499a1dc4d7fcb60d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11429150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67e67cf5cea1ad4fb3f3345d2045f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11460640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84,17 +95,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ccccca2ff429de4488a923b0630a16b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11482398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295c444d5222c094fa97d9a9a5faf8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21271566
@@ -123,7 +123,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d6e6481858b281b489b2bdace2d314c2, type: 3}
+  m_Sprite: {fileID: 21300082, guid: 563b91815b87ab740a42fba5c383eee1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -10,14 +10,6 @@ namespace Player
         public float Angle;
         public float Radius;
 
-        void Update()
-        {
-            if (GameMgr.Instance.RespawnPlayer == true)
-            {
-                Destroy(gameObject);
-            }
-        }
-
         public void StartRotatePower(Transform playerTransform)
         {
             transformCache = GetComponent<Transform>();
@@ -26,7 +18,7 @@ namespace Player
 
         private IEnumerator RotatePower(Transform playerTransform)
         {
-            while (GameMgr.Instance.RespawnPlayer == false)
+            while (true)
             {
                 Vector2 circle = playerTransform.localPosition;
 

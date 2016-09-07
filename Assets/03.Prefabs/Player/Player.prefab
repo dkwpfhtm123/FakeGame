@@ -84,6 +84,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoomPrefab: {fileID: 150196, guid: 7735f7d0008a9aa4b8f87fdd081c3651, type: 2}
   BoomCount: 3
+  PlayerPower: 0
+  PlayerPowerObject: {fileID: 104706, guid: 56205d0af6e06314c85c8bbfa560a012, type: 2}
 --- !u!212 &21281248
 SpriteRenderer:
   m_ObjectHideFlags: 1

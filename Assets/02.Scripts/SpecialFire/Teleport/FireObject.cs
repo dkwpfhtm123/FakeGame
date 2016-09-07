@@ -194,7 +194,7 @@ namespace Teleport
             return teleportPoint;
         }
 
-        private static float AxBy_AyBx(Vector2 a, Vector2 b) // 복잡한거 함수로 만듬.
+        private static float AxBy_AyBx(Vector2 a, Vector2 b) // 겹치는 수식 함수로 만듬.
         {
             return (a.x * b.y - a.y * b.x);
         }
