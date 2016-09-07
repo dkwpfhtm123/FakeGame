@@ -9,6 +9,8 @@ namespace Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
+        public Player.PlayerCtrl Target;
+
         private int erasethis;
  
         public enum AttackType
@@ -110,8 +112,8 @@ namespace Enemy
             return GlobalClass.RotateDirection(targetDirection, angle);
         }
 
-        private void CreateMoveBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType, float angle, float localScale, float bulletSpeed) // 직선 탄환 생성
-        {
+        private void CreateMoveBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType, float angle, float localScale, float bulletSpeed)
+        { 
             GameObject bulletObject = null;
             if (attackType == AttackType.RedAttack)
             {
@@ -133,7 +135,7 @@ namespace Enemy
             bulletTransform.localRotation = Quaternion.identity;
             bulletTransform.localScale = Vector3.one * localScale;
 
-            bullet.SetUp(targetDirection.normalized, bulletSpeed, angle);
+            bullet.SetUp(targetDirection.normalized, bulletSpeed, angle, Target);
 
             if (attackType == AttackType.PurpleCircle)
             {

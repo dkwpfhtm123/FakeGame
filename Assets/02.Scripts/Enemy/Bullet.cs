@@ -33,12 +33,16 @@ namespace Enemy
             private set;
         }
 
+        public Player.PlayerCtrl Target
+        {
+            get;
+            private set;
+        }
+
         private Transform transformCache;
         private BulletTypeScript bulletType;
         private float currentTime;
         private Vector2 startingPosition;
-
-        private Player.PlayerCtrl boomCheck;
 
         void Start()
         {
@@ -46,8 +50,6 @@ namespace Enemy
             bulletType = gameObject.GetComponent<BulletTypeScript>();
             currentTime = 0;
             startingPosition = transformCache.localPosition;
-
-            boomCheck = GetComponent<Player.PlayerCtrl>();
 
             float angle = GetRotation();
             transform.localRotation = Quaternion.Euler(0, 0, angle);
@@ -61,22 +63,19 @@ namespace Enemy
         void Update()
         {
             MoveBullet();
-            if(boomCheck == null)
+            if (Target.OnGoingBoom == true)
             {
-                boomCheck = GetComponent<Player.PlayerCtrl>();
-            }
-            else if (boomCheck.OnGoingBoom == false)
-            {
-          //      ItemSpawn.Instance.SpawnItem(transformCache, ItemSpawn.ItemTypeObject.ScoreItem);
+                ItemSpawn.Instance.SpawnItem(transformCache, ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
             }
         }
 
-        public void SetUp(Vector2 direction, float bulletSpeed, float angle)
+        public void SetUp(Vector2 direction, float bulletSpeed, float angle, Player.PlayerCtrl target)
         {
             Direction = direction;
             BulletSpeed = bulletSpeed;
             Angle = angle;
+            Target = target;
         }
 
         private float GetRotation()
