@@ -31,6 +31,10 @@ namespace Boss
         {
             transformCache = GetComponent<Transform>();
 
+            Image hpbar = Instantiate(bossHPbar);
+            hpbar.transform.localPosition = new Vector2(835, -35.5f);
+            hpbar.transform.localScale = Vector2.one;
+
             bossLife = pattern.Length;
             currentPattern = 0;
 

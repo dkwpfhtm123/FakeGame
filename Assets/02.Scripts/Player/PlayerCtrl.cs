@@ -7,13 +7,13 @@ namespace Player
     {
         // Boom관련 변수들
         public GameObject BoomPrefab;    // 프리팹
-        public int BoomCount = 3;        // 남은 갯수
+        public int BoomCount;            // 남은 갯수
         public bool OnGoingBoom = false; // 폭탄이 진행중인지 체크
         private float boomTime = 2.0f;   // 지속시간
         private GameObject boomObject;   // 게임오브젝트 저장
 
         // Power관련 변수들
-        public int PlayerPower = 0;
+        public int PlayerPower;
         public GameObject PlayerPowerObject;
         private PowerObject powerUp = null;    // 파워 오브젝트 순서대로 저장
 
@@ -21,8 +21,9 @@ namespace Player
         private float moveSpeed = 5.0f;
 
         private GameUI gameUI;
+        private CreateObject restart;
 
-        private int playerLife = 3;
+        private int playerLife;
 
         private ItemTypeScript item = null;
 
@@ -32,16 +33,24 @@ namespace Player
             Power,
         }
 
+        public void Setup(int life, int power, int boom)
+        {
+            playerLife = life;
+            PlayerPower = power;
+            BoomCount = boom;
+        }
+
         void Awake()
         {
             transformCache = GetComponent<Transform>();
 
             gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
+        }
 
+        void Start()
+        {
             UI_Player(PlayerPower, PowerLife.Power);
             UI_Player(playerLife, PowerLife.Life);
-
-            GameMgr.Instance.PlayerTransform = transformCache;
         }
 
         void Update()
@@ -89,12 +98,26 @@ namespace Player
             BoomCount--;
         }
 
-        public void KillPlayer(GameObject player)
+        public void HitPlayer(GameObject player)
         {
-            Debug.Log("Player Hit!!");
             PlayerPower--;
-            UI_Player(PlayerPower, PowerLife.Power);
-            //     Destroy(player.gameObject);
+            playerLife--;
+
+            if (playerLife < 1)
+            {
+                KillPlayer();
+            }
+            else
+            {
+                UI_Player(PlayerPower, PowerLife.Power);
+                UI_Player(playerLife, PowerLife.Life);
+            }
+        }
+
+        private void KillPlayer()
+        {
+            gameUI.AppearGameOver();
+            Destroy(gameObject);
         }
 
         void OnCollisionEnter2D(Collision2D coll)
@@ -118,7 +141,7 @@ namespace Player
 
             if (coll.gameObject.GetComponent<ThisIsEnemyBullet>())
             {
-                KillPlayer(gameObject);
+                HitPlayer(gameObject);
             }
         }
 
@@ -130,7 +153,6 @@ namespace Player
             if (PlayerPower > 4)
             {
                 PlayerPower = 4;
-                Debug.Log("Max Power");
             }
             else {
                 Debug.Log("Power : " + PlayerPower);

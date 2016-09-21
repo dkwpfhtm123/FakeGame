@@ -9,7 +9,7 @@ namespace Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
-        public Player.PlayerCtrl Target;
+        public Player.PlayerCtrl CheckBoom;
 
         private int erasethis;
  
@@ -135,7 +135,7 @@ namespace Enemy
             bulletTransform.localRotation = Quaternion.identity;
             bulletTransform.localScale = Vector3.one * localScale;
 
-            bullet.SetUp(targetDirection.normalized, bulletSpeed, angle, Target);
+            bullet.SetUp(targetDirection.normalized, bulletSpeed, angle, CheckBoom);
 
             if (attackType == AttackType.PurpleCircle)
             {

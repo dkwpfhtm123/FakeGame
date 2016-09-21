@@ -18,19 +18,17 @@ namespace RandomCircle
 
         IEnumerator CreateBullet()
         {
-            Vector2 direction = new Vector2(1, 0);
-
-                int degree = 0; // 꽃잎설정
+            int degree = 0; // 꽃잎설정
             while (true)
             {
-            //    float angle = Random.Range(0.0f, 360.0f); // 원 설정
-              //  float distance = Random.Range(0.0f, 1.0f); // min 값만 0으로 수정하면 원 안의 랜덤범위.
+                //    float angle = Random.Range(0.0f, 360.0f); // 원 설정
+                //  float distance = Random.Range(0.0f, 1.0f); // min 값만 0으로 수정하면 원 안의 랜덤범위.
 
-                       float radian = degree * Mathf.Deg2Rad; // 꽃잎설정
-                       float distance = 2 * Mathf.Sin(4 * radian); ; // 꽃잎설정
-                      Vector2 position = Change(Vector3.zero , distance, degree); // 꽃잎설정
+                float radian = degree * Mathf.Deg2Rad; // 꽃잎설정
+                float distance = 2 * Mathf.Sin(4 * radian); ; // 꽃잎설정
+                Vector2 position = Change(Vector3.zero, distance, degree); // 꽃잎설정
 
-             //   Vector2 position = Change(transformCache.localPosition, distance, angle);  // 원 설정
+                //   Vector2 position = Change(transformCache.localPosition, distance, angle);  // 원 설정
 
                 GameObject bulletObject = Instantiate(Bullet);
                 Transform bulletTransform = bulletObject.GetComponent<Transform>();
@@ -41,8 +39,8 @@ namespace RandomCircle
                 bulletTransform.localRotation = Quaternion.identity;
                 bulletTransform.localScale = Vector2.one;
 
-                   degree += 5; // 꽃잎설정
-                   degree %= 360; // 꽃잎설정
+                degree += 5; // 꽃잎설정
+                degree %= 360; // 꽃잎설정
                 yield return new WaitForSeconds(0.1f);
             }
         }
