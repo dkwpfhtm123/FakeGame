@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurnRound : MonoBehaviour
+public class TurnRoundObject : MonoBehaviour
 {
     private float angle;
     private Transform transformCache;

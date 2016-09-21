@@ -33,7 +33,7 @@ namespace Enemy
             private set;
         }
 
-        public Player.PlayerCtrl Target
+        public Player.PlayerCtrl CheckBoom
         {
             get;
             private set;
@@ -63,7 +63,7 @@ namespace Enemy
         void Update()
         {
             MoveBullet();
-            if (Target.OnGoingBoom == true)
+            if (CheckBoom.OnGoingBoom == true)
             {
                 ItemSpawn.Instance.SpawnItem(transformCache, ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
@@ -75,7 +75,7 @@ namespace Enemy
             Direction = direction;
             BulletSpeed = bulletSpeed;
             Angle = angle;
-            Target = target;
+            CheckBoom = target;
         }
 
         private float GetRotation()

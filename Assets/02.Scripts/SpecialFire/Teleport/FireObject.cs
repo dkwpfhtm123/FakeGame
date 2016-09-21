@@ -143,8 +143,8 @@ namespace Teleport
         {
             Vector2 crossPoint;
 
-            float da = (StraightA.x - StraightB.x) * (LineC.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineC.x);
-            float db = (StraightA.x - StraightB.x) * (LineD.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineD.x);
+            //    float da = (StraightA.x - StraightB.x) * (LineC.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineC.x);
+            //   float db = (StraightA.x - StraightB.x) * (LineD.y - StraightA.y) + (StraightA.y - StraightB.y) * (StraightA.x - LineD.x);
 
             //         if (da * db <= 0) // 교차한다. 교차점을 구한다.
             //     {
@@ -157,9 +157,9 @@ namespace Teleport
             dy /= division;
 
             crossPoint = new Vector2(dx, dy); // 교차점 좌표.
-                            //       }
-                            //        else
-                            //           crossPoint = Vector2.zero;
+                                              //       }
+                                              //        else
+                                              //           crossPoint = Vector2.zero;
 
             return crossPoint;
         }

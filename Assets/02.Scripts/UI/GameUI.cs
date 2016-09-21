@@ -9,6 +9,8 @@ public class GameUI : MonoBehaviour
     public Text PlayerLife;
     public Text PlayerPower;
 
+    public Image GameOver;
+
     private int maxScore;
     private int newScore;
     private int playerLife;
@@ -16,6 +18,8 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
+        Screen.SetResolution(Screen.width, Screen.width * 16 / 9, true);
+
         maxScore = PlayerPrefs.GetInt("MAX_SCORE", 0);
         MaxScore.text = "MAX SCORE " + maxScore.ToString();
 
@@ -68,5 +72,15 @@ public class GameUI : MonoBehaviour
         }
 
         return manyStars;
+    }
+
+    public void AppearGameOver()
+    {
+        GameOver.GetComponent<Transform>().localScale = Vector3.one;
+    }
+
+    public void HideGameOver()
+    {
+        GameOver.GetComponent<Transform>().localScale = Vector3.zero;
     }
 }
