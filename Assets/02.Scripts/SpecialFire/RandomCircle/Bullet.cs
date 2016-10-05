@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace RandomCircle
+namespace Fake
 {
-    public class Bullet : MonoBehaviour
+    namespace RandomCircle
     {
-        void Start()
+        public class Bullet : MonoBehaviour
         {
-            StartCoroutine(Destroy());
-        }
+            void Start()
+            {
+                StartCoroutine(Destroy());
+            }
 
-        IEnumerator Destroy()
-        {
-            yield return new WaitForSeconds(10.0f);
-            Destroy(gameObject);
+            IEnumerator Destroy()
+            {
+                yield return new WaitForSeconds(10.0f);
+                Destroy(gameObject);
+            }
         }
     }
 }

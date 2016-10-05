@@ -1,135 +1,138 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Teleport
+namespace Fake
 {
-    public class Bullet : MonoBehaviour
+    namespace Teleport
     {
-        public Vector2 Direction
+        public class Bullet : MonoBehaviour
         {
-            get;
-            private set;
-        }
-
-        public float Speed
-        {
-            get;
-            private set;
-        }
-
-        public Vector2 CrossPoint
-        {
-            get;
-            private set;
-        }
-
-        public Vector2 TeleportPoint
-        {
-            get;
-            private set;
-        }
-
-        public float Angle
-        {
-            get;
-            private set;
-        }
-
-        private Transform transformCache;
-
-        private float teleportNumber;
-
-        private FireObject.Side sideOption;
-
-        void Start()
-        {
-            transformCache = GetComponent<Transform>();
-
-            teleportNumber = 0;
-        }
-
-        void Update()
-        {
-            Move();
-        }
-
-        private void Move()
-        {
-            Vector2 position = transformCache.localPosition;
-
-            if (sideOption == FireObject.Side.Up)
+            public Vector2 Direction
             {
-                if (position.y > CrossPoint.y && teleportNumber == 0)
-                {
-                    position = Teleport(position);
-
-                }
-                else if (position.y < CrossPoint.y && teleportNumber == 1)
-                {
-                    position = Teleport(position);
-                }
-            }
-            else if (sideOption == FireObject.Side.Left)
-            {
-                if (position.x < CrossPoint.x && teleportNumber == 0)
-                {
-                    position = Teleport(position);
-                }
-                else if (position.x > CrossPoint.x && teleportNumber == 1)
-                {
-                    position = Teleport(position);
-                }
-            }
-            else if (sideOption == FireObject.Side.Down)
-            {
-                if (position.y < CrossPoint.y && teleportNumber == 0)
-                {
-                    position = Teleport(position);
-                }
-                else if (position.y > CrossPoint.y && teleportNumber == 1)
-                {
-                    position = Teleport(position);
-                }
-            }
-            else if (sideOption == FireObject.Side.Right)
-            {
-                if (position.x > CrossPoint.x && teleportNumber == 0)
-                {
-                    position = Teleport(position);
-                }
-                else if (position.x < CrossPoint.x && teleportNumber == 1)
-                {
-                    position = Teleport(position);
-                }
+                get;
+                private set;
             }
 
-            position += Direction * Speed * Time.deltaTime;
+            public float Speed
+            {
+                get;
+                private set;
+            }
 
-            transformCache.localPosition = position;
-        }
+            public Vector2 CrossPoint
+            {
+                get;
+                private set;
+            }
 
-        private Vector2 Teleport(Vector2 position)
-        {
-            Direction = GlobalClass.RotateDirection(Direction, 180.0f);
-            float rotateAngle = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
-            transformCache.localRotation = Quaternion.Euler(0, 0, rotateAngle);
+            public Vector2 TeleportPoint
+            {
+                get;
+                private set;
+            }
 
-            transform.localPosition = TeleportPoint;
-            position = transformCache.localPosition;
+            public float Angle
+            {
+                get;
+                private set;
+            }
 
-            teleportNumber++;
+            private Transform transformCache;
 
-            return position;
-        }
+            private float teleportNumber;
 
-        public void SetUp(Vector2 direction, float speed, Vector2 crossPoint, Vector2 teleportPoint, FireObject.Side sideOption, float angle)
-        {
-            Direction = direction;
-            Speed = speed;
-            CrossPoint = crossPoint;
-            TeleportPoint = teleportPoint;
-            this.sideOption = sideOption;
-            Angle = angle;
+            private FireObject.Side sideOption;
+
+            void Start()
+            {
+                transformCache = GetComponent<Transform>();
+
+                teleportNumber = 0;
+            }
+
+            void Update()
+            {
+                Move();
+            }
+
+            private void Move()
+            {
+                Vector2 position = transformCache.localPosition;
+
+                if (sideOption == FireObject.Side.Up)
+                {
+                    if (position.y > CrossPoint.y && teleportNumber == 0)
+                    {
+                        position = Teleport(position);
+
+                    }
+                    else if (position.y < CrossPoint.y && teleportNumber == 1)
+                    {
+                        position = Teleport(position);
+                    }
+                }
+                else if (sideOption == FireObject.Side.Left)
+                {
+                    if (position.x < CrossPoint.x && teleportNumber == 0)
+                    {
+                        position = Teleport(position);
+                    }
+                    else if (position.x > CrossPoint.x && teleportNumber == 1)
+                    {
+                        position = Teleport(position);
+                    }
+                }
+                else if (sideOption == FireObject.Side.Down)
+                {
+                    if (position.y < CrossPoint.y && teleportNumber == 0)
+                    {
+                        position = Teleport(position);
+                    }
+                    else if (position.y > CrossPoint.y && teleportNumber == 1)
+                    {
+                        position = Teleport(position);
+                    }
+                }
+                else if (sideOption == FireObject.Side.Right)
+                {
+                    if (position.x > CrossPoint.x && teleportNumber == 0)
+                    {
+                        position = Teleport(position);
+                    }
+                    else if (position.x < CrossPoint.x && teleportNumber == 1)
+                    {
+                        position = Teleport(position);
+                    }
+                }
+
+                position += Direction * Speed * Time.deltaTime;
+
+                transformCache.localPosition = position;
+            }
+
+            private Vector2 Teleport(Vector2 position)
+            {
+                Direction = GlobalClass.RotateDirection(Direction, 180.0f);
+                float rotateAngle = -Mathf.Atan2(Direction.x, Direction.y) * Mathf.Rad2Deg;
+                transformCache.localRotation = Quaternion.Euler(0, 0, rotateAngle);
+
+                transform.localPosition = TeleportPoint;
+                position = transformCache.localPosition;
+
+                teleportNumber++;
+
+                return position;
+            }
+
+            public void SetUp(Vector2 direction, float speed, Vector2 crossPoint, Vector2 teleportPoint, FireObject.Side sideOption, float angle)
+            {
+                Direction = direction;
+                Speed = speed;
+                CrossPoint = crossPoint;
+                TeleportPoint = teleportPoint;
+                this.sideOption = sideOption;
+                Angle = angle;
+            }
         }
     }
 }

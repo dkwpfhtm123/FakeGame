@@ -1,78 +1,81 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace LineSpread
+namespace Fake
 {
-    public class FireObject : MonoBehaviour
+    namespace LineSpread
     {
-        public GameObject BulletA;
-        public GameObject BulletB;
-
-        private bool firstFire;
-        private bool firing;
-
-        private Transform transformCache;
-        private Transform playerTransform;
-
-        void Start()
+        public class FireObject : MonoBehaviour
         {
-            transformCache = GetComponent<Transform>();
+            public GameObject BulletA;
+            public GameObject BulletB;
 
-            firstFire = false;
-            firing = false;
-        }
+            private bool firstFire;
+            private bool firing;
 
-        void Update()
-        {
-            if (firing == false && Manager.Instance.WaitTime == false)
+            private Transform transformCache;
+            private Transform playerTransform;
+
+            void Start()
             {
-                StartCoroutine(FireBullet());
+                transformCache = GetComponent<Transform>();
+
+                firstFire = false;
+                firing = false;
             }
-        }
 
-        IEnumerator FireBullet()
-        {
-            firing = true; // object에서 bullet을 발사하는중.
-            Manager.Instance.WaitTime = true; // bullet에서 bullet을 발사하는 일이 끝날 때까지 대기.
-
-            yield return new WaitForSeconds(0.1f);
-            int anglePlus = 0;
-
-            playerTransform = GameMgr.Instance.PlayerTransform;
-            Vector2 targetVector = (playerTransform.localPosition - transformCache.localPosition).normalized;
-
-            while (Manager.Instance.OnCollision == false) // bullet이 충돌할 때까지 무한반복
+            void Update()
             {
-                yield return new WaitForSeconds(0.1f); // 발사간격
-                for (int i = 0; i < 6; i++)
+                if (firing == false && Manager.Instance.WaitTime == false)
                 {
-                    GameObject bulletObject;
-                    if (firstFire == false)
-                    {
-                        bulletObject = Instantiate(BulletA);
-                        firstFire = true; // 첫번째만 발사
-                    }
-                    else
-                    {
-                        bulletObject = Instantiate(BulletB);
-                    }
-                    Transform bulletTransform = bulletObject.GetComponent<Transform>();
-                    Bullet bullet = bulletObject.GetComponent<Bullet>();
-
-                    bulletTransform.parent = transformCache;
-
-                    bulletTransform.localPosition = Vector3.zero;
-                    bulletTransform.localRotation = Quaternion.identity;
-                    bulletTransform.localScale = Vector3.one * 0.5f;
-
-                    bullet.SetUp(targetVector, 3.0f, anglePlus, false);
-
-                    anglePlus = (i + 1) * 60; // 60도씩 돌림.
+                    StartCoroutine(FireBullet());
                 }
-                anglePlus = 0;
             }
-            firing = false; // object에서 bullet을 발사하기를 끝냄. 
-            firstFire = false; // 첫번째만 발사 초기화
+
+            IEnumerator FireBullet()
+            {
+                firing = true; // object에서 bullet을 발사하는중.
+                Manager.Instance.WaitTime = true; // bullet에서 bullet을 발사하는 일이 끝날 때까지 대기.
+
+                yield return new WaitForSeconds(0.1f);
+                int anglePlus = 0;
+
+                playerTransform = Fake.GameMgr.Instance.PlayerTransform;
+                Vector2 targetVector = (playerTransform.localPosition - transformCache.localPosition).normalized;
+
+                while (Manager.Instance.OnCollision == false) // bullet이 충돌할 때까지 무한반복
+                {
+                    yield return new WaitForSeconds(0.1f); // 발사간격
+                    for (int i = 0; i < 6; i++)
+                    {
+                        GameObject bulletObject;
+                        if (firstFire == false)
+                        {
+                            bulletObject = Instantiate(BulletA);
+                            firstFire = true; // 첫번째만 발사
+                        }
+                        else
+                        {
+                            bulletObject = Instantiate(BulletB);
+                        }
+                        Transform bulletTransform = bulletObject.GetComponent<Transform>();
+                        Bullet bullet = bulletObject.GetComponent<Bullet>();
+
+                        bulletTransform.parent = transformCache;
+
+                        bulletTransform.localPosition = Vector3.zero;
+                        bulletTransform.localRotation = Quaternion.identity;
+                        bulletTransform.localScale = Vector3.one * 0.5f;
+
+                        bullet.SetUp(targetVector, 3.0f, anglePlus, false);
+
+                        anglePlus = (i + 1) * 60; // 60도씩 돌림.
+                    }
+                    anglePlus = 0;
+                }
+                firing = false; // object에서 bullet을 발사하기를 끝냄. 
+                firstFire = false; // 첫번째만 발사 초기화
+            }
         }
     }
 }

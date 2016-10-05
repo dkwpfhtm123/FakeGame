@@ -2,10 +2,14 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class SceneChange : MonoBehaviour {
-
-    public void ChangedToScene()
+namespace Fake
+{
+    public class SceneChange : MonoBehaviour
     {
-        SceneManager.LoadScene("PlayScene");
+
+        public void ChangedToScene()
+        {
+            SceneManager.LoadScene("PlayScene");
+        }
     }
 }

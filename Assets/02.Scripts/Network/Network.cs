@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+namespace Fake { 
 public class Network : MonoBehaviour
 {
     public Text[] HighScore;
@@ -21,75 +22,76 @@ public class Network : MonoBehaviour
         }
     }
 
-    IEnumerator Start()
-    {
-        /*     using (var www = new WWW("http://127.0.0.1:8000/hello/"))
-             {
-                 yield return www;
-                 var response = www.text;
-                 Debug.Log(response);
-
-                 var result = Halak.JValue.Parse(response);
-                 foreach (var rankerValue in result.Array())
-                 {
-                     var ranker = new Ranker(
-                         rankerValue["rank"],
-                         rankerValue["name"],
-                         rankerValue["score"],
-                         rankerValue["date"]);
-
-                     Debug.Log(ranker.Rank + " / " + ranker.Name + " / " + ranker.Score + " / " + ranker.Date);
-                 }
-             }
-             */
-
-        using (var www = new WWW("http://127.0.0.1:8000/getscore/"))
+        IEnumerator Start()
         {
-            yield return www;
-            var response = www.text;
+            /*     using (var www = new WWW("http://127.0.0.1:8000/hello/"))
+                 {
+                     yield return www;
+                     var response = www.text;
+                     Debug.Log(response);
 
-            var result = Halak.JValue.Parse(response);
+                     var result = Halak.JValue.Parse(response);
+                     foreach (var rankerValue in result.Array())
+                     {
+                         var ranker = new Ranker(
+                             rankerValue["rank"],
+                             rankerValue["name"],
+                             rankerValue["score"],
+                             rankerValue["date"]);
 
-            Ranker[] data = new Ranker[9];
-            int length = 0;
+                         Debug.Log(ranker.Rank + " / " + ranker.Name + " / " + ranker.Score + " / " + ranker.Date);
+                     }
+                 }
+                 */
 
-            for (int i = 0; i < data.Length; i++)
+            using (var www = new WWW("http://127.0.0.1:8000/getscore/"))
             {
-                HighScore[i].text = (i + 1).ToString() + "  NON  0";
-            }
+                yield return www;
+                var response = www.text;
 
-            foreach (var rankerValue in result.Array())
-            {
-                var ranker = new Ranker(
-                    rankerValue["rank"],
-                    rankerValue["name"],
-                    rankerValue["score"],
-                    rankerValue["date"]);
+                var result = Halak.JValue.Parse(response);
 
-                data[length] = new Ranker(ranker.Rank, ranker.Name, ranker.Score, ranker.Date);
-                length++;
-            }
+                Ranker[] data = new Ranker[9];
+                int length = 0;
 
-            for (int i = 0; i < length; i++)
-            {
-                for (int x = 0; x < length; x++)
+                for (int i = 0; i < data.Length; i++)
                 {
-                    Ranker temp;
-                    if (data[x].Score < data[x + 1].Score)
-                    {
-                        temp = data[x];
-                        data[x] = data[x + 1];
-                        data[x + 1] = data[x];
-                    }
-                    x++;
+                    HighScore[i].text = (i + 1).ToString() + "  NON  0";
                 }
-            }
 
-            for (int i = 0; i < length; i++)
-            {
-                HighScore[i].text = (i + 1).ToString() + "  " + data[i].Name + "  " + data[i].Score.ToString();
-            }
+                foreach (var rankerValue in result.Array())
+                {
+                    var ranker = new Ranker(
+                        rankerValue["rank"],
+                        rankerValue["name"],
+                        rankerValue["score"],
+                        rankerValue["date"]);
 
+                    data[length] = new Ranker(ranker.Rank, ranker.Name, ranker.Score, ranker.Date);
+                    length++;
+                }
+
+                for (int i = 0; i < length; i++)
+                {
+                    for (int x = 0; x < length; x++)
+                    {
+                        Ranker temp;
+                        if (data[x].Score < data[x + 1].Score)
+                        {
+                            temp = data[x];
+                            data[x] = data[x + 1];
+                            data[x + 1] = data[x];
+                        }
+                        x++;
+                    }
+                }
+
+                for (int i = 0; i < length; i++)
+                {
+                    HighScore[i].text = (i + 1).ToString() + "  " + data[i].Name + "  " + data[i].Score.ToString();
+                }
+
+            }
         }
     }
 }

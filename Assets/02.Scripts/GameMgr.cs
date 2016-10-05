@@ -3,42 +3,45 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameMgr : MonoBehaviour
+namespace Fake
 {
-    private static GameMgr instance;
-    public static GameMgr Instance
+    public class GameMgr : MonoBehaviour
     {
-        get
+        private static GameMgr instance;
+        public static GameMgr Instance
         {
-            if (instance == null)
-                instance = FindObjectOfType<GameMgr>();
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<GameMgr>();
 
-            return instance;
+                return instance;
+            }
         }
-    }
 
-    public GameObject SmallEnemyPrefab;
-    public List<GameObject> SmallEnemyPool;
-    public Transform PlayerTransform
-    {
-        get;
-        set;
-    }
+        public GameObject SmallEnemyPrefab;
+        public List<GameObject> SmallEnemyPool;
+        public Transform PlayerTransform
+        {
+            get;
+            set;
+        }
 
-    public int PlayerScore;
+        public int PlayerScore;
 
-    private Transform transformCache;
+        private Transform transformCache;
 
-    void Start()
-    {
-        SmallEnemyPool = new List<GameObject>();
+        void Start()
+        {
+            SmallEnemyPool = new List<GameObject>();
 
-        PlayerScore = 0;
-    }
+            PlayerScore = 0;
+        }
 
-    void OnDestroy()
-    {
-        if (instance == this)
-            instance = null;
+        void OnDestroy()
+        {
+            if (instance == this)
+                instance = null;
+        }
     }
 }

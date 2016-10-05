@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace DistanceCirecle
+namespace Fake
 {
-    public class Bullet : MonoBehaviour
+    namespace DistanceCirecle
     {
-        void Start()
+        public class Bullet : MonoBehaviour
         {
-            StartCoroutine(TimeOut());
-        }
+            void Start()
+            {
+                StartCoroutine(TimeOut());
+            }
 
-        IEnumerator TimeOut()
-        {
-            yield return new WaitForSeconds(4.0f);
-            Destroy(gameObject);
+            IEnumerator TimeOut()
+            {
+                yield return new WaitForSeconds(4.0f);
+                Destroy(gameObject);
+            }
         }
     }
 }

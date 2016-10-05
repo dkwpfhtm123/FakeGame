@@ -1,35 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace LineSpread
+namespace Fake
 {
-    public class Manager : MonoBehaviour
+    namespace LineSpread
     {
-        private static Manager instance;
-        public static Manager Instance
+        public class Manager : MonoBehaviour
         {
-            get
+            private static Manager instance;
+            public static Manager Instance
             {
-                if (instance == null)
-                    instance = FindObjectOfType<Manager>();
+                get
+                {
+                    if (instance == null)
+                        instance = FindObjectOfType<Manager>();
 
-                return instance;
+                    return instance;
+                }
             }
-        }
 
-        public bool OnCollision;
-        public bool WaitTime;
+            public bool OnCollision;
+            public bool WaitTime;
 
-        void Start()
-        {
-            OnCollision = false;
-            WaitTime = false;
-        }
+            void Start()
+            {
+                OnCollision = false;
+                WaitTime = false;
+            }
 
-        void OnDestroy()
-        {
-            if (instance == this)
-                instance = null;
+            void OnDestroy()
+            {
+                if (instance == this)
+                    instance = null;
+            }
         }
     }
 }
