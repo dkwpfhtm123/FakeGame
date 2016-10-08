@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: 8643443d4cd8799489fb44bcea8d998e
+timeCreated: 1475933445
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Lantern
+    21300002: Cane
+    21300004: items_2
+    21300006: items_3
+    21300008: items_4
+    21300010: items_5
+    21300012: items_6
+    21300014: items_7
+    21300016: items_8
+    21300018: items_9
+    21300020: items_10
+    21300022: items_11
+    21300024: items_12
+    21300026: items_13
+    21300028: items_14
+    21300030: items_15
+    21300032: items_16
+    21300034: items_17
+    21300036: items_18
+    21300038: items_19
+    21300040: items_20
+    21300042: items_21
+    21300044: items_22
+    21300046: items_23
+    21300048: items_24
+    21300050: items_25
+    21300052: items_26
+    21300054: items_27
+    21300056: items_28
+    21300058: items_29
+    21300060: items_30
+    21300062: items_31
+    21300064: items_32
+    21300066: items_33
+    21300068: items_34
+    21300070: items_35
+    21300072: items_36
+    21300074: items_37
+    21300076: items_38
+    21300078: items_39
+    21300080: items_40
+    21300082: items_41
+    21300084: items_42
+    21300086: items_43
+    21300088: items_44
+    21300090: items_45
+    21300092: items_46
+    21300094: items_47
+    21300096: items_48
+    21300098: items_49
+    21300100: items_50
+    21300102: items_51
+    21300104: items_52
+    21300106: items_53
+    21300108: items_54
+    21300110: items_55
+    21300112: items_56
+    21300114: items_57
+    21300116: items_58
+    21300118: items_59
+    21300120: items_60
+    21300122: items_61
+    21300124: items_62
+    21300126: items_63
+    21300128: items_64
+    21300130: items_65
+    21300132: items_66
+    21300134: items_67
+    21300136: items_68
+    21300138: items_69
+    21300140: items_70
+    21300142: items_71
+    21300144: items_72
+    21300146: items_73
+    21300148: items_74
+    21300150: items_75
+    21300152: WhiteItem
+    21300154: BlackItem
+    21300156: items_78
+    21300158: RedItem
+    21300160: items_80
+    21300162: items_81
+    21300164: items_82
+    21300166: items_83
+    21300168: items_84
+    21300170: items_85
+    21300172: items_86
+    21300174: items_87
+    21300176: BlueItem
+    21300178: GreenItem
+    21300180: YellowItem
+    21300182: PurpleItem
+    21300184: items_92
+    21300186: items_93
+    21300188: items_94
+    21300190: items_95
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cane
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 229
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: WhiteItem
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 38
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlackItem
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 38
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: RedItem
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 38
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlueItem
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 6
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GreenItem
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 6
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: YellowItem
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 6
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: PurpleItem
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 6
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

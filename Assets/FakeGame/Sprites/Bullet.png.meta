@@ -1,0 +1,742 @@
+fileFormatVersion: 2
+guid: 563b91815b87ab740a42fba5c383eee1
+timeCreated: 1475932718
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_0
+    21300002: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_1
+    21300004: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_2
+    21300006: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_3
+    21300008: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_4
+    21300010: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_5
+    21300012: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_6
+    21300014: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_7
+    21300016: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_8
+    21300018: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_9
+    21300020: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_10
+    21300022: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_11
+    21300024: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_12
+    21300026: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_13
+    21300028: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_14
+    21300030: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_15
+    21300032: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_16
+    21300034: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_17
+    21300036: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_18
+    21300038: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_19
+    21300040: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_20
+    21300042: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_21
+    21300044: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_22
+    21300046: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_23
+    21300048: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_24
+    21300050: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_25
+    21300052: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_26
+    21300054: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_27
+    21300056: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_28
+    21300058: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_29
+    21300060: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_30
+    21300062: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_31
+    21300064: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_32
+    21300066: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_33
+    21300068: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_34
+    21300070: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_35
+    21300072: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_36
+    21300074: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_37
+    21300076: BlackStar
+    21300078: RedStar
+    21300080: PinkStar
+    21300082: BlueStar
+    21300084: SkyStar
+    21300086: GreenStar
+    21300088: YellowStar
+    21300090: WhiteStar
+    21300092: BigBlackCircle
+    21300094: BigRedCircle
+    21300096: BigPinkCircle
+    21300098: BigBlueCircle
+    21300100: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_50
+    21300102: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_51
+    21300104: SmallBlackCircle
+    21300106: SmallRedCircle
+    21300108: SmallPinkCircle
+    21300110: SmallBlueCircle
+    21300112: SmallSkyCircle
+    21300114: SmallGreenCircle
+    21300116: SmallYellowCircle
+    21300118: SmallWhiteCircle
+    21300120: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_60
+    21300122: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_61
+    21300124: BigSkyCircle
+    21300126: BigGreenCircle
+    21300128: BigYellowCircle
+    21300130: BigWhiteCircle
+    21300132: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_66
+    21300134: BlackKnife
+    21300136: RedKnife
+    21300138: PinkKnife
+    21300140: BlueKnife
+    21300142: SkyKnife
+    21300144: GreenKnife
+    21300146: YellowKnife
+    21300148: WhiteKnife
+    21300150: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_75
+    21300152: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_76
+    21300154: BlackEllipse
+    21300156: RedEllipse
+    21300158: PinkEllipse
+    21300160: BlueEllipse
+    21300162: SkyEllipse
+    21300164: GreenEllipse
+    21300166: YellowEllipse
+    21300168: WhiteEllipse
+    21300170: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_85
+    21300172: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_86
+    21300174: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_87
+    21300176: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_88
+    21300178: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_89
+    21300180: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_90
+    21300182: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_91
+    21300184: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_92
+    21300186: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_93
+    21300188: BigFilledRedCircle
+    21300190: BigFilledBlueCircle
+    21300192: BigFilledGreenCircle
+    21300194: BigFilledYellowCircle
+    21300196: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_98
+    21300198: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_99
+    21300200: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_100
+    21300202: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_101
+    21300204: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_102
+    21300206: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_103
+    21300208: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_104
+    21300210: touhou_style_bullets_2_0__bronze_coin_is_bronze___by_popfan95b-d8hofsb_105
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BlackStar
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: RedStar
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: PinkStar
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlueStar
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SkyStar
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GreenStar
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: YellowStar
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: WhiteStar
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 324
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigBlackCircle
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 275
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigRedCircle
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 275
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigPinkCircle
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 275
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigBlueCircle
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 275
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallBlackCircle
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallRedCircle
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallPinkCircle
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 276
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallBlueCircle
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallSkyCircle
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallGreenCircle
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 276
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallYellowCircle
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SmallWhiteCircle
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 276
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigSkyCircle
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 184
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigGreenCircle
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 184
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigYellowCircle
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 184
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigWhiteCircle
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 184
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlackKnife
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: RedKnife
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: PinkKnife
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlueKnife
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SkyKnife
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 184
+        width: 32
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GreenKnife
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: YellowKnife
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 184
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: WhiteKnife
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 184
+        width: 32
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlackEllipse
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: RedEllipse
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: PinkEllipse
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BlueEllipse
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SkyEllipse
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GreenEllipse
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: YellowEllipse
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 138
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: WhiteEllipse
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 137
+        width: 26
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigFilledRedCircle
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigFilledBlueCircle
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigFilledGreenCircle
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 1
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: BigFilledYellowCircle
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 1
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
