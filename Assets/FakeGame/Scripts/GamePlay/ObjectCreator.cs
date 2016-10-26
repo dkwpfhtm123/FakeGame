@@ -9,8 +9,6 @@ namespace Fake
         public GameObject Boss;
         public GameObject EnemyObject;
 
-   // 베이스뷸렛 완성후 다시 활성화     private BaseBullet bulletKinds;
-
         private Vector2 PlayerSpawnPoint;
 
         private Transform transformCache;
@@ -21,8 +19,6 @@ namespace Fake
         {
             radius = 5.0f;
             transformCache = GetComponent<Transform>();
-      // 베이스뷸렛 완성후 다시활성화      bulletKinds = gameObject.GetComponent<BaseBullet>();
-            
             PlayerSpawnPoint = new Vector2(transformCache.localPosition.x, transformCache.localPosition.y - radius * 0.5f);
 
             StartCoroutine(StartGame());
@@ -52,17 +48,16 @@ namespace Fake
 
         public void CreateEnemy()
         {
-            GameObject enemyObject = Instantiate(EnemyObject);
-            Enemy.EnemyController set = enemyObject.GetComponent<Enemy.EnemyController>();
-            // 구현중       Enemy.EnemyAttackKinds kinds = enemyObject.GetComponent<Enemy.EnemyAttackKinds>();
-            MoveObject direct = enemyObject.GetComponent<MoveObject>();
+            var enemyObject = Instantiate(EnemyObject);
+            var set = enemyObject.GetComponent<Enemy.EnemyController>();
+            var direct = enemyObject.GetComponent<Mover>();
 
             enemyObject.transform.localPosition = new Vector2(2, 0);
             enemyObject.transform.localRotation = Quaternion.identity;
             enemyObject.transform.localScale = Vector2.one;
 
             set.EnemyTypeCheck = Enemy.EnemyController.EnemyType.SmallEnemy1; // 수정예정
-            direct.Set(new Vector2(2, -3), new Vector2(-10, 0), new Vector2(2, 3));
+            direct.SetBezierCurve(new Vector2(2, -3), new Vector2(-10, 0), new Vector2(2, 3));
         }
     }
 }

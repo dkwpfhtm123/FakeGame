@@ -109,7 +109,7 @@ namespace Fake.LineSpread
 
         void OnCollisionExit2D(Collision2D coll)
         {
-            if (gameObject.GetComponent<NoDestroy>() != null) // bulletA , bulletB 구분.
+            if (gameObject.GetComponent<BaseBullet>().DestroyWhenHitWall == false) // bulletA , bulletB 구분.
             {
                 if (coll.gameObject.GetComponent<Wall>() != null) // Wall 에 충돌했을때
                 {

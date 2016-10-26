@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21203372}
   - 58: {fileID: 5869494}
   - 114: {fileID: 11403602}
-  - 114: {fileID: 11480128}
+  - 114: {fileID: 114000010806192716}
   m_Layer: 0
   m_Name: PurpleCircle
   m_TagString: Untagged
@@ -57,19 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c89c936e5db0ef409748b7f75623ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisIsEnemyBullet: 1
---- !u!114 &11480128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1891e5559332f04f984fdfd10c3693c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletTypeCheck: 2
+  BulletDamage: 0
+  BulletSpeed: 0
+  BulletDirection: {x: 0, y: 0}
+  BulletTypeCheck: 0
 --- !u!212 &21203372
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,3 +105,18 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173520}
   m_IsPrefabParent: 1
+--- !u!114 &114000010806192716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af06759a70933545a8d83940a1af47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletDamage: 0
+  BulletSpeed: 0
+  BulletDirection: {x: 0, y: 0}
+  BulletTypeCheck: 2

@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 namespace Fake
 {
-    public class NavigateToPlayScene : MonoBehaviour
+    public class SceneNavigator : MonoBehaviour
     {
-
-        public void ChangedToScene()
+        public void NavigateToPlayScene()
         {
             SceneManager.LoadScene("PlayScene");
         }

@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8376a1ffadd054abc4ca5adaa1d175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAttack1: {fileID: 199190, guid: c95feea1ef791a145a0417742361497b, type: 2}
-  PlayerAttack2: {fileID: 191088, guid: b6722373ecea6cb49879bb818bb96493, type: 2}
+  PlayerSlowAttack: {fileID: 191088, guid: b6722373ecea6cb49879bb818bb96493, type: 2}
+  PlayerFastAttack: {fileID: 199190, guid: c95feea1ef791a145a0417742361497b, type: 2}
   FirePosition: {fileID: 496552}
 --- !u!114 &11469646
 MonoBehaviour:

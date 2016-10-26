@@ -15,7 +15,7 @@ namespace Fake.Player
         // Power관련 변수들
         public int PlayerPower;
         public GameObject PlayerPowerObject;
-        private PowerObject powerUp = null;    // 파워 오브젝트 순서대로 저장
+        private PowerShooter powerUp = null;    // 파워 오브젝트 순서대로 저장
 
         private Transform transformCache;
         private float moveSpeed = 5.0f;
@@ -55,10 +55,10 @@ namespace Fake.Player
 
         void Update()
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            var vertical = Input.GetAxisRaw("Vertical");
 
-            Vector2 moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
+            var moveDir = (Vector2.up * vertical) + (Vector2.right * horizontal);
 
             if (Input.GetKeyDown(KeyCode.X))
             {
@@ -89,9 +89,9 @@ namespace Fake.Player
             boomObject.transform.SetParent(transformCache, true);
             boomObject.transform.localScale *= 2.0f;
             OnGoingBoom = true;
-            Debug.Log("Start");
+            Debug.Log("BoomStart");
             yield return new WaitForSeconds(boomTime);
-            Debug.Log("End");
+            Debug.Log("BoomEnd");
             OnGoingBoom = false;
             Destroy(boomObject);
             OnGoingBoom = false;
@@ -174,8 +174,8 @@ namespace Fake.Player
 
         public void PowerUp(float powerLevel)
         {
-            GameObject playerPower = Instantiate(PlayerPowerObject);
-            PowerObject powerCtrl = playerPower.GetComponent<PowerObject>();
+            var playerPower = Instantiate(PlayerPowerObject);
+            var powerCtrl = playerPower.GetComponent<PowerShooter>();
 
             playerPower.transform.localPosition = transform.localPosition;
             playerPower.transform.localRotation = Quaternion.identity;

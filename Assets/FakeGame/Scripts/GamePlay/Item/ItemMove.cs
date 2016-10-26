@@ -48,10 +48,10 @@ namespace Fake.Item
         {
             transformCache = GetComponent<Transform>();
 
-            Transform playerTransform = GameManager.Instance.PlayerTransform;
-            Vector2 target = (playerTransform.localPosition - transformCache.localPosition).normalized;
+            var playerTransform = GameManager.Instance.PlayerTransform;
+            var target = (playerTransform.localPosition - transformCache.localPosition).normalized;
 
-            Vector2 position = transformCache.localPosition;
+            var position = transformCache.localPosition;
             position.x += target.x * ScoreSpeed * deltaTime;
             position.y += target.y * ScoreSpeed * deltaTime;
 
@@ -66,7 +66,7 @@ namespace Fake.Item
         IEnumerator MovePosition()
         {
             transformCache = GetComponent<Transform>();
-            Vector2 position = transformCache.localPosition;
+            var position = transformCache.localPosition;
 
             position.y += PowerSpeed * Time.deltaTime;
             transformCache.localPosition = position;

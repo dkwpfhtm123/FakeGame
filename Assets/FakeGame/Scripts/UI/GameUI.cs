@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace Fake.UI
 {
@@ -23,8 +22,6 @@ namespace Fake.UI
 
         void Start()
         {
-            Screen.SetResolution(Screen.width, Screen.width * 16 / 9, true);
-
             maxScore = PlayerPrefs.GetInt("MAX_SCORE", 0);
             MaxScore.text = maxScore.ToString();
 
@@ -52,17 +49,17 @@ namespace Fake.UI
         {
             playerLife = checkLife;
 
-            Show(LifeStar, playerLife);
+            AppearStar(LifeStar, playerLife);
         }
 
         public void CheckPlayerPower(int checkPower)
         {
             playerPower = checkPower;
 
-            Show(PowerStar, playerPower);
+            AppearStar(PowerStar, playerPower);
         }
 
-        public void HideAll(Image[] star)
+        public void DisappearAllStar(Image[] star)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -70,9 +67,9 @@ namespace Fake.UI
             }
         }
 
-        public void Show(Image[] star, int num)
+        public void AppearStar(Image[] star, int num)
         {
-            HideAll(star);
+            DisappearAllStar(star);
 
             for (int i = 0; i < num; i++)
             {
@@ -82,12 +79,12 @@ namespace Fake.UI
 
         public void AppearGameOver()
         {
-            GameOver.GetComponent<Transform>().localScale = Vector3.one;
+            GameOver.gameObject.SetActive(true);
         }
 
         public void HideGameOver()
         {
-            GameOver.GetComponent<Transform>().localScale = Vector3.zero;
+            GameOver.gameObject.SetActive(false);
         }
     }
 }

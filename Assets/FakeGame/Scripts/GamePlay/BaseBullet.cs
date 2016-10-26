@@ -3,14 +3,42 @@ using System.Collections;
 
 namespace Fake
 {
+    public enum BulletType
+    {
+        RedKnife,
+        BlueKnife,
+        PurpleCircle,
+        PlayerBullet,
+        PlayerBoom,
+    }
+
     public class BaseBullet : MonoBehaviour
     {
+        private bool destroyWhenHitWall;
         public bool DestroyWhenHitWall
         {
-            set;
-            get;
+            private set
+            {
+                destroyWhenHitWall = value;
+            }
+            get
+            {
+                return destroyWhenHitWall;
+            }
         }
 
-        public GameObject bulletObject;
+        public float BulletDamage;
+        public float BulletSpeed;
+        public Vector2 BulletDirection;
+
+        public BulletType BulletTypeCheck;
+
+        public void SetBaseBullet(float bulletDamage, float bulletSpeed, Vector2 bulletDirection, bool destroyWhenHitWall)
+        {
+            BulletDamage = bulletDamage;
+            BulletSpeed = bulletSpeed;
+            BulletDirection = bulletDirection;
+            DestroyWhenHitWall = destroyWhenHitWall;
+        }
     }
 }

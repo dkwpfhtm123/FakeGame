@@ -31,7 +31,7 @@ namespace Fake.Boss
         {
             transformCache = GetComponent<Transform>();
 
-            Image hpbar = Instantiate(bossHPbar);
+            var hpbar = Instantiate(bossHPbar);
             hpbar.transform.localPosition = new Vector2(835, -35.5f);
             hpbar.transform.localScale = Vector2.one;
 
@@ -52,7 +52,7 @@ namespace Fake.Boss
         private IEnumerator StartPattern()
         {
             GetComponent<Collider2D>().enabled = false;
-            GameObject WaitTimeBoss = MakeBossImage();
+            var WaitTimeBoss = MakeBossImage();
 
             // 패턴 시작 직전 패턴이름, 패턴애니메이션 기타등등 넣을곳
             yield return new WaitForSeconds(3.0f);
@@ -84,8 +84,8 @@ namespace Fake.Boss
 
         private GameObject MakeBossImage()
         {
-            GameObject WaitTimeBoss = Instantiate(BossImageObject);
-            Transform bossTransform = WaitTimeBoss.GetComponent<Transform>();
+            var WaitTimeBoss = Instantiate(BossImageObject);
+            var bossTransform = WaitTimeBoss.GetComponent<Transform>();
 
             bossTransform.localPosition = transformCache.localPosition;
             bossTransform.localRotation = Quaternion.identity;
@@ -102,8 +102,8 @@ namespace Fake.Boss
 
             GetComponent<Collider2D>().enabled = true;
 
-            GameObject patternObject = Instantiate(pattern[number]);
-            Transform objectTransform = patternObject.GetComponent<Transform>();
+            var patternObject = Instantiate(pattern[number]);
+            var objectTransform = patternObject.GetComponent<Transform>();
 
             objectTransform.localPosition = transformCache.localPosition;
             objectTransform.localRotation = Quaternion.identity;
@@ -116,9 +116,9 @@ namespace Fake.Boss
         {
             //     if (patternStart == true)
             //   {
-            if (coll.gameObject.GetComponent<BulletTypeCode>() != null)
+            if (coll.gameObject.GetComponent<BaseBullet>() != null)
             {
-                BulletTypeCode bulletType = coll.gameObject.GetComponent<BulletTypeCode>();
+                var bulletType = coll.gameObject.GetComponent<BaseBullet>();
 
                 if (bulletType.BulletTypeCheck == BulletType.PlayerBullet)
                 {

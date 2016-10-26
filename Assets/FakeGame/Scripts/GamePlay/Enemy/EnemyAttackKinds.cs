@@ -34,14 +34,14 @@ namespace Fake.Enemy
 
         public void FireConeType(Transform spawnTransform, AttackType attackType, float bulletSpeed)
         {
-            int oneshot = 5;
-            float angle = 60.0f;
-            float anglePlus = angle / (oneshot - 1);
+            var oneshot = 5;
+            var angle = 60.0f;
+            var anglePlus = angle / (oneshot - 1);
             angle *= 0.5f;
 
             while (oneshot > 0)
             {
-                Vector2 targetDirection = RotateBullet(angle, spawnTransform);
+                var targetDirection = RotateBullet(angle, spawnTransform);
                 CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
 
                 oneshot--;
@@ -55,9 +55,9 @@ namespace Fake.Enemy
 
             while (oneshot > 0)
             {
-                float angle = Random.Range(0.0f, 360.0f);
+                var angle = Random.Range(0.0f, 360.0f);
 
-                Vector2 targetDirection = RotateBullet(angle, spawnTransform);
+                var targetDirection = RotateBullet(angle, spawnTransform);
                 CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
 
                 oneshot--;
@@ -71,17 +71,17 @@ namespace Fake.Enemy
 
         IEnumerator SinTypeCoroutine(Transform spawnTransform, AttackType attackType, float bulletSpeed)
         {
-            float angle = 0.0f;
-            float oneShot = 6.0f;
-            float anglePlus = 0.0f;
+            var angle = 0.0f;
+            var oneShot = 6.0f;
+            var anglePlus = 0.0f;
 
-            Vector2 direction = new Vector2(1, 0);
+            var direction = new Vector2(1, 0);
 
             while (true)
             {
-                for (int i = 0; i < oneShot; i++)
+                for (var i = 0; i < oneShot; i++)
                 {
-                    for (int z = 0; z < oneShot; z++)
+                    for (var z = 0; z < oneShot; z++)
                     {
                         CreateMoveBullet(direction, spawnTransform, attackType, angle, 0.5f, bulletSpeed);
                         angle += 60.0f;
@@ -96,18 +96,18 @@ namespace Fake.Enemy
 
         private static Vector2 SinCurve(float currentTime)
         {
-            float dx = 300.0f * currentTime * Mathf.Deg2Rad;
-            float dy = Mathf.Sin(dx);
+            var dx = 300.0f * currentTime * Mathf.Deg2Rad;
+            var dy = Mathf.Sin(dx);
 
-            Vector2 direction = new Vector2(dx, dy);
+            var direction = new Vector2(dx, dy);
 
             return direction.normalized;
         }
 
         private static Vector2 RotateBullet(float angle, Transform spawnTransform)     // 총알 회전
         {
-            Transform playerTransform = GameManager.Instance.PlayerTransform;
-            Vector2 targetDirection = (playerTransform.transform.position - spawnTransform.transform.position).normalized;
+            var playerTransform = GameManager.Instance.PlayerTransform;
+            var targetDirection = (playerTransform.transform.position - spawnTransform.transform.position).normalized;
 
             return GlobalClass.RotateDirection(targetDirection, angle);
         }
@@ -128,14 +128,16 @@ namespace Fake.Enemy
                 bulletObject = Instantiate(PurpleCircle);
             }
 
-            Transform bulletTransform = bulletObject.transform;
-            EnemyBullet bullet = bulletObject.GetComponent<EnemyBullet>();
+            var bulletTransform = bulletObject.transform;
+            var bullet = bulletObject.GetComponent<EnemyBullet>();
 
             bulletTransform.localPosition = spawnTransform.localPosition;
             bulletTransform.localRotation = Quaternion.identity;
             bulletTransform.localScale = Vector3.one * localScale;
 
-            bullet.SetUp(targetDirection.normalized, bulletSpeed, angle, CheckBoom);
+            bullet.SetBaseBullet(0, 2.0f, targetDirection.normalized, true);
+
+            bullet.SetUp(angle, CheckBoom);
 
             if (attackType == AttackType.PurpleCircle)
             {

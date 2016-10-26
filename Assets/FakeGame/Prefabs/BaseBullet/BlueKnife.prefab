@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21227536}
   - 114: {fileID: 11496040}
   - 58: {fileID: 5852328}
-  - 114: {fileID: 11495202}
+  - 114: {fileID: 114000013131422358}
   m_Layer: 0
   m_Name: BlueKnife
   m_TagString: Untagged
@@ -46,18 +46,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.06
---- !u!114 &11495202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1891e5559332f04f984fdfd10c3693c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletTypeCheck: 1
 --- !u!114 &11496040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,6 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c89c936e5db0ef409748b7f75623ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletTypeCheck: 0
+  Damage: 0
+  Speed: 0
+  Direction: {x: 0, y: 0}
 --- !u!212 &21227536
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,3 +105,18 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 134734}
   m_IsPrefabParent: 1
+--- !u!114 &114000013131422358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af06759a70933545a8d83940a1af47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletTypeCheck: 1
+  Damage: 0
+  Speed: 0
+  Direction: {x: 0, y: 0}

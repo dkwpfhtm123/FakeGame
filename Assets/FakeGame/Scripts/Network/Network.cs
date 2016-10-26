@@ -2,48 +2,29 @@
 using System.Collections;
 using UnityEngine.UI;
 
-namespace Fake { 
-public class Network : MonoBehaviour
+namespace Fake
 {
-    public Text[] HighScore;
-
-    struct Ranker
+    public class Network : MonoBehaviour
     {
-        public readonly int Rank;
-        public readonly string Name;
-        public readonly int Score;
-        public readonly string Date;
-        public Ranker(int rank, string name, int score, string date)
+        public Text[] HighScore;
+
+        struct Ranker
         {
-            Rank = rank;
-            Name = name;
-            Score = score;
-            Date = date;
+            public readonly int Rank;
+            public readonly string Name;
+            public readonly int Score;
+            public readonly string Date;
+            public Ranker(int rank, string name, int score, string date)
+            {
+                Rank = rank;
+                Name = name;
+                Score = score;
+                Date = date;
+            }
         }
-    }
 
         IEnumerator Start()
         {
-            /*     using (var www = new WWW("http://127.0.0.1:8000/hello/"))
-                 {
-                     yield return www;
-                     var response = www.text;
-                     Debug.Log(response);
-
-                     var result = Halak.JValue.Parse(response);
-                     foreach (var rankerValue in result.Array())
-                     {
-                         var ranker = new Ranker(
-                             rankerValue["rank"],
-                             rankerValue["name"],
-                             rankerValue["score"],
-                             rankerValue["date"]);
-
-                         Debug.Log(ranker.Rank + " / " + ranker.Name + " / " + ranker.Score + " / " + ranker.Date);
-                     }
-                 }
-                 */
-
             using (var www = new WWW("http://127.0.0.1:8000/getscore/"))
             {
                 yield return www;
@@ -52,7 +33,7 @@ public class Network : MonoBehaviour
                 var result = Halak.JValue.Parse(response);
 
                 Ranker[] data = new Ranker[9];
-                int length = 0;
+                var length = 0;
 
                 for (int i = 0; i < data.Length; i++)
                 {
@@ -90,7 +71,6 @@ public class Network : MonoBehaviour
                 {
                     HighScore[i].text = (i + 1).ToString() + "  " + data[i].Name + "  " + data[i].Score.ToString();
                 }
-
             }
         }
     }

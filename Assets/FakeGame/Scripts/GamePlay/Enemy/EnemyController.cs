@@ -21,7 +21,7 @@ namespace Fake.Enemy
 
         public Image GreenHpBar;
 
-        private BulletTypeCode bulletType;
+        private BaseBullet bulletType;
 
         private Transform transformCache;
 
@@ -71,8 +71,8 @@ namespace Fake.Enemy
 
         private void CreateHPbar()
         {
-            Canvas hp = Instantiate(HPBar);
-            Transform hpTransform = hp.GetComponent<Transform>();
+            var hp = Instantiate(HPBar);
+            var hpTransform = hp.GetComponent<Transform>();
             hpTransform.parent = transformCache;
             hpTransform.position = transformCache.localPosition + Vector3.up;
 
@@ -81,9 +81,9 @@ namespace Fake.Enemy
 
         void OnCollisionEnter2D(Collision2D coll)
         {
-            if (coll.gameObject.GetComponent<BulletTypeCode>() != null)
+            if (coll.gameObject.GetComponent<BaseBullet>() != null)
             {
-                bulletType = coll.gameObject.GetComponent<BulletTypeCode>();
+                bulletType = coll.gameObject.GetComponent<BaseBullet>();
 
                 if (bulletType.BulletTypeCheck == BulletType.PlayerBullet)
                 {

@@ -7,7 +7,7 @@ namespace Fake.Player
     {
         public GameObject PlayerSlowAttack;
         public GameObject PlayerFastAttack;
-      
+
         public Transform FirePosition;  // 발사위치
 
         private float playerAttackTime = 0.0f;
@@ -53,9 +53,8 @@ namespace Fake.Player
 
             playerBullet.transform.localPosition = FirePosition.localPosition;
             playerBullet.transform.localRotation = Quaternion.identity;
-            bulletObject.Speed = 5.0f;
-            bulletObject.Damage = 10.0f;
-            //      bulletObject.type = BaseBullet.BulletType.Player;
+
+            bulletObject.SetBaseBullet(10.0f, 3.0f, Vector2.up, true);
         }
     }
 }

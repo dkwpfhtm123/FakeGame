@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Fake.Player
 {
-    public class PowerObject : MonoBehaviour
+    public class PowerShooter : MonoBehaviour
     {
         private Transform transformCache;
 
@@ -20,7 +20,7 @@ namespace Fake.Player
         {
             while (true)
             {
-                Vector2 circle = playerTransform.localPosition;
+                var circle = playerTransform.localPosition;
 
                 circle.x = playerTransform.localPosition.x + (Mathf.Sin(Angle * Mathf.Deg2Rad) * Radius);
                 circle.y = playerTransform.localPosition.y + (Mathf.Cos(Angle * Mathf.Deg2Rad) * Radius);

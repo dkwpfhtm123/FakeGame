@@ -7,13 +7,9 @@ namespace Fake
     {
         public static Vector2 RotateDirection(Vector2 direction, float degree)
         {
-            float radian = degree * Mathf.Deg2Rad;
-            Vector2 targetDirection = direction;
+            var radian = degree * Mathf.Deg2Rad;
 
-            direction.x = targetDirection.x * Mathf.Cos(radian) - targetDirection.y * Mathf.Sin(radian);
-            direction.y = targetDirection.x * Mathf.Sin(radian) + targetDirection.y * Mathf.Cos(radian);
-
-            return direction;
+            return new Vector2(direction.x * Mathf.Cos(radian) - direction.y * Mathf.Sin(radian), direction.x * Mathf.Sin(radian) + direction.y * Mathf.Cos(radian));
         }
     }
 }

@@ -3,11 +3,9 @@ using System.Collections;
 
 namespace Fake
 {
-    public class MoveObject : MonoBehaviour
+    public class Mover : MonoBehaviour
     {
         private Transform transformCache;
-
-        public Vector2 dir;
 
         private bool plus = true;
 
@@ -16,22 +14,18 @@ namespace Fake
             transformCache = gameObject.GetComponent<Transform>();
         }
 
-        public void Set(Vector2 one, Vector2 two, Vector2 three)
+        public void SetBezierCurve(Vector2 one, Vector2 two, Vector2 three)
         {
-            StartCoroutine(Move(one, two, three));
+            StartCoroutine(BezierCurve(one, two, three));
         }
 
-        public IEnumerator Move(Vector2 one, Vector2 two, Vector3 three)
+        public IEnumerator BezierCurve(Vector2 one, Vector2 two, Vector3 three)
         {
-            float t = 0.05f;
-            Vector2 direct;
+            var t = 0.05f;
 
             while (true)
             {
-                direct.x = (1 - t) * (1 - t) * one.x + 2 * t * (1 - t) * two.x + t * t * three.x;
-                direct.y = (1 - t) * (1 - t) * one.y + 2 * t * (1 - t) * two.y + t * t * three.y;
-
-                transformCache.localPosition = direct;
+                transformCache.localPosition = new Vector2((1 - t) * (1 - t) * one.x + 2 * t * (1 - t) * two.x + t * t * three.x, (1 - t) * (1 - t) * one.y + 2 * t * (1 - t) * two.y + t * t * three.y);
 
                 if (plus == true)
                 {
@@ -46,7 +40,7 @@ namespace Fake
                 {
                     t -= 0.01f;
 
-                    if(t < 0)
+                    if (t < 0)
                     {
                         plus = true;
                     }

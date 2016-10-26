@@ -7,9 +7,12 @@ namespace Fake
     {
         void OnCollisionExit2D(Collision2D coll)
         {
-            if (coll.gameObject.GetComponent<NoDestroy>() == null)
+            if (coll.gameObject.GetComponent<BaseBullet>() != null)
             {
-                Destroy(coll.gameObject);
+                if (coll.gameObject.GetComponent<BaseBullet>().DestroyWhenHitWall == true)
+                {
+                    Destroy(coll.gameObject);
+                }
             }
         }
     }

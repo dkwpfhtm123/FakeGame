@@ -44,7 +44,7 @@ namespace Fake.Item
                     break;
             }
 
-            Transform itemTransform = item.transform;
+            var itemTransform = item.transform;
             SetPosition(point, itemTransform);
         }
 
