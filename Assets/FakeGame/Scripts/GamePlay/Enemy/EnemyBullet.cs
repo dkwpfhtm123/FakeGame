@@ -14,16 +14,29 @@ namespace Fake.Enemy
             private set;
         }
 
-        public Player.PlayerController CheckBoom
+        public Player.PlayerController Target
         {
-            get;
-            private set;
+            get { return target; }
+            private set
+            {
+                if (target != value)
+                {
+                    if (target != null)
+                        target.Dead -= OnTargetDead;
+
+                    target = value;
+
+                    if (target != null)
+                        target.Dead += OnTargetDead;
+                }
+            }
         }
 
         private Transform transformCache;
         private BaseBullet bulletType;
         private float currentTime;
         private Vector2 startingPosition;
+        private Player.PlayerController target;
 
         void Start()
         {
@@ -44,7 +57,7 @@ namespace Fake.Enemy
         void Update()
         {
             MoveBullet();
-            if (CheckBoom.OnGoingBoom == true)
+            if (Target.OnGoingBoom == true)
             {
                 Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
@@ -54,7 +67,12 @@ namespace Fake.Enemy
         public void SetUp(float angle, Player.PlayerController target)
         {
             Angle = angle;
-            CheckBoom = target;
+            Target = target;
+        }
+
+        private void OnTargetDead(Player.PlayerController sender, GameObject killer)
+        {
+            Target = null;
         }
 
         private float GetRotation()

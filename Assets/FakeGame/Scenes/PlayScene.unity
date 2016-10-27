@@ -867,7 +867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af06759a70933545a8d83940a1af47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletObject: {fileID: 0}
+  BulletDamage: 0
+  BulletSpeed: 0
+  BulletDirection: {x: 0, y: 0}
+  BulletTypeCheck: 0
 --- !u!1 &708607429
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,7 +3041,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

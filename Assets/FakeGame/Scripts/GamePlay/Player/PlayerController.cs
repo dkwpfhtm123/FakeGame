@@ -3,6 +3,8 @@ using System.Collections;
 
 namespace Fake.Player
 {
+    public delegate void DeadEventHandler(PlayerController sender, GameObject killer);
+
     public class PlayerController : MonoBehaviour
     {
         // Boom관련 변수들
@@ -24,7 +26,7 @@ namespace Fake.Player
         private ObjectCreator restart;
 
         private int playerLife;
-
+         
         private ItemTypeCode item = null;
 
         private enum PowerLife
@@ -32,6 +34,8 @@ namespace Fake.Player
             Life,
             Power,
         }
+
+        public event DeadEventHandler Dead;
 
         public void Setup(int life, int power, int boom)
         {
@@ -81,6 +85,12 @@ namespace Fake.Player
             }
 
             transformCache.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
+        }
+
+        void OnDestroy()
+        {
+            if (Dead != null)
+                Dead(this, null);
         }
 
         private IEnumerator BoomEvent()
