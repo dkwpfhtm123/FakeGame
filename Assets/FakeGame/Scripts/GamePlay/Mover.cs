@@ -9,11 +9,6 @@ namespace Fake
 
         private bool plus = true;
 
-        void Start()
-        {
-            transformCache = gameObject.GetComponent<Transform>();
-        }
-
         public void SetBezierCurve(Vector2 one, Vector2 two, Vector2 three)
         {
             StartCoroutine(BezierCurve(one, two, three));
@@ -25,7 +20,10 @@ namespace Fake
 
             while (true)
             {
-                transformCache.localPosition = new Vector2((1 - t) * (1 - t) * one.x + 2 * t * (1 - t) * two.x + t * t * three.x, (1 - t) * (1 - t) * one.y + 2 * t * (1 - t) * two.y + t * t * three.y);
+                transformCache = gameObject.GetComponent<Transform>();
+
+                var position = new Vector2((1 - t) * (1 - t) * one.x + 2 * t * (1 - t) * two.x + t * t * three.x, (1 - t) * (1 - t) * one.y + 2 * t * (1 - t) * two.y + t * t * three.y);
+                transformCache.localPosition = position;
 
                 if (plus == true)
                 {

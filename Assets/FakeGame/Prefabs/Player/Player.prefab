@@ -11,7 +11,6 @@ GameObject:
   - 212: {fileID: 21281248}
   - 114: {fileID: 11473558}
   - 114: {fileID: 11404674}
-  - 114: {fileID: 11469646}
   - 58: {fileID: 5895388}
   - 50: {fileID: 50000013665000252}
   m_Layer: 0
@@ -62,17 +61,6 @@ MonoBehaviour:
   PlayerSlowAttack: {fileID: 191088, guid: b6722373ecea6cb49879bb818bb96493, type: 2}
   PlayerFastAttack: {fileID: 199190, guid: c95feea1ef791a145a0417742361497b, type: 2}
   FirePosition: {fileID: 496552}
---- !u!114 &11469646
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ccccca2ff429de4488a923b0630a16b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11473558
 MonoBehaviour:
   m_ObjectHideFlags: 1

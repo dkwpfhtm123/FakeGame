@@ -9,15 +9,29 @@ namespace Fake.Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
-        public Player.PlayerController CheckBoom;
-
-        private int erasethis;
-
-        public enum AttackType
+        public ObjectCreator ObjectCreatorCache
         {
-            RedAttack,
-            BlueAttack,
-            PurpleCircle
+            get { return objectCreatorCache; }
+            private set
+            {
+                if(objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn -= PlayerRespawn;
+                }
+
+                objectCreatorCache = value;
+
+                if (objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn += PlayerRespawn;
+                }
+            }
+        }
+
+        public static Transform PlayerTransform
+        {
+            get { return playerTransform; }
+            private set { playerTransform = value; }
         }
 
         private static EnemyAttackKinds instance;
@@ -30,6 +44,26 @@ namespace Fake.Enemy
 
                 return instance;
             }
+        }
+
+        public enum AttackType
+        {
+            RedAttack,
+            BlueAttack,
+            PurpleCircle
+        }
+
+        private ObjectCreator objectCreatorCache;
+        private static Transform playerTransform;
+
+        public void SetObjectCreatorCache(ObjectCreator cache)
+        {
+            ObjectCreatorCache = cache;
+        }
+
+        private void PlayerRespawn(GameObject player)
+        {
+            playerTransform = player.GetComponent<Transform>();
         }
 
         public void FireConeType(Transform spawnTransform, AttackType attackType, float bulletSpeed)
@@ -106,8 +140,7 @@ namespace Fake.Enemy
 
         private static Vector2 RotateBullet(float angle, Transform spawnTransform)     // 총알 회전
         {
-            var playerTransform = GameManager.Instance.PlayerTransform;
-            var targetDirection = (playerTransform.transform.position - spawnTransform.transform.position).normalized;
+            var targetDirection = (PlayerTransform.transform.position - spawnTransform.transform.position).normalized;
 
             return GlobalClass.RotateDirection(targetDirection, angle);
         }
@@ -137,7 +170,7 @@ namespace Fake.Enemy
 
             bullet.SetBaseBullet(0, 2.0f, targetDirection.normalized, true);
 
-            bullet.SetUp(angle, CheckBoom);
+            bullet.SetUp(angle, ObjectCreatorCache);
 
             if (attackType == AttackType.PurpleCircle)
             {

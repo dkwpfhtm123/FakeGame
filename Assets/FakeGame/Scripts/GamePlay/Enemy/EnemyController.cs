@@ -4,11 +4,11 @@ using System.Collections;
 
 namespace Fake.Enemy
 {
+    public delegate void EnemyAttackTypeDelegate(Transform tr, EnemyAttackKinds.AttackType type, float bulletSpeed);
+
     public class EnemyController : MonoBehaviour
     {
         public Canvas HPBar;
-
-        public delegate void EnemyAttackTypeDelegate(Transform tr, EnemyAttackKinds.AttackType type, float bulletSpeed);
 
         public enum EnemyType
         {
@@ -17,30 +17,56 @@ namespace Fake.Enemy
             SmallEnemy3
         }
 
-        public EnemyType EnemyTypeCheck;
+        public ObjectCreator ObjectCreatorCache
+        {
+            get { return objectCreatorCache; }
+            private set
+            {
+                if(objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn -= PlayerRespawn;
+                    objectCreatorCache.PlayerDead -= PlayerDead;
+                }
 
+                objectCreatorCache = value;
+
+                if(objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn += PlayerRespawn;
+                    objectCreatorCache.PlayerDead += PlayerDead;
+                }
+            }
+        }
+        public EnemyType EnemyTypeCheck;
         public Image GreenHpBar;
 
+        private ObjectCreator objectCreatorCache;
         private BaseBullet bulletType;
-
         private Transform transformCache;
-
         private int maxHP = 10;
         private int currentHP;
+
+        private bool playerDead;
 
         void Start()
         {
             transformCache = GetComponent<Transform>();
             currentHP = maxHP;
 
+            playerDead = false;
+
             CreateHPbar();
 
             StartCoroutine(AttackPlayer());
         }
 
+        public void SetEventCache(ObjectCreator objectCreatorCache)
+        {
+            ObjectCreatorCache = objectCreatorCache;
+        }
+
         private IEnumerator AttackPlayer()
         {
-            //     System.Action<Transform, EnemyAttackType.AttackType , float> attack;
             EnemyAttackTypeDelegate attack;
             if (EnemyTypeCheck == EnemyType.SmallEnemy1)
             {
@@ -60,20 +86,30 @@ namespace Fake.Enemy
             }
         }
 
+        private void PlayerDead()
+        {
+            playerDead = true;
+        }
+
+        private void PlayerRespawn(GameObject e)
+        {
+            playerDead = false;
+        }
+
         private IEnumerator StartAttack(float attackTime, float bulletSpeed, EnemyAttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
         {
             while (true)
             {
                 yield return new WaitForSeconds(attackTime); // 공격 텀
                 attack(transform, attackType, bulletSpeed);
-            }
+            } // 플레이어가 리스폰했을때 다시 공격하도록 수정
         }
 
         private void CreateHPbar()
         {
             var hp = Instantiate(HPBar);
             var hpTransform = hp.GetComponent<Transform>();
-            hpTransform.parent = transformCache;
+            hpTransform.SetParent(transformCache);
             hpTransform.position = transformCache.localPosition + Vector3.up;
 
             GreenHpBar = hp.GetComponentInChildren<Image>();
@@ -90,13 +126,13 @@ namespace Fake.Enemy
                     Destroy(coll.gameObject);
                     currentHP--;
                 }
-            }
 
-            GreenHpBar.fillAmount = (float)currentHP / (float)maxHP;
+                GreenHpBar.fillAmount = currentHP / maxHP;
 
-            if (currentHP < 0)
-            {
-                KillEnemy();
+                if (currentHP < 0)
+                {
+                    KillEnemy();
+                }
             }
         }
 

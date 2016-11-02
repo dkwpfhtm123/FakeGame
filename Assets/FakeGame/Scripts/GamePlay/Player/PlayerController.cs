@@ -3,7 +3,9 @@ using System.Collections;
 
 namespace Fake.Player
 {
-    public delegate void DeadEventHandler(PlayerController sender, GameObject killer);
+    public delegate void DeadEventHandler();
+    public delegate void BoomStartEventHandler();
+    public delegate void BoomEndEventHandler();
 
     public class PlayerController : MonoBehaviour
     {
@@ -22,11 +24,11 @@ namespace Fake.Player
         private Transform transformCache;
         private float moveSpeed = 5.0f;
 
-        private Fake.UI.GameUI gameUI;
+        private UI.GameUI gameUI;
         private ObjectCreator restart;
 
         private int playerLife;
-         
+
         private ItemTypeCode item = null;
 
         private enum PowerLife
@@ -35,7 +37,9 @@ namespace Fake.Player
             Power,
         }
 
-        public event DeadEventHandler Dead;
+        public event DeadEventHandler PlayerDead;
+        public event BoomStartEventHandler BoomStart;
+        public event BoomEndEventHandler BoomEnd;
 
         public void Setup(int life, int power, int boom)
         {
@@ -89,8 +93,8 @@ namespace Fake.Player
 
         void OnDestroy()
         {
-            if (Dead != null)
-                Dead(this, null);
+            if (PlayerDead != null)
+                PlayerDead();
         }
 
         private IEnumerator BoomEvent()
@@ -99,12 +103,14 @@ namespace Fake.Player
             boomObject.transform.SetParent(transformCache, true);
             boomObject.transform.localScale *= 2.0f;
             OnGoingBoom = true;
-            Debug.Log("BoomStart");
+
+            BoomStart();
+
             yield return new WaitForSeconds(boomTime);
-            Debug.Log("BoomEnd");
+
+            BoomEnd();
             OnGoingBoom = false;
             Destroy(boomObject);
-            OnGoingBoom = false;
             BoomCount--;
         }
 

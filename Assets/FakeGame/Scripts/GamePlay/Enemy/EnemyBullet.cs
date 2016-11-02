@@ -5,16 +5,13 @@ namespace Fake.Enemy
 {
     public class EnemyBullet : BaseBullet
     {
-        public delegate Vector2 MoveTypeDelegate(float deltaTime);
-        public MoveTypeDelegate MoveType;
-
         public float Angle
         {
             get;
             private set;
         }
 
-        public Player.PlayerController Target
+        public Player.PlayerController TargetPlayer
         {
             get { return target; }
             private set
@@ -22,21 +19,55 @@ namespace Fake.Enemy
                 if (target != value)
                 {
                     if (target != null)
-                        target.Dead -= OnTargetDead;
+                    {
+                        target.PlayerDead -= OnPlayerDead;
+                        target.BoomStart -= StartPlayerBoom;
+                        target.BoomEnd -= EndPlayerBoom;
+                    }
 
                     target = value;
 
                     if (target != null)
-                        target.Dead += OnTargetDead;
+                    {
+                        target.PlayerDead += OnPlayerDead;
+                        target.BoomStart += StartPlayerBoom;
+                        target.BoomEnd += EndPlayerBoom;
+                    }
                 }
             }
         }
+
+        public ObjectCreator ObjectCreatorCache
+        {
+            get { return objectCreatorCache; }
+            private set
+            {
+                if (objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn -= OnPlayerRespawn;
+                }
+
+                objectCreatorCache = value;
+
+                if (objectCreatorCache != null)
+                {
+                    objectCreatorCache.PlayerRespawn += OnPlayerRespawn;
+                }
+            }
+        }
+
+        public delegate Vector2 MoveTypeDelegate(float deltaTime);
+        public MoveTypeDelegate MoveType;
 
         private Transform transformCache;
         private BaseBullet bulletType;
         private float currentTime;
         private Vector2 startingPosition;
         private Player.PlayerController target;
+        private ObjectCreator objectCreatorCache;
+
+        private bool booming;
+        private bool playerDead;
 
         void Start()
         {
@@ -44,6 +75,9 @@ namespace Fake.Enemy
             bulletType = gameObject.GetComponent<BaseBullet>();
             currentTime = 0;
             startingPosition = transformCache.localPosition;
+
+            booming = false;
+            playerDead = false;
 
             var angle = GetRotation();
             transform.localRotation = Quaternion.Euler(0, 0, angle);
@@ -56,23 +90,43 @@ namespace Fake.Enemy
 
         void Update()
         {
-            MoveBullet();
-            if (Target.OnGoingBoom == true)
+            if (playerDead == false)
+            {
+                MoveBullet();
+            }
+
+            if (booming == true)
             {
                 Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
             }
         }
 
-        public void SetUp(float angle, Player.PlayerController target)
+        public void SetUp(float angle, ObjectCreator objectCreatorCache)
         {
             Angle = angle;
-            Target = target;
+            ObjectCreatorCache = objectCreatorCache;
         }
 
-        private void OnTargetDead(Player.PlayerController sender, GameObject killer)
+        private void OnPlayerRespawn(GameObject player)
         {
-            Target = null;
+       //     BulletDirection = player.GetComponent<Transform>().localPosition;
+        }
+
+        private void OnPlayerDead()
+        {
+            TargetPlayer = null;
+            Destroy(gameObject);
+        }
+
+        private void StartPlayerBoom()
+        {
+            booming = true;
+        }
+
+        private void EndPlayerBoom()
+        {
+            booming = false;
         }
 
         private float GetRotation()

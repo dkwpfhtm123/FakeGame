@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Fake
 {
-    public class TurnRoundObject : MonoBehaviour
+    public class Rotater : MonoBehaviour
     {
         private float angle;
         private Transform transformCache;
