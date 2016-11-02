@@ -23,6 +23,8 @@ namespace Fake.Enemy
 
                 if (objectCreatorCache != null)
                 {
+                    PlayerRespawn(objectCreatorCache.LivePlayer);
+
                     objectCreatorCache.PlayerRespawn += PlayerRespawn;
                 }
             }

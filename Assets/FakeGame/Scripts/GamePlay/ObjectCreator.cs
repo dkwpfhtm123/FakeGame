@@ -52,6 +52,7 @@ namespace Fake
             set.SetObjectCreatorCache(this);
         }
 
+        #region Hello
         public void CreatePlayer()
         {
             Debug.Log("Creating player");
@@ -71,6 +72,7 @@ namespace Fake
 
             GameManager.Instance.PlayerTransform = playerObject.transform;
         }
+        #endregion
 
         public void CreateEnemy()
         {
@@ -89,7 +91,11 @@ namespace Fake
 
         private void PlayerRespawnEvent(GameObject player)
         {
-            PlayerRespawn(player); // Event 오류 질문
+            var e = PlayerRespawn;
+            if (e != null)
+                e(player);
+
+            // PlayerRespawn(player); // Event 오류 질문
         }
 
         private void PlayerDeadEvent()

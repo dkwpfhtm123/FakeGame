@@ -34,6 +34,8 @@ namespace Fake.Enemy
                 {
                     objectCreatorCache.PlayerRespawn += PlayerRespawn;
                     objectCreatorCache.PlayerDead += PlayerDead;
+
+                    PlayerRespawn();
                 }
             }
         }
@@ -45,6 +47,7 @@ namespace Fake.Enemy
         private Transform transformCache;
         private int maxHP = 10;
         private int currentHP;
+        private IEnumerator attckCoroutine;
 
         private bool playerDead;
 
@@ -89,16 +92,28 @@ namespace Fake.Enemy
         private void PlayerDead()
         {
             playerDead = true;
+
+            if (attckCoroutine != null)
+            {
+                StopCoroutine(attckCoroutine);
+                attckCoroutine = null;
+            }
         }
 
         private void PlayerRespawn(GameObject e)
         {
             playerDead = false;
+
+            if (attckCoroutine == null)
+            {
+                attckCoroutine = StartAttack();
+                StartCoroutine(attckCoroutine);
+            }
         }
 
         private IEnumerator StartAttack(float attackTime, float bulletSpeed, EnemyAttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
         {
-            while (true)
+            for (;;)
             {
                 yield return new WaitForSeconds(attackTime); // 공격 텀
                 attack(transform, attackType, bulletSpeed);
