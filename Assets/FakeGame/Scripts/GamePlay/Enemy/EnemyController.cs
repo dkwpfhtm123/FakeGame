@@ -8,8 +8,6 @@ namespace Fake.Enemy
 
     public class EnemyController : MonoBehaviour
     {
-        public Canvas HPBar;
-
         public enum EnemyType
         {
             SmallEnemy1,
@@ -17,32 +15,38 @@ namespace Fake.Enemy
             SmallEnemy3
         }
 
-        public ObjectCreator ObjectCreatorCache
+        #region property
+        public ObjectCreator ObjectCreator
         {
-            get { return objectCreatorCache; }
-            private set
+            get { return objectCreator; }
+            set
             {
-                if(objectCreatorCache != null)
+                if(objectCreator != null)
                 {
-                    objectCreatorCache.PlayerRespawn -= PlayerRespawn;
-                    objectCreatorCache.PlayerDead -= PlayerDead;
+                    objectCreator.OnPlayerRespawn -= OnPlayerRespawn;
+                    objectCreator.OnPlayerDead -= OnPlayerDead;
                 }
 
-                objectCreatorCache = value;
+                objectCreator = value;
 
-                if(objectCreatorCache != null)
+                if(objectCreator != null)
                 {
-                    objectCreatorCache.PlayerRespawn += PlayerRespawn;
-                    objectCreatorCache.PlayerDead += PlayerDead;
+                    objectCreator.OnPlayerRespawn += OnPlayerRespawn;
+                    objectCreator.OnPlayerDead += OnPlayerDead;
 
-                    PlayerRespawn();
+                    OnPlayerRespawn();
                 }
             }
         }
+        #endregion
+
+        #region varible
+        public Canvas HPBar;
+
         public EnemyType EnemyTypeCheck;
         public Image GreenHpBar;
 
-        private ObjectCreator objectCreatorCache;
+        private ObjectCreator objectCreator;
         private BaseBullet bulletType;
         private Transform transformCache;
         private int maxHP = 10;
@@ -50,6 +54,7 @@ namespace Fake.Enemy
         private IEnumerator attckCoroutine;
 
         private bool playerDead;
+        #endregion
 
         void Start()
         {
@@ -61,11 +66,6 @@ namespace Fake.Enemy
             CreateHPbar();
 
             StartCoroutine(AttackPlayer());
-        }
-
-        public void SetEventCache(ObjectCreator objectCreatorCache)
-        {
-            ObjectCreatorCache = objectCreatorCache;
         }
 
         private IEnumerator AttackPlayer()
@@ -89,7 +89,7 @@ namespace Fake.Enemy
             }
         }
 
-        private void PlayerDead()
+        private void OnPlayerDead()
         {
             playerDead = true;
 
@@ -100,20 +100,20 @@ namespace Fake.Enemy
             }
         }
 
-        private void PlayerRespawn(GameObject e)
+        private void OnPlayerRespawn()
         {
             playerDead = false;
 
             if (attckCoroutine == null)
             {
-                attckCoroutine = StartAttack();
+     //           attckCoroutine = StartAttack();
                 StartCoroutine(attckCoroutine);
             }
         }
 
         private IEnumerator StartAttack(float attackTime, float bulletSpeed, EnemyAttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
         {
-            for (;;)
+            while(playerDead == false)
             {
                 yield return new WaitForSeconds(attackTime); // 공격 텀
                 attack(transform, attackType, bulletSpeed);

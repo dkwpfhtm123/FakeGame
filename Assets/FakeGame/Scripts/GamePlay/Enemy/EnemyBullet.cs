@@ -5,13 +5,14 @@ namespace Fake.Enemy
 {
     public class EnemyBullet : BaseBullet
     {
+        #region property
         public float Angle
         {
             get;
             private set;
         }
 
-        public Player.PlayerController TargetPlayer
+        public Player.PlayerController TargetPlayerController
         {
             get { return target; }
             private set
@@ -21,8 +22,8 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead -= OnPlayerDead;
-                        target.BoomStart -= StartPlayerBoom;
-                        target.BoomEnd -= EndPlayerBoom;
+                        target.BoomStart -= OnStartPlayerBoom;
+                        target.BoomEnd -= OnEndPlayerBoom;
                     }
 
                     target = value;
@@ -30,32 +31,34 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead += OnPlayerDead;
-                        target.BoomStart += StartPlayerBoom;
-                        target.BoomEnd += EndPlayerBoom;
+                        target.BoomStart += OnStartPlayerBoom;
+                        target.BoomEnd += OnEndPlayerBoom;
                     }
                 }
             }
         }
 
-        public ObjectCreator ObjectCreatorCache
+        public ObjectCreator ObjectCreator
         {
-            get { return objectCreatorCache; }
-            private set
+            get { return objectCreator; }
+            set
             {
-                if (objectCreatorCache != null)
+                if (objectCreator != null)
                 {
-                    objectCreatorCache.PlayerRespawn -= OnPlayerRespawn;
+         //           objectCreator.OnPlayerRespawn -= OnPlayerRespawn;
                 }
 
-                objectCreatorCache = value;
+                objectCreator = value;
 
-                if (objectCreatorCache != null)
+                if (objectCreator != null)
                 {
-                    objectCreatorCache.PlayerRespawn += OnPlayerRespawn;
+        //            objectCreator.OnPlayerRespawn += OnPlayerRespawn;
                 }
             }
         }
+        #endregion
 
+        #region varible
         public delegate Vector2 MoveTypeDelegate(float deltaTime);
         public MoveTypeDelegate MoveType;
 
@@ -64,11 +67,13 @@ namespace Fake.Enemy
         private float currentTime;
         private Vector2 startingPosition;
         private Player.PlayerController target;
-        private ObjectCreator objectCreatorCache;
+        private ObjectCreator objectCreator;
 
         private bool booming;
         private bool playerDead;
+        #endregion
 
+        #region Start,Update
         void Start()
         {
             transformCache = GetComponent<Transform>();
@@ -97,37 +102,40 @@ namespace Fake.Enemy
 
             if (booming == true)
             {
-                Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
             }
         }
+        #endregion
 
-        public void SetUp(float angle, ObjectCreator objectCreatorCache)
+        public void Setting(float angle, ObjectCreator objectCreatorCache)
         {
             Angle = angle;
-            ObjectCreatorCache = objectCreatorCache;
+            ObjectCreator = objectCreatorCache;
         }
 
-        private void OnPlayerRespawn(GameObject player)
+        #region eventMethod
+
+        private void OnDestroy()
         {
-       //     BulletDirection = player.GetComponent<Transform>().localPosition;
+            Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
         }
 
         private void OnPlayerDead()
         {
-            TargetPlayer = null;
+            TargetPlayerController = null;
             Destroy(gameObject);
         }
 
-        private void StartPlayerBoom()
+        private void OnStartPlayerBoom()
         {
             booming = true;
         }
 
-        private void EndPlayerBoom()
+        private void OnEndPlayerBoom()
         {
             booming = false;
         }
+        #endregion
 
         private float GetRotation()
         {
@@ -137,7 +145,7 @@ namespace Fake.Enemy
 
         private void MoveBullet()
         {
-            if (MoveType != null)
+            if (MoveType != null) // null일때는 직선
             {
                 BulletDirection = MoveType(currentTime); // EnemyAttackType에서 받아옴.
             }

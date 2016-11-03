@@ -3,9 +3,7 @@ using System.Collections;
 
 namespace Fake.Player
 {
-    public delegate void DeadEventHandler();
-    public delegate void BoomStartEventHandler();
-    public delegate void BoomEndEventHandler();
+    public delegate void EmptyEventHandler();
 
     public class PlayerController : MonoBehaviour
     {
@@ -37,9 +35,9 @@ namespace Fake.Player
             Power,
         }
 
-        public event DeadEventHandler PlayerDead;
-        public event BoomStartEventHandler BoomStart;
-        public event BoomEndEventHandler BoomEnd;
+        public event EmptyEventHandler PlayerDead;
+        public event EmptyEventHandler BoomStart;
+        public event EmptyEventHandler BoomEnd;
 
         public void Setup(int life, int power, int boom)
         {
@@ -91,12 +89,6 @@ namespace Fake.Player
             transformCache.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
         }
 
-        void OnDestroy()
-        {
-            if (PlayerDead != null)
-                PlayerDead();
-        }
-
         private IEnumerator BoomEvent()
         {
             boomObject = (GameObject)Instantiate(BoomPrefab, transformCache.localPosition, Quaternion.identity);
@@ -114,6 +106,19 @@ namespace Fake.Player
             BoomCount--;
         }
 
+        #region PlayerHit
+        private void KillPlayer()
+        {
+            gameUI.AppearGameOver();
+            Destroy(gameObject);
+        }
+
+        void OnDestroy()
+        {
+            if (PlayerDead != null)
+                PlayerDead();
+        }
+
         public void HitPlayer(GameObject player)
         {
             PlayerPower--;
@@ -128,12 +133,6 @@ namespace Fake.Player
                 UI_Player(PlayerPower, PowerLife.Power);
                 UI_Player(playerLife, PowerLife.Life);
             }
-        }
-
-        private void KillPlayer()
-        {
-            gameUI.AppearGameOver();
-            Destroy(gameObject);
         }
 
         void OnCollisionEnter2D(Collision2D coll)
@@ -160,7 +159,21 @@ namespace Fake.Player
                 HitPlayer(gameObject);
             }
         }
+        #endregion
 
+        private void UI_Player(int num, PowerLife what)
+        {
+            if (what == PowerLife.Power)
+            {
+                gameUI.CheckPlayerPower(num);
+            }
+            else
+            {
+                gameUI.CheckPlayerLife(num);
+            }
+        }
+
+        #region PlayerPower
         public void AddPlayerPower()
         {
             PlayerPower += 1;
@@ -173,18 +186,6 @@ namespace Fake.Player
             else {
                 Debug.Log("Power : " + PlayerPower);
                 PowerUp(PlayerPower);
-            }
-        }
-
-        private void UI_Player(int num, PowerLife what)
-        {
-            if (what == PowerLife.Power)
-            {
-                gameUI.CheckPlayerPower(num);
-            }
-            else
-            {
-                gameUI.CheckPlayerLife(num);
             }
         }
 
@@ -210,5 +211,6 @@ namespace Fake.Player
 
             powerUp = powerCtrl;
         }
+        #endregion
     }
 }

@@ -9,23 +9,22 @@ namespace Fake.Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
-        public ObjectCreator ObjectCreatorCache
+        public ObjectCreator ObjectCreator
         {
-            get { return objectCreatorCache; }
-            private set
+            get { return objectCreator; }
+            set
             {
-                if(objectCreatorCache != null)
+                if(objectCreator != null)
                 {
-                    objectCreatorCache.PlayerRespawn -= PlayerRespawn;
+                    objectCreator.OnPlayerRespawn -= OnPlayerRespawn;
                 }
 
-                objectCreatorCache = value;
+                objectCreator = value;
 
-                if (objectCreatorCache != null)
+                if (objectCreator != null)
                 {
-                    PlayerRespawn(objectCreatorCache.LivePlayer);
-
-                    objectCreatorCache.PlayerRespawn += PlayerRespawn;
+                    objectCreator.OnPlayerRespawn += OnPlayerRespawn;
+                    OnPlayerRespawn(); // 첫 설정
                 }
             }
         }
@@ -55,17 +54,12 @@ namespace Fake.Enemy
             PurpleCircle
         }
 
-        private ObjectCreator objectCreatorCache;
+        private ObjectCreator objectCreator;
         private static Transform playerTransform;
 
-        public void SetObjectCreatorCache(ObjectCreator cache)
+        private void OnPlayerRespawn()
         {
-            ObjectCreatorCache = cache;
-        }
-
-        private void PlayerRespawn(GameObject player)
-        {
-            playerTransform = player.GetComponent<Transform>();
+            playerTransform = objectCreator.LivePlayer.transform;
         }
 
         public void FireConeType(Transform spawnTransform, AttackType attackType, float bulletSpeed)
@@ -172,7 +166,7 @@ namespace Fake.Enemy
 
             bullet.SetBaseBullet(0, 2.0f, targetDirection.normalized, true);
 
-            bullet.SetUp(angle, ObjectCreatorCache);
+            bullet.Setting(angle, ObjectCreator);
 
             if (attackType == AttackType.PurpleCircle)
             {
