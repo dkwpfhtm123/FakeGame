@@ -9,6 +9,11 @@ namespace Fake.Enemy
         public GameObject BlueKnife;
         public GameObject PurpleCircle;
 
+        private ObjectCreator objectCreator;
+        private static Transform playerTransform;
+        private EnemyStartAttackParams parameters;
+
+        #region property
         public ObjectCreator ObjectCreator
         {
             get { return objectCreator; }
@@ -17,6 +22,7 @@ namespace Fake.Enemy
                 if(objectCreator != null)
                 {
                     objectCreator.OnPlayerRespawn -= OnPlayerRespawn;
+                    objectCreator.OnPlayerDead -= OnPlayerDead;
                 }
 
                 objectCreator = value;
@@ -24,6 +30,7 @@ namespace Fake.Enemy
                 if (objectCreator != null)
                 {
                     objectCreator.OnPlayerRespawn += OnPlayerRespawn;
+                    objectCreator.OnPlayerDead += OnPlayerDead;
                     OnPlayerRespawn(); // 첫 설정
                 }
             }
@@ -34,6 +41,7 @@ namespace Fake.Enemy
             get { return playerTransform; }
             private set { playerTransform = value; }
         }
+        #endregion
 
         private static EnemyAttackKinds instance;
         public static EnemyAttackKinds Instance
@@ -54,15 +62,20 @@ namespace Fake.Enemy
             PurpleCircle
         }
 
-        private ObjectCreator objectCreator;
-        private static Transform playerTransform;
-
         private void OnPlayerRespawn()
         {
-            playerTransform = objectCreator.LivePlayer.transform;
+            if (playerTransform == null)
+                playerTransform = objectCreator.LivePlayer.transform;
         }
 
-        public void FireConeType(Transform spawnTransform, AttackType attackType, float bulletSpeed)
+        private void OnPlayerDead()
+        {
+            if (playerTransform != null)
+                playerTransform = null;
+        }
+
+        #region firetype
+        public void FireConeType(EnemyStartAttackParams parameters)
         {
             var oneshot = 5;
             var angle = 60.0f;
@@ -71,15 +84,15 @@ namespace Fake.Enemy
 
             while (oneshot > 0)
             {
-                var targetDirection = RotateBullet(angle, spawnTransform);
-                CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
+                var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
+                CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
 
                 oneshot--;
                 angle -= anglePlus;
             }
         }
 
-        public void FireBoomType(Transform spawnTransform, AttackType attackType, float bulletSpeed)     // 무작위 발사후 ConFireType 형태로 발사.
+        public void FireBoomType(EnemyStartAttackParams parameters)     // 무작위 발사후 ConFireType 형태로 발사.
         {
             int oneshot = 5;
 
@@ -87,19 +100,19 @@ namespace Fake.Enemy
             {
                 var angle = Random.Range(0.0f, 360.0f);
 
-                var targetDirection = RotateBullet(angle, spawnTransform);
-                CreateMoveBullet(targetDirection, spawnTransform, attackType, 0, 1, bulletSpeed);
+                var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
+                CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
 
                 oneshot--;
             }
         }
 
-        public void FireSinType(Transform spawnTransform, AttackType attackType, float bulletSpeed)     // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
+        public void FireSinType(EnemyStartAttackParams parameters)     // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
         {
-            StartCoroutine(SinTypeCoroutine(spawnTransform, attackType, bulletSpeed));
+            StartCoroutine(SinTypeCoroutine(parameters));
         }
 
-        IEnumerator SinTypeCoroutine(Transform spawnTransform, AttackType attackType, float bulletSpeed)
+        IEnumerator SinTypeCoroutine(EnemyStartAttackParams parameters)
         {
             var angle = 0.0f;
             var oneShot = 6.0f;
@@ -113,7 +126,7 @@ namespace Fake.Enemy
                 {
                     for (var z = 0; z < oneShot; z++)
                     {
-                        CreateMoveBullet(direction, spawnTransform, attackType, angle, 0.5f, bulletSpeed);
+                        CreateMoveBullet(direction, parameters.SpawnTransform, parameters.AttackType, angle, 0.5f, parameters.BulletSpeed);
                         angle += 60.0f;
                     }
                     yield return new WaitForSeconds(0.2f);
@@ -133,6 +146,7 @@ namespace Fake.Enemy
 
             return direction.normalized;
         }
+        #endregion
 
         private static Vector2 RotateBullet(float angle, Transform spawnTransform)     // 총알 회전
         {

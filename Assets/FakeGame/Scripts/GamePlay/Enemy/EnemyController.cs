@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Fake.Enemy
 {
-    public delegate void EnemyAttackTypeDelegate(Transform tr, EnemyAttackKinds.AttackType type, float bulletSpeed);
+    public delegate void EnemyAttackTypeDelegate(EnemyStartAttackParams parameters);
 
     public class EnemyController : MonoBehaviour
     {
@@ -52,6 +52,7 @@ namespace Fake.Enemy
         private int maxHP = 10;
         private int currentHP;
         private IEnumerator attckCoroutine;
+        private EnemyStartAttackParams parameters;
 
         private bool playerDead;
         #endregion
@@ -74,21 +75,25 @@ namespace Fake.Enemy
             if (EnemyTypeCheck == EnemyType.SmallEnemy1)
             {
                 attack = EnemyAttackKinds.Instance.FireConeType;
-                StartCoroutine(StartAttack(new EnemyStartAttackParams(2.0f, 2.0f, EnemyAttackKinds.AttackType.RedAttack, attack)));
+                parameters = new EnemyStartAttackParams(2.0f, 2.0f, EnemyAttackKinds.AttackType.RedAttack, attack);
+                StartCoroutine(StartAttack(parameters));
             }
             else if (EnemyTypeCheck == EnemyType.SmallEnemy2)
             {
                 attack = EnemyAttackKinds.Instance.FireBoomType;
-                StartCoroutine(StartAttack(new EnemyStartAttackParams(2.5f, Random.Range(1.0f, 2.0f), EnemyAttackKinds.AttackType.BlueAttack, attack)));
+                parameters = new EnemyStartAttackParams(2.5f, Random.Range(1.0f, 2.0f), EnemyAttackKinds.AttackType.BlueAttack, attack);
+                StartCoroutine(StartAttack(parameters));
             }
             else if (EnemyTypeCheck == EnemyType.SmallEnemy3)
             {
                 attack = EnemyAttackKinds.Instance.FireSinType;
                 yield return new WaitForSeconds(0.5f);
-                attack(transform, EnemyAttackKinds.AttackType.PurpleCircle, 4.0f);
+                parameters = new EnemyStartAttackParams(transform, EnemyAttackKinds.AttackType.PurpleCircle, 4.0f);
+                attack(parameters);
             }
         }
 
+        #region event
         private void OnPlayerDead()
         {
             playerDead = true;
@@ -106,17 +111,26 @@ namespace Fake.Enemy
 
             if (attckCoroutine == null)
             {
-     //           attckCoroutine = StartAttack();
-                StartCoroutine(attckCoroutine);
+                if (parameters != null)
+                {
+                    attckCoroutine = StartAttack(parameters);
+                    StartCoroutine(attckCoroutine);
+                }
             }
         }
+
+        private void OnDestroy()
+        {
+            Item.ItemSpawn.Instance.SpawnItem(transform, Item.ItemSpawn.ItemTypeObject.PowerItem);
+        }
+        #endregion
 
         private IEnumerator StartAttack(EnemyStartAttackParams parameters)
         {
             while(playerDead == false)
             {
                 yield return new WaitForSeconds(parameters.AttackTime); // 공격 텀
-                parameters.Attack(transform, parameters.AttackType, parameters.BulletSpeed);
+                parameters.Attack(parameters);
             } // 플레이어가 리스폰했을때 다시 공격하도록 수정
         }
 
@@ -153,7 +167,6 @@ namespace Fake.Enemy
 
         private void KillEnemy()
         {
-            Item.ItemSpawn.Instance.SpawnItem(transform, Item.ItemSpawn.ItemTypeObject.PowerItem);
             Destroy(gameObject);
         }
     }

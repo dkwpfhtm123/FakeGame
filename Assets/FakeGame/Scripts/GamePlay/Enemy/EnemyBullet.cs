@@ -22,8 +22,8 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead -= OnPlayerDead;
-                        target.BoomStart -= OnStartPlayerBoom;
-                        target.BoomEnd -= OnEndPlayerBoom;
+                        target.OnBoomStart -= OnStartPlayerBoom;
+                        target.OnBoomEnd -= OnEndPlayerBoom;
                     }
 
                     target = value;
@@ -31,8 +31,8 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead += OnPlayerDead;
-                        target.BoomStart += OnStartPlayerBoom;
-                        target.BoomEnd += OnEndPlayerBoom;
+                        target.OnBoomStart += OnStartPlayerBoom;
+                        target.OnBoomEnd += OnEndPlayerBoom;
                     }
                 }
             }
@@ -68,6 +68,7 @@ namespace Fake.Enemy
         private Vector2 startingPosition;
         private Player.PlayerController target;
         private ObjectCreator objectCreator;
+        private EnemyStartAttackParams parameters;
 
         private bool booming;
         private bool playerDead;
@@ -165,7 +166,8 @@ namespace Fake.Enemy
         private IEnumerator BoomBullet()
         {
             yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
-            EnemyAttackKinds.Instance.FireConeType(transformCache, EnemyAttackKinds.AttackType.RedAttack, 2.0f);
+            parameters = new EnemyStartAttackParams(transformCache, EnemyAttackKinds.AttackType.RedAttack, 2.0f);
+            EnemyAttackKinds.Instance.FireConeType(parameters);
             Destroy(gameObject);
         }
     }

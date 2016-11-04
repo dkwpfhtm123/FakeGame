@@ -7,6 +7,7 @@ namespace Fake.Player
 
     public class PlayerController : MonoBehaviour
     {
+        #region varible
         // Boom관련 변수들
         public GameObject BoomPrefab;    // 프리팹
         public int BoomCount;            // 남은 갯수
@@ -36,8 +37,9 @@ namespace Fake.Player
         }
 
         public event EmptyEventHandler PlayerDead;
-        public event EmptyEventHandler BoomStart;
-        public event EmptyEventHandler BoomEnd;
+        public event EmptyEventHandler OnBoomStart;
+        public event EmptyEventHandler OnBoomEnd;
+        #endregion
 
         public void Setup(int life, int power, int boom)
         {
@@ -50,7 +52,7 @@ namespace Fake.Player
         {
             transformCache = GetComponent<Transform>();
 
-            gameUI = GameObject.Find("GameUI").GetComponent<Fake.UI.GameUI>();
+            gameUI = GameObject.Find("GameUI").GetComponent<UI.GameUI>();
         }
 
         void Start()
@@ -96,11 +98,14 @@ namespace Fake.Player
             boomObject.transform.localScale *= 2.0f;
             OnGoingBoom = true;
 
-            BoomStart();
+            if (OnBoomStart != null)
+                OnBoomStart();
 
             yield return new WaitForSeconds(boomTime);
 
-            BoomEnd();
+            if (OnBoomEnd != null)
+                OnBoomEnd();
+
             OnGoingBoom = false;
             Destroy(boomObject);
             BoomCount--;

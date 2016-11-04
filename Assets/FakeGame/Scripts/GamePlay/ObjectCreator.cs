@@ -76,12 +76,13 @@ namespace Fake
 
             setting.Setup(3, 1, 3); // life, power, boom
 
-            PlayerRespawnEvent(); // 여기서 멈추는 이유?
+            LivePlayer = playerObject;
+
+            PlayerRespawnEvent();
             player = setting;
             if (player != null)
                 player.PlayerDead += PlayerDeadEvent;
 
-            LivePlayer = playerObject;
 
             GameManager.Instance.PlayerTransform = playerObject.transform;
         }
