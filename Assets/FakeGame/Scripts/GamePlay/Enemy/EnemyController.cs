@@ -74,12 +74,12 @@ namespace Fake.Enemy
             if (EnemyTypeCheck == EnemyType.SmallEnemy1)
             {
                 attack = EnemyAttackKinds.Instance.FireConeType;
-                StartCoroutine(StartAttack(2.0f, 2.0f, EnemyAttackKinds.AttackType.RedAttack, attack));
+                StartCoroutine(StartAttack(new EnemyStartAttackParams(2.0f, 2.0f, EnemyAttackKinds.AttackType.RedAttack, attack)));
             }
             else if (EnemyTypeCheck == EnemyType.SmallEnemy2)
             {
                 attack = EnemyAttackKinds.Instance.FireBoomType;
-                StartCoroutine(StartAttack(2.5f, Random.Range(1.0f, 2.0f), EnemyAttackKinds.AttackType.BlueAttack, attack));
+                StartCoroutine(StartAttack(new EnemyStartAttackParams(2.5f, Random.Range(1.0f, 2.0f), EnemyAttackKinds.AttackType.BlueAttack, attack)));
             }
             else if (EnemyTypeCheck == EnemyType.SmallEnemy3)
             {
@@ -111,12 +111,12 @@ namespace Fake.Enemy
             }
         }
 
-        private IEnumerator StartAttack(float attackTime, float bulletSpeed, EnemyAttackKinds.AttackType attackType, EnemyAttackTypeDelegate attack)
+        private IEnumerator StartAttack(EnemyStartAttackParams parameters)
         {
             while(playerDead == false)
             {
-                yield return new WaitForSeconds(attackTime); // 공격 텀
-                attack(transform, attackType, bulletSpeed);
+                yield return new WaitForSeconds(parameters.AttackTime); // 공격 텀
+                parameters.Attack(transform, parameters.AttackType, parameters.BulletSpeed);
             } // 플레이어가 리스폰했을때 다시 공격하도록 수정
         }
 
