@@ -60,7 +60,7 @@ MonoBehaviour:
   BulletDamage: 0
   BulletSpeed: 0
   BulletDirection: {x: 0, y: 0}
-  BulletTypeCheck: 0
+  BulletTypeCheck: 3
 --- !u!212 &21220234
 SpriteRenderer:
   m_ObjectHideFlags: 1

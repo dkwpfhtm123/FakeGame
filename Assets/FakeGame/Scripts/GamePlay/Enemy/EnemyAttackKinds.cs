@@ -150,7 +150,7 @@ namespace Fake.Enemy
 
         private static Vector2 RotateBullet(float angle, Transform spawnTransform)     // 총알 회전
         {
-            var targetDirection = (PlayerTransform.transform.position - spawnTransform.transform.position).normalized;
+            var targetDirection = (PlayerTransform.position - spawnTransform.position).normalized;
 
             return GlobalClass.RotateDirection(targetDirection, angle);
         }

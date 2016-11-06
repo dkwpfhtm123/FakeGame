@@ -156,7 +156,7 @@ namespace Fake.Enemy
                     currentHP--;
                 }
 
-                GreenHpBar.fillAmount = currentHP / maxHP;
+                GreenHpBar.fillAmount = (float)currentHP / maxHP;
 
                 if (currentHP < 0)
                 {
