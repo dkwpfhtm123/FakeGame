@@ -112,6 +112,7 @@ namespace Fake.Enemy
         {
             Angle = angle;
             ObjectCreator = objectCreatorCache;
+            // 싱글턴 변수 만들어서 싱글턴 넣기
         }
 
         #region eventMethod
