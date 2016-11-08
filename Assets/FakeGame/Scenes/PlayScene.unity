@@ -856,7 +856,7 @@ MonoBehaviour:
   PlayerObject: {fileID: 165234, guid: 9f0f34de74c630a46ba83125b67e488f, type: 2}
   Boss: {fileID: 0}
   EnemyObject: {fileID: 187720, guid: b74a1f1448cd26b439693260945c8c31, type: 2}
-  EnemyAttackKindsObject: {fileID: 1000011783951832, guid: 1d6b71a0e1391f546ba16b174befe0d9,
+  EnemyAttackKinds: {fileID: 1000011783951832, guid: 1d6b71a0e1391f546ba16b174befe0d9,
     type: 2}
 --- !u!114 &647477774
 MonoBehaviour:

@@ -11,7 +11,6 @@ namespace Fake.Enemy
 
         private ObjectCreator objectCreator;
         private static Transform playerTransform;
-        private EnemyStartAttackParams parameters;
 
         #region property
         public ObjectCreator ObjectCreator
@@ -42,18 +41,6 @@ namespace Fake.Enemy
             private set { playerTransform = value; }
         }
         #endregion
-
-        private static EnemyAttackKinds instance;
-        public static EnemyAttackKinds Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = FindObjectOfType<EnemyAttackKinds>();
-
-                return instance;
-            }
-        }
 
         public enum AttackType
         {
@@ -155,6 +142,7 @@ namespace Fake.Enemy
             return GlobalClass.RotateDirection(targetDirection, angle);
         }
 
+        #region CreateBullet - Shooter
         private void CreateMoveBullet(Vector2 targetDirection, Transform spawnTransform, AttackType attackType, float angle, float localScale, float bulletSpeed)
         {
             GameObject bulletObject = null;
@@ -178,9 +166,9 @@ namespace Fake.Enemy
             bulletTransform.localRotation = Quaternion.identity;
             bulletTransform.localScale = Vector3.one * localScale;
 
-            bullet.SetBaseBullet(0, 2.0f, targetDirection.normalized, true);
+            bullet.SetBaseBullet(0, bulletSpeed, targetDirection.normalized, true);
 
-            bullet.Setting(angle, ObjectCreator);
+            bullet.SetUp(angle, ObjectCreator, this);
 
             if (attackType == AttackType.PurpleCircle)
             {
@@ -191,5 +179,6 @@ namespace Fake.Enemy
                 bullet.MoveType = null;
             }
         }
+        #endregion
     }
 }

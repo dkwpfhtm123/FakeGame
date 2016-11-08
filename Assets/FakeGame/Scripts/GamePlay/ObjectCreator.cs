@@ -22,9 +22,10 @@ namespace Fake
         public GameObject PlayerObject;
         public GameObject Boss;
         public GameObject EnemyObject;
-        public GameObject EnemyAttackKindsObject;
+        public GameObject EnemyAttackKinds;
 
         private GameObject livePlayer;
+        private Enemy.EnemyAttackKinds enemyAttackKinds;
 
         private Vector2 PlayerSpawnPoint;
         private Player.PlayerController player;
@@ -53,33 +54,34 @@ namespace Fake
         #region CreateMethod
         private void CreateEnemyAttackKinds()
         {
-            Debug.Log("Creating attackkidns");
-            var enemyAttackKindsObject = Instantiate(EnemyAttackKindsObject);
-            var setting = enemyAttackKindsObject.GetComponent<Enemy.EnemyAttackKinds>();
+            Debug.Log("Creating attackkinds");
+            var enemyAttackKinds = Instantiate(EnemyAttackKinds);
+            var setup = enemyAttackKinds.GetComponent<Enemy.EnemyAttackKinds>();
 
-            enemyAttackKindsObject.transform.localPosition = Vector2.zero;
-            enemyAttackKindsObject.transform.localRotation = Quaternion.identity;
-            enemyAttackKindsObject.transform.localScale = Vector2.one;
+            enemyAttackKinds.transform.localPosition = Vector2.zero;
+            enemyAttackKinds.transform.localRotation = Quaternion.identity;
+            enemyAttackKinds.transform.localScale = Vector2.one;
 
-            setting.ObjectCreator = this;
+            setup.ObjectCreator = this;
+            this.enemyAttackKinds = setup;
         }
 
         public void CreatePlayer()
         {
             Debug.Log("Creating player");
             var playerObject = Instantiate(PlayerObject);
-            var setting = playerObject.GetComponent<Player.PlayerController>();
+            var setup = playerObject.GetComponent<Player.PlayerController>();
 
             playerObject.transform.localPosition = PlayerSpawnPoint;
             playerObject.transform.localRotation = Quaternion.identity;
             playerObject.transform.localScale = Vector2.one;
 
-            setting.Setup(3, 1, 3); // life, power, boom
+            setup.Setup(3, 1, 3); // life, power, boom
 
             LivePlayer = playerObject;
 
             PlayerRespawnEvent();
-            player = setting;
+            player = setup;
             if (player != null)
                 player.PlayerDead += PlayerDeadEvent;
 
@@ -90,15 +92,16 @@ namespace Fake
         public void CreateEnemy()
         {
             var enemyObject = Instantiate(EnemyObject);
-            var setting = enemyObject.GetComponent<Enemy.EnemyController>();
+            var setup = enemyObject.GetComponent<Enemy.EnemyController>();
             var mover = enemyObject.GetComponent<Mover>();
 
             enemyObject.transform.localPosition = new Vector2(2, 0);
             enemyObject.transform.localRotation = Quaternion.identity;
             enemyObject.transform.localScale = Vector2.one;
 
-            setting.ObjectCreator = this;
-            setting.EnemyTypeCheck = Enemy.EnemyController.EnemyType.SmallEnemy1; // 수정예정
+            setup.ObjectCreator = this;
+            setup.EnemyAttackKinds = enemyAttackKinds;
+            setup.EnemyTypeCheck = Enemy.EnemyController.EnemyType.SmallEnemy1; // 수정예정
             mover.SetBezierCurve(new Vector2(2, -3), new Vector2(-10, 0), new Vector2(2, 3));
         }
         #endregion

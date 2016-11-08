@@ -62,6 +62,8 @@ namespace Fake.Enemy
         public delegate Vector2 MoveTypeDelegate(float deltaTime);
         public MoveTypeDelegate MoveType;
 
+        public EnemyAttackKinds EnemyAttackKinds;
+
         private Transform transformCache;
         private BaseBullet bulletType;
         private float currentTime;
@@ -108,10 +110,11 @@ namespace Fake.Enemy
         }
         #endregion
 
-        public void Setting(float angle, ObjectCreator objectCreatorCache)
+        public void SetUp(float angle, ObjectCreator objectCreatorCache, EnemyAttackKinds enemyAttackKinds)
         {
             Angle = angle;
             ObjectCreator = objectCreatorCache;
+            EnemyAttackKinds = enemyAttackKinds;
             // 싱글턴 변수 만들어서 싱글턴 넣기
         }
 
@@ -167,8 +170,9 @@ namespace Fake.Enemy
         private IEnumerator BoomBullet()
         {
             yield return new WaitForSeconds(1.0f); // 1 초후 폭발.
-            parameters = new EnemyStartAttackParams(transformCache, EnemyAttackKinds.AttackType.RedAttack, 2.0f);
-            EnemyAttackKinds.Instance.FireConeType(parameters);
+            EnemyAttackTypeDelegate attack = EnemyAttackKinds.FireConeType;
+            parameters = new EnemyStartAttackParams(transformCache, 2.0f, EnemyAttackKinds.AttackType.RedAttack, attack);
+            attack(parameters);
             Destroy(gameObject);
         }
     }
