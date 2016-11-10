@@ -137,6 +137,7 @@ namespace Fake.Enemy
 
         private void OnDestroy()
         {
+            // ondestroy 내에 이벤트 수정하기 // 다른 맞는곳으로 옮기기.
             Item.ItemSpawn.Instance.SpawnItem(transform, Item.ItemSpawn.ItemTypeObject.PowerItem);
         }
         #endregion

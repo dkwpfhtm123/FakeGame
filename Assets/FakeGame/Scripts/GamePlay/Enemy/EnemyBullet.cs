@@ -12,7 +12,7 @@ namespace Fake.Enemy
             private set;
         }
 
-        public Player.PlayerController TargetPlayerController
+        public Player.PlayerController TargetPlayerController //// 수정해야할 부분. // targetplayercontroller을 넣는 부분이 없음 // 디버깅하는 버릇 들이기
         {
             get { return target; }
             private set
@@ -119,12 +119,12 @@ namespace Fake.Enemy
         }
 
         #region eventMethod
-
-        private void OnDestroy()
+      /*  private void OnDestroy()
         {
+            //// 수정할부분 --- 벽에부딫치면 아이템 // ondestroy를 없애고 다른부분에 넣기.
             Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
         }
-
+        */
         private void OnPlayerDead()
         {
             TargetPlayerController = null;
