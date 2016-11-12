@@ -10,12 +10,19 @@ namespace Fake
         #region event
         public event EmptyEventHandler OnPlayerRespawn;
         public event EmptyEventHandler OnPlayerDead;
+
         #endregion
 
-        public GameObject LivePlayer
+        public Player.PlayerController LivePlayerController
         {
-            get { return livePlayer; }
-            set { livePlayer = value; }
+            get { return livePlayerController; }
+            private set { livePlayerController = value; }
+        }
+
+        public bool PlayerBooming
+        {
+            get { return playerBooming; }
+            private set { playerBooming = value; }
         }
 
         #region variable
@@ -24,7 +31,8 @@ namespace Fake
         public GameObject EnemyObject;
         public GameObject EnemyAttackKinds;
 
-        private GameObject livePlayer;
+        private Player.PlayerController livePlayerController;
+        private bool playerBooming;
         private Enemy.EnemyAttackKinds enemyAttackKinds;
 
         private Vector2 PlayerSpawnPoint;
@@ -70,20 +78,28 @@ namespace Fake
         {
             Debug.Log("Creating player");
             var playerObject = Instantiate(PlayerObject);
-            var setup = playerObject.GetComponent<Player.PlayerController>();
+            var playerController = playerObject.GetComponent<Player.PlayerController>();
 
             playerObject.transform.localPosition = PlayerSpawnPoint;
             playerObject.transform.localRotation = Quaternion.identity;
             playerObject.transform.localScale = Vector2.one;
 
-            setup.Setup(3, 1, 3); // life, power, boom
+            playerController.Setup(3, 1, 3); // life, power, boom
 
-            LivePlayer = playerObject;
+            LivePlayerController = playerController;
 
-            PlayerRespawnEvent();
-            player = setup;
+            OnPlayerRespawnEvent();
+            player = playerController;
             if (player != null)
-                player.PlayerDead += PlayerDeadEvent;
+            {
+                player.PlayerDead -= OnPlayerDeadEvent;
+                player.OnBoomStart -= OnPlayerStartBoom;   //// 이부분도 -=를 해야하는지 질문
+                player.OnBoomEnd -= OnPlayerEndBoom;
+
+                player.PlayerDead += OnPlayerDeadEvent;
+                player.OnBoomStart += OnPlayerStartBoom;
+                player.OnBoomEnd += OnPlayerEndBoom;
+            }
 
 
             GameManager.Instance.PlayerTransform = playerObject.transform;
@@ -106,16 +122,28 @@ namespace Fake
         }
         #endregion
 
-        private void PlayerRespawnEvent()
+        #region OnEvent
+        private void OnPlayerRespawnEvent()
         {
             var playerRespawn = OnPlayerRespawn;
             if (playerRespawn != null)
                 playerRespawn();
         }
 
-        private void PlayerDeadEvent()
+        private void OnPlayerDeadEvent()
         {
             OnPlayerDead(); // Event
         }
+
+        private void OnPlayerStartBoom()
+        {
+            playerBooming = true;
+        }
+
+        private void OnPlayerEndBoom()
+        {
+            playerBooming = false;
+        }
+        #endregion
     }
 }

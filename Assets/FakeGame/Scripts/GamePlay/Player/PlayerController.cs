@@ -7,6 +7,12 @@ namespace Fake.Player
 
     public class PlayerController : MonoBehaviour
     {
+        #region eventHandler
+        public event EmptyEventHandler PlayerDead;
+        public event EmptyEventHandler OnBoomStart;
+        public event EmptyEventHandler OnBoomEnd;
+        #endregion
+
         #region varible
         // Boom관련 변수들
         public GameObject BoomPrefab;    // 프리팹
@@ -35,10 +41,6 @@ namespace Fake.Player
             Life,
             Power,
         }
-
-        public event EmptyEventHandler PlayerDead;
-        public event EmptyEventHandler OnBoomStart;
-        public event EmptyEventHandler OnBoomEnd;
         #endregion
 
         public void Setup(int life, int power, int boom)
@@ -114,14 +116,11 @@ namespace Fake.Player
         #region PlayerHit
         private void KillPlayer()
         {
-            gameUI.AppearGameOver();
-            Destroy(gameObject);
-        }
-
-        void OnDestroy()
-        {
+            //gameUI.AppearGameOver();
             if (PlayerDead != null)
                 PlayerDead();
+
+            Destroy(gameObject);
         }
 
         public void HitPlayer(GameObject player)

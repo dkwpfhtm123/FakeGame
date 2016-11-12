@@ -22,8 +22,6 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead -= OnPlayerDead;
-                        target.OnBoomStart -= OnStartPlayerBoom;
-                        target.OnBoomEnd -= OnEndPlayerBoom;
                     }
 
                     target = value;
@@ -31,8 +29,6 @@ namespace Fake.Enemy
                     if (target != null)
                     {
                         target.PlayerDead += OnPlayerDead;
-                        target.OnBoomStart += OnStartPlayerBoom;
-                        target.OnBoomEnd += OnEndPlayerBoom;
                     }
                 }
             }
@@ -72,7 +68,6 @@ namespace Fake.Enemy
         private ObjectCreator objectCreator;
         private EnemyStartAttackParams parameters;
 
-        private bool booming;
         private bool playerDead;
         #endregion
 
@@ -84,7 +79,6 @@ namespace Fake.Enemy
             currentTime = 0;
             startingPosition = transformCache.localPosition;
 
-            booming = false;
             playerDead = false;
 
             var angle = GetRotation();
@@ -103,42 +97,28 @@ namespace Fake.Enemy
                 MoveBullet();
             }
 
-            if (booming == true)
+            if (objectCreator.PlayerBooming == true)
             {
+                Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
                 Destroy(gameObject);
             }
         }
         #endregion
 
-        public void SetUp(float angle, ObjectCreator objectCreatorCache, EnemyAttackKinds enemyAttackKinds)
+        public void SetUp(float angle, ObjectCreator objectCreatorCache, EnemyAttackKinds enemyAttackKinds, Player.PlayerController targetPlayerController)
         {
             Angle = angle;
             ObjectCreator = objectCreatorCache;
             EnemyAttackKinds = enemyAttackKinds;
+            TargetPlayerController = targetPlayerController;
             // 싱글턴 변수 만들어서 싱글턴 넣기
         }
 
         #region eventMethod
-      /*  private void OnDestroy()
-        {
-            //// 수정할부분 --- 벽에부딫치면 아이템 // ondestroy를 없애고 다른부분에 넣기.
-            Item.ItemSpawn.Instance.SpawnItem(transformCache, Item.ItemSpawn.ItemTypeObject.ScoreItem);
-        }
-        */
         private void OnPlayerDead()
         {
-            TargetPlayerController = null;
+            /////  플레이어가 죽었을때 마지막에 있던 장소를 저장해서 그곳으로 발사 / 플레이어가 Respawn하면 다시 Transform을 받아서 발사하는 방법 찾기
             Destroy(gameObject);
-        }
-
-        private void OnStartPlayerBoom()
-        {
-            booming = true;
-        }
-
-        private void OnEndPlayerBoom()
-        {
-            booming = false;
         }
         #endregion
 

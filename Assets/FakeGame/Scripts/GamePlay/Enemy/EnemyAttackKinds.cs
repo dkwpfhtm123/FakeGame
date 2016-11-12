@@ -52,7 +52,7 @@ namespace Fake.Enemy
         private void OnPlayerRespawn()
         {
             if (playerTransform == null)
-                playerTransform = objectCreator.LivePlayer.transform;
+                playerTransform = objectCreator.LivePlayerController.transform;
         }
 
         private void OnPlayerDead()
@@ -62,44 +62,48 @@ namespace Fake.Enemy
         }
 
         #region firetype
-        public void FireConeType(EnemyStartAttackParams parameters)
+        public IEnumerator FireConeType(EnemyStartAttackParams parameters)
         {
-            var oneshot = 5;
-            var angle = 60.0f;
-            var anglePlus = angle / (oneshot - 1);
-            angle *= 0.5f;
-
-            while (oneshot > 0)
+            while (true)
             {
-                var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
-                CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
+                var oneshot = 5;
+                var angle = 60.0f;
+                var anglePlus = angle / (oneshot - 1);
+                angle *= 0.5f;
 
-                oneshot--;
-                angle -= anglePlus;
+                while (oneshot > 0)
+                {
+                    var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
+                    CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
+
+                    oneshot--;
+                    angle -= anglePlus;
+                }
+                yield return new WaitForSeconds(parameters.AttackTime);
             }
         }
 
-        public void FireBoomType(EnemyStartAttackParams parameters)     // 무작위 발사후 ConFireType 형태로 발사.
+
+        public IEnumerator FireBoomType(EnemyStartAttackParams parameters)     // 무작위 발사후 ConFireType 형태로 발사.
         {
-            int oneshot = 5;
-
-            while (oneshot > 0)
+            while (true)
             {
-                var angle = Random.Range(0.0f, 360.0f);
+                int oneshot = 5;
 
-                var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
-                CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
+                while (oneshot > 0)
+                {
+                    var angle = Random.Range(0.0f, 360.0f);
 
-                oneshot--;
+                    var targetDirection = RotateBullet(angle, parameters.SpawnTransform);
+                    CreateMoveBullet(targetDirection, parameters.SpawnTransform, parameters.AttackType, 0, 1, parameters.BulletSpeed);
+
+                    oneshot--;
+                }
+                yield return new WaitForSeconds(parameters.AttackTime);
             }
         }
 
-        public void FireSinType(EnemyStartAttackParams parameters)     // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
-        {
-            StartCoroutine(SinTypeCoroutine(parameters));
-        }
-
-        IEnumerator SinTypeCoroutine(EnemyStartAttackParams parameters)
+        public IEnumerator FireSinType(EnemyStartAttackParams parameters) // 6방향 sin형태의 탄 6발씩 발사 후 20도 꺾어서 6발발사. x6
         {
             var angle = 0.0f;
             var oneShot = 6.0f;
@@ -168,7 +172,7 @@ namespace Fake.Enemy
 
             bullet.SetBaseBullet(0, bulletSpeed, targetDirection.normalized, true);
 
-            bullet.SetUp(angle, ObjectCreator, this);
+            bullet.SetUp(angle, ObjectCreator, this, objectCreator.LivePlayerController.GetComponent<Player.PlayerController>());
 
             if (attackType == AttackType.PurpleCircle)
             {

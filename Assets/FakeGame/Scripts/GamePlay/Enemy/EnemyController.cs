@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Fake.Enemy
 {
-    public delegate void EnemyAttackTypeDelegate(EnemyStartAttackParams parameters);
+    public delegate IEnumerator EnemyAttackTypeDelegate(EnemyStartAttackParams parameters);
 
     public class EnemyController : MonoBehaviour
     {
@@ -68,10 +68,10 @@ namespace Fake.Enemy
 
             CreateHPbar();
 
-            StartCoroutine(AttackPlayer());
+            AttackPlayer();
         }
 
-        private IEnumerator AttackPlayer()
+        private void AttackPlayer()
         {
             EnemyAttackTypeDelegate attackDelegate;
 
@@ -100,13 +100,13 @@ namespace Fake.Enemy
                 bulletSpeed = 4.0f;
                 attackTime = 2.0f;
                 attackType = EnemyAttackKinds.AttackType.PurpleCircle;
-                yield return new WaitForSeconds(0.5f);
                 parameters = new EnemyStartAttackParams(transformCache, 4.0f, EnemyAttackKinds.AttackType.PurpleCircle, attackDelegate);
-                attackDelegate(parameters);
+                StartCoroutine(attackDelegate(parameters));
             }
 
             parameters = new EnemyStartAttackParams(transformCache, bulletSpeed, attackTime, attackType, attackDelegate);
-            StartCoroutine(StartAttack(parameters));
+            if (objectCreator.LivePlayerController != null)
+                StartCoroutine(attackDelegate(parameters));
         }
 
         #region event
@@ -133,12 +133,6 @@ namespace Fake.Enemy
                     StartCoroutine(attckCoroutine);
                 }
             }
-        }
-
-        private void OnDestroy()
-        {
-            // ondestroy 내에 이벤트 수정하기 // 다른 맞는곳으로 옮기기.
-            Item.ItemSpawn.Instance.SpawnItem(transform, Item.ItemSpawn.ItemTypeObject.PowerItem);
         }
         #endregion
 
@@ -185,6 +179,7 @@ namespace Fake.Enemy
 
         private void KillEnemy()
         {
+            Item.ItemSpawn.Instance.SpawnItem(transform, Item.ItemSpawn.ItemTypeObject.PowerItem);
             Destroy(gameObject);
         }
     }
